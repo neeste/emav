@@ -58,7 +58,7 @@ char    dpoae_fn[MAXNAME] = {0};
 static char curdir[MAXPATH] = {0};
 static char ofiledir[MAXPATH] = {0};
 static char *sf[] = {"*.TOK", "*.DAT", "*.SWP", "*.CAL", "*.PRB"};
-static int (*rd_file[]) () = {
+static int (*rd_file[]) (void) = {
     rd_teoae_file, rd_dpoae_file, rd_dpswp_file, rd_dpcal_file, rd_probe_file
 };
 
@@ -170,7 +170,7 @@ savefile(char *no_use)
 
 /* restart from the beginning of the program and clear screen */
 int
-Start_New()
+Start_New(void)
 {
     defpar();
     read_init_file();
@@ -302,7 +302,7 @@ chg_dir(char *no_use)
 }
 
 int
-File_wind()
+File_wind(void)
 {
     return (simple_submenu(0, txtpar.menu_height, file_opt));
 }
@@ -368,7 +368,7 @@ extern int xbegin, xrange;
 
 /* read in a TEOAE file */
 int
-rd_teoae_file()
+rd_teoae_file(void)
 {
     TOKENFILE *tfp;
     int     i, j, k, sweeps = 0;
@@ -488,14 +488,14 @@ set_level_unit(char *s)
 }
 
 int
-rd_dpoae_file()
+rd_dpoae_file(void)
 {
     char    outmsg[3][16] = {{0}};
     char   *start;
     char    comment[3][40];
     float   f, f2, f1, pst[4], nst[2], tm, lev[14];
     float   pdp[NEX], ndp[NEX], adp[NEX];
-    int     i, j, k, flag, swp, tim, cmt, nd, cal_flg, plot_yet, idp, sf;
+    int     i, j, k, flag, swp, tim, cmt, nd, cal_flg, plot_yet, idp, local_sf;
     int     dpf_old, datafmt_old, sbin_old, nnsb_old, sigt_old, suppr_old;
     FILE   *fpt;
     static char *kw[] = {
@@ -666,12 +666,12 @@ rd_dpoae_file()
             lev[12] = pst[2];
             lev[13] = pst[3];
 	    if (datafmt.at == 4)
-	        sf = 2;
+	        local_sf = 2;
 	    else if (f1 == f2)
-	        sf = 1;
+	        local_sf = 1;
 	    else
-	        sf = 0;
-	    show_dp(f, lev, flag, flag, -1, sf, plot_yet++);
+	        local_sf = 0;
+	    show_dp(f, lev, flag, flag, -1, local_sf, plot_yet++);
 	    flag++;
 	}
     }
@@ -731,7 +731,7 @@ rd_dpoae_file()
 }
 
 int
-rd_dpswp_file()
+rd_dpswp_file(void)
 {
     strcpy(swp_file, o_file_name);
     r_mode.at = 2;
@@ -740,7 +740,7 @@ rd_dpswp_file()
 }
 
 int
-rd_dpcal_file()
+rd_dpcal_file(void)
 {
     w_spec.ybot = ypix - 1;
     if (cal_read(o_file_name, 0))
@@ -764,7 +764,7 @@ check_probe_file(char *fn, int flag)
 }
 
 int
-rd_probe_file()
+rd_probe_file(void)
 {
     thev_source(o_file_name);
     fileflag = 2;
@@ -773,7 +773,7 @@ rd_probe_file()
 }
 
 int
-eventintime()
+eventintime(void)
 {
     int32_t    timer;
     int     rv;
@@ -1098,7 +1098,7 @@ open_file(char *use2chk)
 }
 
 int
-extract_sfoae()
+extract_sfoae(void)
 {
     char    msg[MAXLINE];
     char    sfoae_file[MAXNAME];

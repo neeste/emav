@@ -130,8 +130,8 @@ TOGGLETYPE z_cav_type = {
     { "0", "1", NULL },
 };
 
-static int check_th_off();
-static int chk_rate_tone();
+static int check_th_off(void);
+static int chk_rate_tone(void);
 static int sys_menu(char *);
 static int sen_menu(char *);
 static int dpoae_opt(char *);
@@ -145,9 +145,9 @@ static int data_opt(char *);
 static int dp_stim_opt(char *);
 static int hpf_opt(char *);
 static int noise_opt(char *);
-static int pb_opt();
-static int p_c_opt();
-static int p_t_opt();
+static int pb_opt(void);
+static int p_c_opt(void);
+static int p_t_opt(void);
 
 static  int text_wind_flag = 0;
 static  int upperv = 0;
@@ -326,7 +326,7 @@ open_text_w(int *i)
 }
 
 void
-close_text_w()
+close_text_w(void)
 {
     if (text_wind_flag)
 	close_w(&w_text);
@@ -334,7 +334,7 @@ close_text_w()
 }
 
 int
-Option_wind()
+Option_wind(void)
 {
     return (simple_submenu(menu_x(), txtpar.menu_height, option));
 }
@@ -518,7 +518,7 @@ dec_att(float **f)
 }
 
 void
-dsp_vfs()
+dsp_vfs(void)
 {
     float ad_vfs[2], da_vfs[2];
 
@@ -536,7 +536,7 @@ dsp_vfs()
 }
 
 int
-dsp_init()
+dsp_init(void)
 {
     int     err;
 
@@ -812,7 +812,7 @@ getstim(char *stimfn, int np)
 }
 
 void
-read_next_car()
+read_next_car(void)
 {
     if (tcount < ntokens) {
 	trdcar(tcount + 1, t);
@@ -828,7 +828,7 @@ read_next_car()
 }
 
 void
-write_next_car()
+write_next_car(void)
 {
     if (tcount < ntokens) {
 	strncpy(t->car.tokcmt, "", COMNTSIZE);
@@ -847,14 +847,14 @@ write_next_car()
 }
 
 static int
-check_th_off()
+check_th_off(void)
 {
     teoae.mvmax = mvmax;
     return (0);
 }
 
 int
-check_t1_t2()
+check_t1_t2(void)
 {
     return (0);
 }
@@ -870,14 +870,14 @@ set_rej(char *no_use)
 }
 
 static int
-chk_rate_tone()
+chk_rate_tone(void)
 {
     tone.rate = adjust_rate(tone.rate);
     return (0);
 }
 
 int
-chk_ramp_tone()
+chk_ramp_tone(void)
 {
     int r;
 
@@ -889,7 +889,7 @@ chk_ramp_tone()
 }
 
 int
-chk_ramp_dpoae()
+chk_ramp_dpoae(void)
 {
     int r;
 
@@ -910,7 +910,7 @@ set_test_opt(int t1, int t2, int t3)
 
 /* return index of selected distortion production frequency */
 int
-dpindx()
+dpindx(void)
 {
     int idp;
 
@@ -940,7 +940,7 @@ dpfreq(double f1, double f2)
 /* input_filter - configure high-pass filter on input */
 
 void
-input_filter(int t, int o, float *f, int32_t rate)
+input_filter(int filter_type, int o, float *f, int32_t sample_rate)
 {
     float *a[2], *b[2], w;
     int i, nfo[2];
@@ -950,11 +950,11 @@ input_filter(int t, int o, float *f, int32_t rate)
     for (i = 0; i < 2; i++) {
         a[i] = (float *) calloc(o + 1, sizeof(float));
         b[i] = (float *) calloc(o + 1, sizeof(float));
-        if (f && (f[i] > 0) && (rate > 0) && (o > 0)) {
-            w = f[i] / rate;        // normalized frequency
-            if (t == 0) {           // Butterworth
+        if (f && (f[i] > 0) && (sample_rate > 0) && (o > 0)) {
+            w = f[i] / sample_rate;        // normalized frequency
+            if (filter_type == 0) {           // Butterworth
 	        nfo[i] = butter(&w, b[i], a[i], o, pb);
-            } else if (t == 1) {    // Bessel
+            } else if (filter_type == 1) {    // Bessel
                 nfo[i] = bessel(&w, b[i], a[i], o, pb);
             } else {                //default
                 nfo[i] = 0;

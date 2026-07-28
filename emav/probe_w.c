@@ -32,7 +32,7 @@
 #define MAX_NF          (MAXNPTS/FFRAC+1)
 #define MAX_SM		32
 #define free_null(x)	if(x){free(x);x=NULL;}
-void    simpfit();
+void    simpfit(void);
 
 extern char line[], ths_file[];
 extern float cal_attn, chk_attn;
@@ -79,7 +79,7 @@ static int ol = 0;
 /* make the probe paramters current */
 
 void
-grab_probe()
+grab_probe(void)
 {
     dis_units(Sen.AD, Sen.MP);
     buflen = limit(MINNPTS, dpoae.size, maxnpts);
@@ -290,7 +290,7 @@ fd_window(double *z, int n)
 }
 
 static void 
-reflect(double *R, float *zl, double z0, int n)
+reflect(double *R, float *local_zl, double local_z0, int n)
 {
     double rnr, rni, rdr, rdi,  rdm;
     int i, ir, ii;
@@ -298,10 +298,10 @@ reflect(double *R, float *zl, double z0, int n)
     for (i = 0; i < n; i++) {
         ir = i * 2;
         ii = ir + 1;
-        rnr = zl[ir] - z0;
-        rni = zl[ii];
-        rdr = zl[ir] + z0;
-        rdi = zl[ii];
+        rnr = local_zl[ir] - local_z0;
+        rni = local_zl[ii];
+        rdr = local_zl[ir] + local_z0;
+        rdi = local_zl[ii];
         rdm = rdr * rdr + rdi * rdi;
         R[ir] = (rnr * rdr + rni * rdi) / rdm;
         R[ii] = (rni * rdr - rnr * rdi) / rdm;
@@ -309,27 +309,27 @@ reflect(double *R, float *zl, double z0, int n)
 }
 
 static double
-z_surge(float *zl, int na)
+z_surge(float *local_zl, int na)
 {
-    double z0, w0, wr, *R;
+    double local_z0, w0, wr, *R;
     float zc[2];
     int k, nk = probe.surge;
 
     z_chr(zc);
-    z0 = zc[0];
+    local_z0 = zc[0];
     R = (double *) calloc(na * 2, sizeof(double));
     c_ones(R, na);
     fd_window(R, na);
     w0 = mean_real(R, na);
     for (k = 0; k < nk; k++) {
-        reflect(R, zl, z0, na);
+        reflect(R, local_zl, local_z0, na);
         fd_window(R, na);
         wr = mean_real(R, na);
-        z0 *= (1 + wr / w0);
+        local_z0 *= (1 + wr / w0);
     }
     free(R);
 
-    return (z0);
+    return (local_z0);
 }
 
 /***********************************************************************/
@@ -357,7 +357,7 @@ select_chan(int c)
 
 
 static int
-thev_init()
+thev_init(void)
 {
     int m;
 
@@ -391,7 +391,7 @@ thev_init()
 }
 
 static void
-thev_free()
+thev_free(void)
 {
 
     free_null(pzs);
@@ -595,7 +595,7 @@ thev_err(float *lc)
 }
 
 static void
-thev_err_cav()
+thev_err_cav(void)
 {
     double df;
     float *lc;
@@ -649,7 +649,7 @@ thev_rep(float *lc)
 }
 
 static int
-thev_esc()
+thev_esc(void)
 {
     int c = 0;
 
@@ -667,7 +667,7 @@ static void
 divide_by_stim(float *pp, int n, int c, int s)
 {
     int i, ii, ir;
-    complex p0, p1, pr;
+    complex p0, p1, local_pr;
     double ppv;
 
     ppv = Sen.DA[c] / (Sen.AD * Sen.MP * s);  // removed 2 in 3.32
@@ -678,9 +678,9 @@ divide_by_stim(float *pp, int n, int c, int s)
         p0.y = st[ii];
         p1.x = pp[ir];
         p1.y = pp[ii];
-        pr = cdiv(p1, p0);
-        pp[ir] = (float) (pr.x * ppv);
-        pp[ii] = (float) (pr.y * ppv);
+        local_pr = cdiv(p1, p0);
+        pp[ir] = (float) (local_pr.x * ppv);
+        pp[ii] = (float) (local_pr.y * ppv);
     }
 }
 
@@ -802,7 +802,7 @@ dis_cal_tok(int32_t *buf)
 }
 
 static int
-dis_cal()
+dis_cal(void)
 {
     int i, j, k, m, fh;
 
@@ -1017,7 +1017,7 @@ write_thev_zcav(int type)
 }
 
 static void
-show_db(float *z, int n, WIND *wn, int levref, int reset, int db_range, int c)
+show_db(float *z, int n, WIND *wn, int levref, int reset, int local_db_range, int c)
 {
     int     i, n1, nd;
     double   dt, lpsval;
@@ -1104,7 +1104,7 @@ show_pz(int c, int pz, int rs)
 }
 
 static void
-show_pf(int c, int pp, int st, int rs)
+show_pf(int c, int pp, int local_st, int rs)
 {
     char ext[5];
     complex p0, pm;
@@ -1142,7 +1142,7 @@ show_pf(int c, int pp, int st, int rs)
         s[i] = (float) pm.x;
     }
 
-    ws = st ? w_stim_fft : w_spec;
+    ws = local_st ? w_stim_fft : w_spec;
     wn.wbgc = ws.wbgc;
     wn.xtop = ws.xtop;
     wn.xbot = ws.xbot;
@@ -1151,7 +1151,7 @@ show_pf(int c, int pp, int st, int rs)
     wn.wfgc = scrn_c[C_WAVE];
     gprintf(draw_w(&wn), wn.ybot - 2, "SPL%s:",ext);
     wn.ytop = ws.ytop + txtpar.menu_height;
-    wn.ybot = st ? ws.ybot : ypix - 1;
+    wn.ybot = local_st ? ws.ybot : ypix - 1;
     wn.wfgc = dfgc;
     show_db(s, n, &wn, 2, rs, db_range, dfgc);
 }
@@ -1165,7 +1165,7 @@ show_thev_src_chan(int c)
 }
 
 static void
-show_thev_src()
+show_thev_src(void)
 {
     show_pz(0, 0, 1);
     show_pz(1, 0, 0);
@@ -1198,22 +1198,22 @@ show_thev_ld(int sil)
 }
 
 static void
-show_thev_adj(int sil, int st)
+show_thev_adj(int sil, int local_st)
 {
-    show_pf(0, 0, st, 1);
-    show_pf(1, 0, st, 0);
+    show_pf(0, 0, local_st, 1);
+    show_pf(1, 0, local_st, 0);
     if (sil) {			// SIL
-        show_pf(0, 2, st, 0);
-	show_pf(1, 2, st, 0);
+        show_pf(0, 2, local_st, 0);
+	show_pf(1, 2, local_st, 0);
     } else {			// FPL
-        show_pf(0, 1, st, 0);
-	show_pf(1, 1, st, 0);
+        show_pf(0, 1, local_st, 0);
+	show_pf(1, 1, local_st, 0);
     }
     check_event();
 }
 
 double
-cavity_length(float *pc, int nf, double vs)
+cavity_length(float *local_pc, int nf, double vs)
 {
     double dl, ecl, l1, l2, d;
     float *p;
@@ -1224,7 +1224,7 @@ cavity_length(float *pc, int nf, double vs)
     for (i = 0; i < nf; i++) {
 	ir = 2 * i;
 	ii = 2 * i + 1;
-	p[ir] = pc[ir] * pc[ir] + pc[ii] * pc[ii];
+	p[ir] = local_pc[ir] * local_pc[ir] + local_pc[ii] * local_pc[ii];
 	p[ii] = 0;
     }
     p[0] = p[n - 2] = 1e-9F;
@@ -1441,24 +1441,24 @@ chkfn(char *calfn, char *thsfn)
 /***********************************************************************/
 
 static void
-ldimp(float *zl, float *zs, float *ps, float *pl, int na, double sg)
+ldimp(float *local_zl, float *local_zs, float *local_ps, float *local_pl, int na, double sg)
 {
     double  plr, pli, pdr, pdi, pdm, prr, pri, zlr, zli;
     double  psr, psi, zsr, zsi;
     int     i, ii, ir;
     static float eps = 1e-9F;
  
-    zl[0] = eps;
-    zl[1] = 0;
+    local_zl[0] = eps;
+    local_zl[1] = 0;
     for (i = 1; i < na; i++) {
         ir = 2 * i;
         ii = 2 * i + 1;
-        psr = ps[ir] * sg;
-        psi = ps[ii] * sg;
-        zsr = zs[ir];
-        zsi = zs[ii];
-        plr = pl[ir];
-        pli = pl[ii];
+        psr = local_ps[ir] * sg;
+        psi = local_ps[ii] * sg;
+        zsr = local_zs[ir];
+        zsi = local_zs[ii];
+        plr = local_pl[ir];
+        pli = local_pl[ii];
         pdr = psr - plr;
         pdi = psi - pli;
         pdm = pdr * pdr + pdi * pdi;
@@ -1466,13 +1466,13 @@ ldimp(float *zl, float *zs, float *ps, float *pl, int na, double sg)
         pri = (pli * pdr - plr * pdi) / pdm;
         zlr = zsr * prr - zsi * pri;
         zli = zsi * prr + zsr * pri;
-        zl[ir] = (float) zlr;
-        zl[ii] = (float) zli;
+        local_zl[ir] = (float) zlr;
+        local_zl[ii] = (float) zli;
     }
 }
 
 static double
-surge_gain(float *zl, float *zs, float *ps, float *pl, int na)
+surge_gain(float *local_zl, float *local_zs, float *local_ps, float *local_pl, int na)
 {
     double sg = 1;
     float zc[2];
@@ -1480,15 +1480,15 @@ surge_gain(float *zl, float *zs, float *ps, float *pl, int na)
 
     z_chr(zc);
     for (i = 0; i < nk; i++) {
-        ldimp(zl, zs, ps, pl, na, sg);
-	sg *= z_surge(zl, na) / zc[0];
+        ldimp(local_zl, local_zs, local_ps, local_pl, na, sg);
+	sg *= z_surge(local_zl, na) / zc[0];
     }
 
     return (sg);
 }
 
 static void
-thev_cmp_zl()
+thev_cmp_zl(void)
 {
     double   plr, pli, pdr, pdi, pdm, prr, pri;
     double   z0r, z0i, zlr, zli, zlm, psr, psi, zsr, zsi, sg;
@@ -1538,7 +1538,7 @@ thev_cmp_zl()
 }
 
 static void
-thev_cmp_prz0()
+thev_cmp_prz0(void)
 {
     float   zt[2];
     int     i, ii, ir;
@@ -1578,20 +1578,20 @@ thev_cmp_prz0()
 }
 
 static void
-thev_cmp_pfcd()
+thev_cmp_pfcd(void)
 {
     int     i, ii, ir;
     double  zlr, zli, zlm, cdr, ac, nc;
     double  plr, pli, prr, pri, pfr, pfi;
     static float eps = 1e-9F;
     static double pi = M_PI;
-    static double spl_ref = 2e-5;	// 20 uPa
+    static double local_spl_ref = 2e-5;	// 20 uPa
     static double imp_ref = 1e5;	// 1 ohm = 10^5 Pa.s/m^3
     static double int_ref = 1e-12;	// pW/m^2 (F&M, 1933)
 
     //df = (double) rate / buflen;
     ac = pi * diacav * diacav / 4e4;	// area of cavity (m^2)
-    nc = spl_ref / sqrt(ac * imp_ref * int_ref);
+    nc = local_spl_ref / sqrt(ac * imp_ref * int_ref);
     pf[0] = cd[0] = eps;
     pf[1] = pr[1] = 0;
     for (i = 1; i < nthf; i++) {
@@ -1815,7 +1815,7 @@ thev_adj_cal(float *fst, float *pst, float *fpl, float *sil, float *rfl)
 
 /* free calibration adjustment arrays */
 void
-thev_adj_free()
+thev_adj_free(void)
 {
     if (padj) {		// forward pressure adjustment
 	free(padj);
@@ -1865,7 +1865,7 @@ create_load_file(void)
 }
 
 int
-create_load()
+create_load(void)
 {
     set_trailer(create_load_file);
     return (27);
@@ -1874,7 +1874,7 @@ create_load()
 /*****************************************************************************/
 
 int
-stepper()
+stepper(void)
 {
 #ifdef WIN32
     char cmd[80];
@@ -1902,7 +1902,7 @@ stepper()
 /*****************************************************************************/
 
 void
-Cavity_wind()
+Cavity_wind(void)
 {
     int cal_ok = 0;
 
@@ -1936,7 +1936,7 @@ Cavity_wind()
 /*****************************************************************************/
 
 void
-Probe_wind()
+Probe_wind(void)
 {
     int cal_ok = 0;
 

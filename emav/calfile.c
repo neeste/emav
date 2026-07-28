@@ -377,7 +377,7 @@ mat_save(char *fn, int icav)
     char    type[4], nam[80], cn[20], dn[20];
     int     mfd, npts, ntok = 0, dtyp, dsiz, i;
     float   scale;
-    int32_t    hdr[5], *accbuf[2];
+    int32_t    hdr[5], *local_accbuf[2];
     short   i2;
 
     if (numsrc <= 0 || numcav <= 0) {		// sanity check
@@ -390,8 +390,8 @@ mat_save(char *fn, int icav)
     if (mfd < 0) {
         return (1);
     }
-    accbuf[0] = accbuf_a;
-    accbuf[1] = accbuf_b;
+    local_accbuf[0] = accbuf_a;
+    local_accbuf[1] = accbuf_b;
     if (icav == 0) {
 	ntok = numsrc;
 	npts = buflen;
@@ -419,7 +419,7 @@ mat_save(char *fn, int icav)
 	}
 	for (i = 0; i < numsrc; i++) {
 	    sprintf(cn, "cal%02d", i + 1);
-	    mat_wr_l(mfd, cn, accbuf[i], npts);
+	    mat_wr_l(mfd, cn, local_accbuf[i], npts);
 	}
     } else if (icav > 0) {
 	if (!mat_rd_hdr(mfd, type, hdr, nam)) {
@@ -451,7 +451,7 @@ mat_save(char *fn, int icav)
 	}
 	for (i = 0; i < numsrc; i++) {
 	    sprintf(cn, "cal%02d", ++ntok);
-	    mat_wr_l(mfd, cn, accbuf[i], npts);
+	    mat_wr_l(mfd, cn, local_accbuf[i], npts);
 	}
     }
     // optional variable at end of file

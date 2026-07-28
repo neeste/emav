@@ -109,4 +109,4 @@ void trdhitch(TOKENFILE *);
 void twrcar(int, TOKENFILE *);
 void twrheader(TOKENFILE *);
 void twrhitch(TOKENFILE *);
-void waitkp();
+void waitkp(void);

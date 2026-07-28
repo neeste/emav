@@ -3,7 +3,7 @@
 
 int bessel(float *, float *, float *, int, int);
 int butter(float *, float *, float *, int, int);
-int count_files();
+int count_files(void);
 int genfn(char *c, char *e, char *f, int *count);
 int nint(double x);
 int rdils(char *fnam, short *buff, int32_t blen, int32_t *rate, int32_t *npts);

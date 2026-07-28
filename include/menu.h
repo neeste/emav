@@ -91,7 +91,7 @@ typedef struct {
     short inputlen;	/* input length in characters */
     char decpts;	/* how many decimal points if applicable */
     char status;	/* 1 for enabled, 0 for disabled */
-    int (*exe)();       /* execute this each time get_str is invoked */
+    int (*exe)(void);       /* execute this each time get_str is invoked */
 } MENUITEM;
 
 /* =======================================================================
@@ -249,16 +249,16 @@ int     lookahead(void);
 void	set_capture_event(void (*)(int));
 
 /* sets the background process function */
-void	set_bg_exe(void (*)());
+void	set_bg_exe(void (*)(void));
 
 /* returns the current background process function */
-void    (*get_bg_exe(void))();
+void    (*get_bg_exe(void))(void);
 
 /* ----------- mainmenu --------------- */
 
 typedef struct {
 	char *menustr;
-	int (*exe)();
+	int (*exe)(void);
 } MAIN_MENU;
 
 int     menu_step(int);

@@ -157,7 +157,7 @@ dis_stim(int load, void *p, int type, int swps, int sets)
     if (load) {
         memcpy(&sav_v, &sig_v, sizeof(SIG_V));
 	if (type == LONG)
-	    memcpy(savbuf, p, buflen * sizeof(int32_t));
+	    memcpy(savbuf, p, (size_t)(buflen) * sizeof(int32_t));
     }
     return(min);
 }
@@ -267,8 +267,8 @@ len_est(int32_t *acc, short *stm, int npt, double vs)
     int i, ii, ir, n;
 
     n = npt + 2;
-    a = (unsigned long)((float *) calloc(n, sizeof(float)));
-    s = (unsigned long)((float *) calloc(n, sizeof(float)));
+    a = (unsigned long)((float *) calloc((size_t)(n), sizeof(float)));
+    s = (unsigned long)((float *) calloc((size_t)(n), sizeof(float)));
     p = a;
     for (i = 0; i < npt; i++) {
         a[i] = (float) acc[i];
@@ -934,7 +934,7 @@ TEOAE_wind()
 	w_dis = &w_sig;
     } while (calculate_it() != 0);
 
-    memcpy(savbuf, outbuf, buflen * sizeof(int32_t));
+    memcpy(savbuf, outbuf, (size_t)(buflen) * sizeof(int32_t));
 
     swp1set = teoae.swp1set;
     do_teoae_task();

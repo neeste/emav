@@ -402,7 +402,7 @@ rd_teoae_file(void)
     swp1set = tfp->car.reps;
     stim_title(tfp->car.sname);
     scaleback(tfp->car.tokmax, tfp->car.maxval, outbuf, savbuf);
-    memcpy(outbuf, savbuf, buflen * sizeof(int32_t));
+    memcpy(outbuf, savbuf, (size_t)(buflen) * sizeof(int32_t));
     sweeps = i / swp1set;
     draw_w(&w_info);
     xbegin = 0;

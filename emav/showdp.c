@@ -455,7 +455,7 @@ show_bin_file(char *fn, int itm, int oct, double tm, float *lev, int chan)
         fbin = NULL;
     } else {
 	fbin = fopen(bfn, "rb");
-	fread(&bhdr, sizeof(struct BINhdr), 1, fbin);
+	fread(&bhdr, sizeof(struct BINhdr), (size_t)(1), fbin);
 	dp_items = bhdr.total;
 	dp_repeat = 1;
 	buflen = bhdr.wav_len;
@@ -473,9 +473,9 @@ show_bin_file(char *fn, int itm, int oct, double tm, float *lev, int chan)
     accnpts = (bhdr.nic < 2) ? buflen : buflen * 2;
     wavsiz = sizeof(struct BINwav) + 2 * 4 * accnpts;
     fseek(fbin, sizeof(struct BINhdr) + (int32_t) itm * wavsiz, 0);
-    fread(&wavhdr, sizeof(struct BINwav), 1, fbin);
-    fread(accbuf_a, 4, accnpts, fbin);
-    fread(accbuf_b, 4, accnpts, fbin);
+    fread(&wavhdr, sizeof(struct BINwav), (size_t)(1), fbin);
+    fread(accbuf_a, 4, (size_t)(accnpts), fbin);
+    fread(accbuf_b, 4, (size_t)(accnpts), fbin);
 
     if (bhdr.swp1set > 0 &&  (wavhdr.N % bhdr.swp1set) == 0) {
 	acc_sets = wavhdr.N / bhdr.swp1set;

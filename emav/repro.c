@@ -32,7 +32,7 @@ repro(int32_t *a, int32_t *b, int n, float *rb)
     int     i, j, k, i1, i2;
 
     if (n > 0 && rate > 0) {
-	af = (unsigned long)((float *) malloc((n + 2) * sizeof(float) * 2));
+	af = (unsigned long)((float *) malloc((size_t)((n + 2)) * sizeof(float) * 2));
 	bf = af + n + 2;
 	for (i = 0; i < n; i++) {
 	    af[i] = (float) a[i];

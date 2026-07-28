@@ -149,7 +149,7 @@ open_bin_file(char *fn)
 	bh.total = 0;
     } else {
 	fbin = fopen(bfn, "rb");
-	fread(&bh, sizeof(struct BINhdr), 1, fbin);
+	fread(&bh, sizeof(struct BINhdr), (size_t)(1), fbin);
 	if (bh.total <= 0 || bh.wav_len <= 0 || bh.samp_rate <= 0) {
 	    fclose(fbin);
 	    fbin = NULL;
@@ -168,13 +168,13 @@ read_bin_file(int r)
     nic = (bh.nic < 2) ? 1 : 2;
     rsz = sizeof(struct BINwav) + 2 * 4 * bsz * nic;
     fseek(fbin, sizeof(struct BINhdr) + (int32_t) r * rsz, 0);
-    fread(&wh, sizeof(struct BINwav), 1, fbin);
-    ard = fread(accbuf_a1, 4, bsz, fbin);
+    fread(&wh, sizeof(struct BINwav), (size_t)(1), fbin);
+    ard = fread(accbuf_a1, 4, (size_t)(bsz), fbin);
     if (nic >= 2)
-        fread(accbuf_a2, 4, bsz, fbin);
-    brd = fread(accbuf_b1, 4, bsz, fbin);
+        fread(accbuf_a2, 4, (size_t)(bsz), fbin);
+    brd = fread(accbuf_b1, 4, (size_t)(bsz), fbin);
     if (nic >= 2)
-	fread(accbuf_b2, 4, bsz, fbin);
+	fread(accbuf_b2, 4, (size_t)(bsz), fbin);
 
     return ((ard == bsz) && (brd == bsz));
 }

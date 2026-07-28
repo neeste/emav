@@ -59,7 +59,7 @@ open_bin(char *fn)
     newext(bfn, "BIN");
     fbin = fopen(bfn, "rb");
     if (fbin != NULL) {
-	fread(&bhdr, sizeof(struct BINhdr), 1, fbin);
+	fread(&bhdr, sizeof(struct BINhdr), (size_t)(1), fbin);
 	dp_items = bhdr.total;
 	dp_repeat = 1;
 	buflen = bhdr.wav_len;
@@ -87,9 +87,9 @@ read_bin(int ild, int ipd, int itm, int chn)
 
     wavsiz = sizeof(struct BINwav) + 2 * 4 * accnpts;
     fseek(fbin, sizeof(struct BINhdr) + (int32_t) itm * wavsiz, 0);
-    fread(&wavhdr, sizeof(struct BINwav), 1, fbin);
-    fread(accbuf_a, 4, accnpts, fbin);
-    fread(accbuf_b, 4, accnpts, fbin);
+    fread(&wavhdr, sizeof(struct BINwav), (size_t)(1), fbin);
+    fread(accbuf_a, 4, (size_t)(accnpts), fbin);
+    fread(accbuf_b, 4, (size_t)(accnpts), fbin);
     acc_sets = wavhdr.N / swp1set;
     f1 = wavhdr.f1;
     f2 = wavhdr.f2;

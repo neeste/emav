@@ -469,8 +469,8 @@ dsp_start()
 {
     if (r_mode.at == 2) {
 	if (fswp) {
-	    fread(&buflen, sizeof(short), 1, fswp);
-	    fread(&swp1set, sizeof(short), 1, fswp);
+	    fread(&buflen, sizeof(short), (size_t)(1), fswp);
+	    fread(&swp1set, sizeof(short), (size_t)(1), fswp);
 	}
     } else {
         dsprst(TRUE);
@@ -478,8 +478,8 @@ dsp_start()
     }
     if (r_mode.at == 1) {
 	if (fswp) {
-	    fwrite(&buflen, sizeof(short), 1, fswp);
-	    fwrite(&swp1set, sizeof(short), 1, fswp);
+	    fwrite(&buflen, sizeof(short), (size_t)(1), fswp);
+	    fwrite(&swp1set, sizeof(short), (size_t)(1), fswp);
 	}
     }
 }
@@ -578,7 +578,7 @@ dsp_fetch(int cnt, int pair)
     obuf = &outbuf[npts * pair];
     if (r_mode.at == 2) {
 	if (fswp && !calmode) {
-	    fread(obuf, sizeof(short), npts, fswp);
+	    fread(obuf, sizeof(short), (size_t)(npts), fswp);
 	}
     } else  {
         dspuarr(dsppar.acc, npts, obuf);
@@ -592,7 +592,7 @@ dsp_fetch(int cnt, int pair)
     }
     if (r_mode.at == 1) {
 	if (fswp && !calmode) {
-	    fwrite(obuf, sizeof(short), npts, fswp);
+	    fwrite(obuf, sizeof(short), (size_t)(npts), fswp);
 	    fflush(fswp);
 	    swpsiz = sizeof(short) * npts;
 	}
@@ -606,7 +606,7 @@ dsp_sync(int32_t nsw)
 
     if (r_mode.at == 2) {
 	if (fswp && !calmode) {
-	    fread(&nrd, sizeof(int32_t), 1, fswp);
+	    fread(&nrd, sizeof(int32_t), (size_t)(1), fswp);
 	}
 	if (nrd != nsw)
 	    decide(0, 1, "Sync error in SWP file.");
@@ -618,7 +618,7 @@ dsp_sync(int32_t nsw)
     }
     if (r_mode.at == 1) {
 	if (fswp && !calmode) {
-	    fwrite(&nsw, sizeof(int32_t), 1, fswp);
+	    fwrite(&nsw, sizeof(int32_t), (size_t)(1), fswp);
 	    fflush(fswp);
 	}
     }
@@ -632,7 +632,7 @@ dsp_chk_sync(int32_t nsw)
     if (r_mode.at == 2) {
 	if (fswp && !calmode) {
 	    nb = (int32_t) sizeof(int32_t);
-	    fread(&nrd, nb, 1, fswp);
+	    fread(&nrd, nb, (size_t)(1), fswp);
 	    fseek(fswp, -nb, SEEK_CUR);
 	    nrd &= 0xFFFF;
 	}
@@ -896,11 +896,11 @@ cali_chan(int c)
     for (i = 0; i < buflen; i++)
 	accbuf_a[i] += accbuf_b[i];
     if (c == 0) {
-	tmpbuf = (unsigned long)((int32_t *) calloc(buflen, sizeof(int32_t)));
-        memcpy(tmpbuf, accbuf_a, buflen * sizeof(int32_t));
+	tmpbuf = (unsigned long)((int32_t *) calloc((size_t)(buflen), sizeof(int32_t)));
+        memcpy(tmpbuf, accbuf_a, (size_t)(buflen) * sizeof(int32_t));
     } else {
-        memcpy(accbuf_b, accbuf_a, buflen * sizeof(int32_t));
-        memcpy(accbuf_a, tmpbuf, buflen * sizeof(int32_t));
+        memcpy(accbuf_b, accbuf_a, (size_t)(buflen) * sizeof(int32_t));
+        memcpy(accbuf_a, tmpbuf, (size_t)(buflen) * sizeof(int32_t));
 	free(tmpbuf);
     }
     compute_calgain(c);
@@ -1138,7 +1138,7 @@ add_data_lnk(int set)
 {
     struct datlnk *p;
 
-    p = (struct datlnk *) calloc(1, sizeof(struct datlnk));
+    p = (struct datlnk *) calloc((size_t)(1), sizeof(struct datlnk));
     if (p == NULL)
 	return (0);
     p->next = NULL;
@@ -1599,7 +1599,7 @@ rdlstfn()
     strcpy(dpoae_file, dpoae.file);
     gflg = 0;
     if (r_mode.at == 2) {
-	fread(dpoae_file, 1, MAXNAME, fswp);
+	fread(dpoae_file, 1, (size_t)(MAXNAME), fswp);
     } else if (dpoae_file[0] == '\0') {
 	gflg = 1;
     } else {
@@ -1620,7 +1620,7 @@ rdlstfn()
 	}
     }
     if (r_mode.at == 1) {
-	fwrite(dpoae_file, 1, MAXNAME, fswp);
+	fwrite(dpoae_file, 1, (size_t)(MAXNAME), fswp);
     }
     if (!gflg) {
 	fptr = fopen(dpoae_file, "rt");
@@ -1824,7 +1824,7 @@ do_dpoae_task()
 	hdr->swp1set = (unsigned short)(swp1set);
 	hdr->nic = (unsigned short)(dspnic);
 	fseek(fbin, 0L, SEEK_SET);
-	fwrite(hdr, sizeof(struct BINhdr), 1, fbin);
+	fwrite(hdr, sizeof(struct BINhdr), (size_t)(1), fbin);
     }
     accnpts = (dspnic < 2) ? buflen : buflen * 2;
     genfn("D", "DAT", file_name, &dpoae_counter);
@@ -1876,9 +1876,9 @@ do_dpoae_task()
 		    wavhdr.L4 = (short) nint(datptr->d4);
 		    wavhdr.N = (unsigned short)(acc_sets * swp1set);
 		    wavhdr.T = (unsigned short)(nint(datptr->tm));
-		    fwrite(&wavhdr, sizeof(struct BINwav), 1, fbin);
-		    fwrite(accbuf_a, accnpts, 4, fbin);
-		    fwrite(accbuf_b, accnpts, 4, fbin);
+		    fwrite(&wavhdr, sizeof(struct BINwav), (size_t)(1), fbin);
+		    fwrite(accbuf_a, accnpts, (size_t)(4), fbin);
+		    fwrite(accbuf_b, accnpts, (size_t)(4), fbin);
 		    file_flush(fbin);
 		}
 		ns = 4;
@@ -2148,17 +2148,17 @@ getcal()
 	    strcpy(swp_file, tmp_swp_file);
 	fswp = fopen(swp_file, "rb");
 	if (fswp) {
-            fread(tmp_id, 1, 8, fswp);
+            fread(tmp_id, 1, (size_t)(8), fswp);
 	    if (strcmp(tmp_id, "DPSW1") == 0)
 		swpver = 1;
-    	    fread(&buflen, sizeof(short), 1, fswp);
-	    fread(&swp1set, sizeof(short), 1, fswp);
-	    fread(&rate, sizeof(int32_t), 1, fswp);
+    	    fread(&buflen, sizeof(short), (size_t)(1), fswp);
+	    fread(&swp1set, sizeof(short), (size_t)(1), fswp);
+	    fread(&rate, sizeof(int32_t), (size_t)(1), fswp);
 	    if (swpver >= 1)
-    		fread(&dspnic, sizeof(short), 1, fswp);
-	    fread(&pas_per_vlt, sizeof(float), 1, fswp);
-	    fread(&vlt_per_cnt, sizeof(float), 1, fswp);
-	    fread(cali_file, 1, MAXNAME, fswp);
+    		fread(&dspnic, sizeof(short), (size_t)(1), fswp);
+	    fread(&pas_per_vlt, sizeof(float), (size_t)(1), fswp);
+	    fread(&vlt_per_cnt, sizeof(float), (size_t)(1), fswp);
+	    fread(cali_file, 1, (size_t)(MAXNAME), fswp);
 	    if (cal_read(cali_file, 0))
 		cal_disp(cali_file, 0);
 	    compute_calgain(0);
@@ -2173,14 +2173,14 @@ getcal()
 	    strcpy(swp_file, tmp_swp_file);
 	    fswp = fopen(swp_file, "wb");
 	    if (fswp) {
-		fwrite(swp_id, 1, 8, fswp);
-		fwrite(&buflen, sizeof(short), 1, fswp);
-		fwrite(&swp1set, sizeof(short), 1, fswp);
-		fwrite(&rate, sizeof(int32_t), 1, fswp);
-		fwrite(&dspnic, sizeof(short), 1, fswp);
-		fwrite(&pas_per_vlt, sizeof(float), 1, fswp);
-		fwrite(&vlt_per_cnt, sizeof(float), 1, fswp);
-		fwrite(cali_file, 1, MAXNAME, fswp);
+		fwrite(swp_id, 1, (size_t)(8), fswp);
+		fwrite(&buflen, sizeof(short), (size_t)(1), fswp);
+		fwrite(&swp1set, sizeof(short), (size_t)(1), fswp);
+		fwrite(&rate, sizeof(int32_t), (size_t)(1), fswp);
+		fwrite(&dspnic, sizeof(short), (size_t)(1), fswp);
+		fwrite(&pas_per_vlt, sizeof(float), (size_t)(1), fswp);
+		fwrite(&vlt_per_cnt, sizeof(float), (size_t)(1), fswp);
+		fwrite(cali_file, 1, (size_t)(MAXNAME), fswp);
 	    }
 	} else {
 	    fswp = NULL;

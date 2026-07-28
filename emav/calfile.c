@@ -332,7 +332,7 @@ mat_wr_t(int fd, char *nam, char *s)
     int i, n;
 
     n = (int)(strlen(s));
-    p = (unsigned long)((double *) calloc(n, sizeof(double)));
+    p = (unsigned long)((double *) calloc((size_t)(n), sizeof(double)));
     for (i = 0; i < n; i++)
 	p[i] = s[i];
     mat_wr(fd, nam, p, n, 0, 1, 0);
@@ -516,7 +516,7 @@ tok_read(char *cal_file_name)
         ntoken = (int) tfp->hitch.tokens;
 	//
 	// read & scaleback two tokens
-	sbuf = (unsigned long)((short *) calloc(buflen, sizeof(short)));
+	sbuf = (unsigned long)((short *) calloc((size_t)(buflen), sizeof(short)));
         tread(sbuf, 1, tfp);
         scaleback(tfp->car.tokmax, tfp->car.maxval, sbuf, accbuf_a);
         tread(sbuf, 2, tfp);
@@ -871,7 +871,7 @@ mptrans_read(int fd, float *fr, float *mg, float *ph)
 	    dsiz = hdr[1] * hdr[2];
 	    if (strcmp(nam, "resp") == 0 && dtyp == 1) {
 	        n = dsiz;
-	        r = (unsigned long)((float *) calloc(n + 2, sizeof(float)));
+	        r = (unsigned long)((float *) calloc((size_t)(n + 2), sizeof(float)));
 	        _read(fd, r, n * sizeof(float));
 	    } else if (strcmp(nam, "fmax") == 0 && dtyp == 0 && dsiz == 1) {
 	        _read(fd, &fmax, bsiz[dtyp]);

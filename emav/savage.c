@@ -623,7 +623,7 @@ tok_store(int c, int32_t *p)
 
     if (c == 0)
 	return;
-    sbuf = (short *) calloc(buflen, sizeof(short));
+    sbuf = (short *) calloc((size_t)(buflen), sizeof(short));
     amax = rescale(p, sbuf, buflen, MAXPOSINT);
     tmax = findmax(sbuf, buflen);
     c *= swp1set;
@@ -948,8 +948,8 @@ input_filter(int filter_type, int o, float *f, int32_t sample_rate)
 
     // compute HPF coefficients
     for (i = 0; i < 2; i++) {
-        a[i] = (float *) calloc(o + 1, sizeof(float));
-        b[i] = (float *) calloc(o + 1, sizeof(float));
+        a[i] = (float *) calloc((size_t)(o + 1), sizeof(float));
+        b[i] = (float *) calloc((size_t)(o + 1), sizeof(float));
         if (f && (f[i] > 0) && (sample_rate > 0) && (o > 0)) {
             w = f[i] / sample_rate;        // normalized frequency
             if (filter_type == 0) {           // Butterworth

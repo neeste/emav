@@ -427,9 +427,9 @@ teoae_aver()
 		    sweeps = acc_sets - sweep;
 		    if (sweeps == 1 && !alt) {
 	                update = (int32_t)(clock());
-			memcpy(savbuf, swpbuf, buflen * sizeof(int32_t));
+			memcpy(savbuf, swpbuf, (size_t)(buflen) * sizeof(int32_t));
 			tok_store(nss, swpbuf);
-                        memcpy(swpbuf, savbuf, buflen * sizeof(int32_t));
+                        memcpy(swpbuf, savbuf, (size_t)(buflen) * sizeof(int32_t));
 		    }
 		}
 		gprintf(j, m, "%d / %d", 2 * sweeps + alt, cnt);

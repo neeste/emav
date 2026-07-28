@@ -284,7 +284,7 @@ mat_wr(int fd, char *nam, void *p, int n, int dtyp, int txt, int cx)
     int     sz;
     int32_t    ns, hdr[5];
 
-    ns = strlen(nam) + 1;
+    ns = (int32_t)(strlen(nam) + 1);
     hdr[0] = encode_mopt(dtyp, txt);
     hdr[1] = txt ? 1 : n;	/* rows */
     hdr[2] = txt ? n : 1;	/* cols */
@@ -331,8 +331,8 @@ mat_wr_t(int fd, char *nam, char *s)
     double *p;
     int i, n;
 
-    n = strlen(s);
-    p = (double *) calloc(n, sizeof(double));
+    n = (int)(strlen(s));
+    p = (unsigned long)((double *) calloc(n, sizeof(double)));
     for (i = 0; i < n; i++)
 	p[i] = s[i];
     mat_wr(fd, nam, p, n, 0, 1, 0);
@@ -354,7 +354,7 @@ mat_wr_cf2d(int fd, char *nam, float *p, int n)
 
     hdr[0] = encode_mopt(0, 0);
     hdr[1] = n;
-    hdr[4] = strlen(nam) + 1;
+    hdr[4] = (int32_t)(strlen(nam) + 1);
     _write(fd, hdr, 20);
     _write(fd, nam, (int) hdr[4]);
     for (j = 0; j < 2; j++) {
@@ -395,7 +395,7 @@ mat_save(char *fn, int icav)
     if (icav == 0) {
 	ntok = numsrc;
 	npts = buflen;
-        scale = 1 / (2 * swp1set * Sen.AD * Sen.MP);
+        scale = (float)(1 / (2 * swp1set * Sen.AD * Sen.MP));
 	mat_wr1_s(mfd, calkey, (short) ntok);
 	mat_wr1_f(mfd, "rate", (float) rate);
 	mat_wr1_s(mfd, "npts", (short) npts);
@@ -516,7 +516,7 @@ tok_read(char *cal_file_name)
         ntoken = (int) tfp->hitch.tokens;
 	//
 	// read & scaleback two tokens
-	sbuf = (short *) calloc(buflen, sizeof(short));
+	sbuf = (unsigned long)((short *) calloc(buflen, sizeof(short)));
         tread(sbuf, 1, tfp);
         scaleback(tfp->car.tokmax, tfp->car.maxval, sbuf, accbuf_a);
         tread(sbuf, 2, tfp);
@@ -871,7 +871,7 @@ mptrans_read(int fd, float *fr, float *mg, float *ph)
 	    dsiz = hdr[1] * hdr[2];
 	    if (strcmp(nam, "resp") == 0 && dtyp == 1) {
 	        n = dsiz;
-	        r = (float *) calloc(n + 2, sizeof(float));
+	        r = (unsigned long)((float *) calloc(n + 2, sizeof(float)));
 	        _read(fd, r, n * sizeof(float));
 	    } else if (strcmp(nam, "fmax") == 0 && dtyp == 0 && dsiz == 1) {
 	        _read(fd, &fmax, bsiz[dtyp]);

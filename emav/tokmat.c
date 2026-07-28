@@ -77,13 +77,13 @@ tok_open(char *fn, char *msg)
     ftyp = 0;
     for (i = 0; i < nstr; i++)
         if (strcmp(tfp->header.pattern, calstr[i]) == 0)
-            ftyp = i + 1;
+            ftyp = (short)(i + 1);
     if (ftyp == 0) {
 	strcpy(msg, "Unknown TOKEN file type");
 	tclose(tfp);
 	return (0);
     }
-    npts = (int) tfp->hitch.toksiz;
+    npts = (short)((int) tfp->hitch.toksiz);
     rate = (int32_t) (tfp->header.isf
         * pow(10.0, (double) tfp->header.power10));
     ntok = tfp->hitch.tokens;
@@ -157,7 +157,7 @@ mat_wr(int fd, char *nam, void *p, int n, int dtyp, int txt, int cx)
     int     sz;
     int32_t    ns, hdr[5];
 
-    ns = strlen(nam) + 1;
+    ns = (int32_t)(strlen(nam) + 1);
     hdr[0] = encode_mopt(dtyp, txt);
     hdr[1] = n; 		/* rows */
     hdr[2] = 1;			/* cols */

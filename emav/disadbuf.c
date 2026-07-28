@@ -218,7 +218,7 @@ display(short *bptr, int np, int reset, int yrange, int xrange)
             gprintf(x0, y0, fmt, fft_ref);
 	    x0 = w_dis->xtop;
 	    x1 = w_dis->xbot;
-	    dy = chkint((float) yrn * 10 / yrange);
+	    dy = (float)(chkint((float) yrn * 10 / yrange));
 	    for (yy = dy + w_dis->ytop; yy < (double) w_dis->ybot; yy += dy) {
 		y0 = (int) yy;
 		gr_line(x0, y0, x0 + 4, y0, menucolor.boxc);
@@ -248,7 +248,7 @@ display(short *bptr, int np, int reset, int yrange, int xrange)
     else
 	reset = 0;
     mouse_exclude(w_dis->xtop, w_dis->ytop, w_dis->xbot, w_dis->ybot);
-    min = w_dis->xbot - 1;
+    min = (short)(w_dis->xbot - 1);
     xrn = w_dis->ytop + 1;
     yrn = w_dis->ybot - 1;
     y0 = limit(xrn, y0, yrn);
@@ -261,7 +261,7 @@ display(short *bptr, int np, int reset, int yrange, int xrange)
 	x0 = x1;
 	y0 = y1;
 	if (reset) {
-	    max = yrn - 8;
+	    max = (short)(yrn - 8);
 	    if (max > y1)
 		gr_line(x1, max, x1, y1, dfgc);
 	}

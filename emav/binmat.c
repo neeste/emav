@@ -64,7 +64,7 @@ mat_wr(int fd, char *nam, void *p, int n, int dtyp, int txt, int cx)
     int     sz;
     int32_t    ns, hdr[5];
 
-    ns = strlen(nam) + 1;
+    ns = (int32_t)(strlen(nam) + 1);
     hdr[0] = encode_mopt(dtyp, txt);
     hdr[1] = n; 		/* rows */
     hdr[2] = 1;			/* cols */

@@ -102,7 +102,7 @@ fanno(int x, double f, int xin)
     }
     cw = txtpar.font_width;
     ch = txtpar.font_height;
-    nc = strlen(s);
+    nc = (int)(strlen(s));
     if (nc * 8 < xin) {
         text_color(scrn_c[C_RSPF], scrn_c[C_RSPB]);
         y = w_dp.ybot + ch - 1;
@@ -120,7 +120,7 @@ xanno(int x, int num, int xin)
     sprintf(s, "%d", num);
     cw = txtpar.font_width;
     ch = txtpar.font_height;
-    nc = strlen(s);
+    nc = (int)(strlen(s));
     if (nc * 8 < xin) {
         text_color(scrn_c[C_RSPF], scrn_c[C_RSPB]);
         y = w_dp.ybot + ch - 1;
@@ -515,8 +515,8 @@ show_dp_file(char *fn, int select, int chan)
     fpt = fopen(fn, "rt");
     strcpy(file_name, fn);
     o_file_name[0] = o_file_name[40] = o_file_name[80] = 0;
-    dpfold = dpftype.at;
-    datafmtold = datafmt.at;
+    dpfold = (int)(dpftype.at);
+    datafmtold = (int)(datafmt.at);
     nst[0] = nst[1] = 0;
     num_oct = 0;
     count = conct = plot_yet = 0;

@@ -53,9 +53,9 @@ pre_dis_ind(char *s, char *m)
     mouse_exclude(w_ind.xtop, i, w_ind.xbot, i);
     gr_line(w_ind.xtop, i, w_ind.xbot, i, menucolor.boxc);
     mouse_show(1);
-    t_ind.top = ++i;
-    t_ind.bot = w_ind.ybot - 1;
-    t_ind.old = t_ind.old1 = w_ind.xtop + 1;
+    t_ind.top = (short)(++i);
+    t_ind.bot = (short)(w_ind.ybot - 1);
+    t_ind.old = (short)(t_ind.old1 = w_ind.xtop + 1);
     text_color(tfgc_s, tbgc_s);
 }
 
@@ -74,21 +74,21 @@ dis_artifact()
     i = (limit_mv < 100) ? 1 : 0;
     gprintf(j, k, "%4.*f mPa", i, limit_mv);
 
-    ppc = (Sen.AD && Sen.MP) ? (Sen.AD * Sen.MP) : 1;
+    ppc = (_Bool)((Sen.AD && Sen.MP) ? (Sen.AD * Sen.MP) : 1);
     ind_mv = t_ind.new * 1000 / ppc;
     max_mv = (ind_mv > limit_mv) ? ind_mv : limit_mv;
     range_mv = (float) ceil(max_mv * 1.1 / 5) * 5;
     j = (w_ind.xbot - w_ind.xtop);
-    k = (int) (w_ind.xtop + limit_mv / range_mv * j);
+    k = (float)((int) (w_ind.xtop + limit_mv / range_mv * j));
     mouse_exclude(w_ind.xtop, w_ind.ytop, w_ind.xbot, w_ind.ybot);
     gr_rectf(w_ind.xtop + 1, t_ind.top + 4, t_ind.old1, t_ind.bot, scrn_c[C_INDB]);
     gr_rectf(t_ind.old, t_ind.top, t_ind.old, t_ind.bot, scrn_c[C_INDB]);
-    t_ind.old = k;
+    t_ind.old = (short)(k);
     x = w_ind.xtop + ind_mv / range_mv * j;
     if (x > w_ind.xbot)
 	x = w_ind.xbot;
     k = (int) x;
-    t_ind.old1 = k;
+    t_ind.old1 = (short)(k);
     gr_rectf(w_ind.xtop + 1, t_ind.top + 4, k, t_ind.bot, scrn_c[C_INDN]);
     gr_rectf(t_ind.old, t_ind.top, t_ind.old, t_ind.bot, scrn_c[C_INDL]);
     mouse_show(1);
@@ -102,7 +102,7 @@ compute_resid(int32_t *p)
     float   v;
     int32_t    tm, mn, mx;
 
-    v = 1 / (swp1set * Sen.AD);
+    v = (float)(1 / (swp1set * Sen.AD));
     mn = mx = 0;
     start = (int) (0.001 * rate + 0.5);	/* start = 1 ms */
     end = (int) (0.004 * rate + 0.5);	/* end = 4 ms */
@@ -117,7 +117,7 @@ compute_resid(int32_t *p)
 	if (mn > -tm)
 	    mn = -tm;
     }
-    resid_vpp = (mx - mn) * v;
+    resid_vpp = (float)((mx - mn) * v);
 }
 
 int
@@ -238,7 +238,7 @@ show_A_B(int c, int m, int nss, int chan)
     eab = (sab - sa * sb / n) / n;
     exx = (sxx - sx * sx / n) / n;
     eyy = (syy - sy * sy / n) / n;
-    scl = 2.5e+4 / (c * swp1set * Sen.AD * Sen.MP);
+    scl = (float)(2.5e+4 / (c * swp1set * Sen.AD * Sen.MP));
     ech = dbv(sqrt(exx) * scl);
     noi = dbv(sqrt(eyy) * scl);
     rep = eab / sqrt(eaa * ebb);
@@ -390,7 +390,7 @@ teoae_aver()
     dis_artifact();
 
     tr = (int32_t) (teoae_refresh * CLOCKS_PER_SEC);
-    run_time = clock();
+    run_time = (int32_t)(clock());
     update = run_time + tr;
     fldbuf= swpbuf + buflen;	/* swpbuf offset */
     sweep = acc_sets;
@@ -426,7 +426,7 @@ teoae_aver()
 		    }
 		    sweeps = acc_sets - sweep;
 		    if (sweeps == 1 && !alt) {
-	                update = clock();
+	                update = (int32_t)(clock());
 			memcpy(savbuf, swpbuf, buflen * sizeof(int32_t));
 			tok_store(nss, swpbuf);
                         memcpy(swpbuf, savbuf, buflen * sizeof(int32_t));
@@ -440,7 +440,7 @@ teoae_aver()
 	    if (i == 27 || i == 3) {
 		escflg = 1;
 	    } else if (i == ' ' && sweeps) {
-	        update = clock();
+	        update = (int32_t)(clock());
 	    } else if (i == 'd' && sweeps) {
 		R_clear();
 		disply(swp1set, fldbuf, np, 1);
@@ -498,7 +498,7 @@ teoae_aver()
     sweeps *= 2;
     sprintf(outmsg[1], "%.0f%% (%d/%d)", (float) sweeps * 100.0 / cnt,
 	sweeps, cnt);
-    t->hitch.time = i;
+    t->hitch.time = (int16_t)(i);
     t->hitch.stab = t_stab;
     t->hitch.rejlmt = limit_mv;
     t->hitch.resid_vpp = resid_vpp;

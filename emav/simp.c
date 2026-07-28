@@ -183,7 +183,7 @@ float   cent[MXNV];
 	for (j = 0; j < nval; j++)
 	    if (j != hiidx)
 		cent[i] = cent[i] + simp[j][i];
-	cent[i] = cent[i] / npar;
+	cent[i] = (float)(cent[i] / npar);
     }
 
     return;

@@ -512,10 +512,10 @@ rd_dpoae_file(void)
     fpt = fopen(o_file_name, "rt");
     strcpy(file_name, o_file_name);
     o_file_name[0] = o_file_name[40] = o_file_name[80] = 0;
-    dpf_old = dpftype.at;
-    datafmt_old = datafmt.at;
-    sbin_old = Sbin.at;
-    suppr_old = Suppr.at;
+    dpf_old = (int)(dpftype.at);
+    datafmt_old = (int)(datafmt.at);
+    sbin_old = (int)(Sbin.at);
+    suppr_old = (int)(Suppr.at);
     nnsb_old = nnsb;
     sigt_old = sig_type;
     stim_unit.at = 0;
@@ -779,7 +779,7 @@ eventintime(void)
     int     rv;
 
     rv = 0;
-    timer = clock() + TICKNUM;
+    timer = (int32_t)(clock() + TICKNUM);
     while (clock() < timer) {
 	rv = check_event();
 	if (rv)
@@ -819,7 +819,7 @@ open_file(char *use2chk)
         strcpy(lastfn, o_file_name);
     }
     end = limit(1, start + nrow, nf);
-    files = (char *) malloc((ncfn + 1) * (end - start));
+    files = (unsigned long)((char *) malloc((ncfn + 1) * (end - start)));
     if (files == NULL) {
 	decide(0, 2, "Error allocating space for filename holder",
 	    "Press any key to continue");

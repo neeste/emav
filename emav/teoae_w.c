@@ -51,7 +51,7 @@ grab_teoae()
     dis_units(Sen.AD, Sen.MP);
 
     if (teoae.size > maxnpts) {
-	teoae.size = maxnpts;
+	teoae.size = (short)(maxnpts);
     }
     buflen = teoae.size;
     acc_sets = teoae.sets;
@@ -267,8 +267,8 @@ len_est(int32_t *acc, short *stm, int npt, double vs)
     int i, ii, ir, n;
 
     n = npt + 2;
-    a = (float *) calloc(n, sizeof(float));
-    s = (float *) calloc(n, sizeof(float));
+    a = (unsigned long)((float *) calloc(n, sizeof(float)));
+    s = (unsigned long)((float *) calloc(n, sizeof(float)));
     p = a;
     for (i = 0; i < npt; i++) {
         a[i] = (float) acc[i];
@@ -387,14 +387,14 @@ O_options(char *no_use)
     void    (*func) ();
     int     mode;
 
-    mode = Stim_mode.at;
+    mode = (int)(Stim_mode.at);
     func = get_bg_exe();
     set_bg_exe((void (*)())0);
     Option_wind();
     set_bg_exe(func);
 
     if (cal_stim_flag && mode != Stim_mode.at) {
-        mode = Stim_mode.at;
+        mode = (int)(Stim_mode.at);
         dsprst(TRUE);
 	downldpar(2, buflen * spm[mode].nset, 0, 0, swp1set);
         recalstim(mode);
@@ -581,15 +581,15 @@ chk_fit_upld()
 	    take_the_aver(buflen, accbuf);
 	    if (dpoae_flag) {
 		if (scope < buflen) 
-		    data = scope;
+		    data = (short)(scope);
 		else 
-		    data = buflen;
+		    data = (short)(buflen);
 	    } else {
-		data = itime1;
+		data = (short)(itime1);
 	    }
 	    min = buflen / 8;
 	    if (data < min)
-		data = min;
+		data = (short)(min);
             dfgc = scrn_c[C_WAVE];
             text_color(scrn_c[C_RSPF], scrn_c[C_RSPB]);
 	    w_sig.ybot -= txtpar.font_height;
@@ -720,16 +720,16 @@ compute_rec(int32_t *rsp, int n)
     w = (float) resrmp;
     for (i = 0; i < RESSIZ; i++) {
 	if (i < resrmp) {
-	    r = i / w;
-	    recrsp[i] = rsp[i] * r;
-	    recrsd[i] = rsd[i] * r;
+	    r = (float)(i / w);
+	    recrsp[i] = (float)(rsp[i] * r);
+	    recrsd[i] = (float)(rsd[i] * r);
 	} else if (i < (reslen - resrmp)) {
 	    recrsp[i] = (float) rsp[i];
 	    recrsd[i] = (float) rsd[i];
 	} else if (i < reslen) {
-	    r = (reslen - i) / w;
-	    recrsp[i] = rsp[i] * r;
-	    recrsd[i] = rsd[i] * r;
+	    r = (float)((reslen - i) / w);
+	    recrsp[i] = (float)(rsp[i] * r);
+	    recrsd[i] = (float)(rsd[i] * r);
 	} else {
 	    recrsp[i] = 0;
 	    recrsd[i] = 0;
@@ -755,7 +755,7 @@ compute_rec(int32_t *rsp, int n)
     }
     fsst(recrsd, RECNFT);	/* inverse FFT */
     for (i = 0; i < reclen; i++)/* add to error correction */
-	rec[i] = (int) (rec[i] + recrsd[i]);
+	rec[i] = (float)((int) (rec[i] + recrsd[i]));
 }
 
 static void
@@ -822,9 +822,9 @@ calibr_upld()
 		    set_att(dbv(attenu.intern_att));
 		    dsprst(TRUE);
 		    downldpar(2, buflen * ns, 0, 0, swp1set);
-		    i = recalstim(Stim_mode.at);
+		    i = (int)(recalstim(Stim_mode.at));
 		    ld_stim(0, Stim_mode.at);
-		    i = recalstim(Stim_mode.at);
+		    i = (int)(recalstim(Stim_mode.at));
 		    ld_stim(1, Stim_mode.at);
 		    dsprst(FALSE);
 		    text_color(scrn_c[C_INFF], scrn_c[C_INFB]);

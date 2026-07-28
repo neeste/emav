@@ -164,9 +164,9 @@ alloc_buffers()
     wo = (dsppar.nic == 2) ? 2 : 1;
     maxnpts = (dspprm - base_addr) / (2 * (wi + wo));
     accnpts = maxnpts * wi;
-    accbuf_a = (int32_t *) calloc(accnpts, 2 * sizeof(int32_t));
-    outbuf = (short *) calloc(accnpts, 4 * sizeof(short));
-    stmbuf = (short *) calloc(maxnpts, 4 * sizeof(short));
+    accbuf_a = (unsigned long)((int32_t *) calloc(accnpts, 2 * sizeof(int32_t)));
+    outbuf = (unsigned long)((short *) calloc(accnpts, 4 * sizeof(short)));
+    stmbuf = (unsigned long)((short *) calloc(maxnpts, 4 * sizeof(short)));
     if (accbuf_a == NULL || outbuf == NULL || stmbuf == NULL) {
         print_version();
 	fprintf(stderr, "Not enough memory!  Program aborted!\n");
@@ -328,7 +328,7 @@ change_nic(int nnic)
 {
     dspnic = (nnic < 2) ? 1 : 2;
     if (dsppar.nic != dspnic) {
-	dsppar.nic = dspnic;
+	dsppar.nic = (short)(dspnic);
 	free(accbuf_a);
 	free(outbuf);
 	free(stmbuf);
@@ -483,7 +483,7 @@ get_token(int reset)
 
     if (reset) {
 	cnt = 0;
-	linelen = strlen(line);
+	linelen = (int)(strlen(line));
 	if (linelen > MAXLINE)
 	    linelen = MAXLINE;
     }
@@ -514,7 +514,7 @@ get_file_name()
     int     c;
 
     cnt = 0;
-    linelen = strlen(line);
+    linelen = (int)(strlen(line));
     if (linelen > MAXLINE)
         linelen = MAXLINE;
     while (line[cnt] != '=' && cnt < linelen)
@@ -737,15 +737,15 @@ set_teoae(int c, double num)
 	break;
     case 2:			/* sweeps */
 	if (i > 0)
-	    teoae.swp1set = i;
+	    teoae.swp1set = (short)(i);
 	break;
     case 3:			/* sets */
 	if (i > 0)
-	    teoae.sets = i;
+	    teoae.sets = (short)(i);
 	break;
     case 4:			/* size */
 	if (i > 0)
-	    teoae.size = i;
+	    teoae.size = (short)(i);
 	break;
     case 5:			/* mode */
 	if (i >= 0 && i < MAXSPM)
@@ -768,11 +768,11 @@ set_teoae(int c, double num)
 	break;
     case 11:			/* FFTkHz */
 	if (i > 0)
-	    teoae.fft_xrange = i;
+	    teoae.fft_xrange = (short)(i);
 	break;
     case 12:			/* FFTdB */
 	if (i > 0)
-	    teoae.fft_yrange = i;
+	    teoae.fft_yrange = (short)(i);
 	break;
     case 13:			/* FFTref */
 	if (*tokstr == 'S')
@@ -796,7 +796,7 @@ set_teoae(int c, double num)
 	break;
     case 17:			/* chk_swps */
 	if (i > 0)
-	    teoae.chk_swps = i;
+	    teoae.chk_swps = (short)(i);
 	break;
     case 18:			/* chk_atten */
 	if (num >= 0)
@@ -844,15 +844,15 @@ set_dpoae(int c, double num)
 	break;
     case 2:			/* sweeps */
 	if (i > 0)
-	    dpoae.swp1set = i;
+	    dpoae.swp1set = (short)(i);
 	break;
     case 3:			/* sets */
 	if (i > 0)
-	    dpoae.sets = i;
+	    dpoae.sets = (short)(i);
 	break;
     case 4:			/* size */
 	if (i > 0)
-	    dpoae.size = i;
+	    dpoae.size = (short)(i);
 	break;
     case 5:			/* checkfit */
 	// not used
@@ -888,18 +888,18 @@ set_dpoae(int c, double num)
 	    sig_type = i - 1;
 	break;
     case 13:			/* FFTmin (obselete) */
-        dpoae.ord_min = i;
+        dpoae.ord_min = (short)(i);
 	break;
     case 14:			/* FFTmax (obselete) */
-        dpoae.ord_max = i;
+        dpoae.ord_max = (short)(i);
 	break;
     case 15:			/* FFTkHz */
 	if (i > 0)
-	    dpoae.fft_xrange = i;
+	    dpoae.fft_xrange = (short)(i);
 	break;
     case 16:			/* FFTdB */
 	if (i > 0)
-	    dpoae.fft_yrange = i;
+	    dpoae.fft_yrange = (short)(i);
 	break;
     case 17:			/* FFTref */
 	if (*tokstr == 'S')
@@ -909,7 +909,7 @@ set_dpoae(int c, double num)
 	break;
     case 18:                    /* chk_swps */
 	if (i > 0)
-	    dpoae.chk_swps = i;
+	    dpoae.chk_swps = (short)(i);
 	break;
     case 19:                    /* chk_attn */
 	if (num >= 0)
@@ -917,7 +917,7 @@ set_dpoae(int c, double num)
 	break;
     case 20:                    /* cal_swps */
 	if (num > 0)
-	    dpoae.cal_swps = i;
+	    dpoae.cal_swps = (short)(i);
 	break;
     case 21:                    /* signal */
 	c = check_list(tokstr, dpsigtyp);
@@ -926,11 +926,11 @@ set_dpoae(int c, double num)
 	break;
     case 22:                    /* nnsb */
 	if (i >= -MAXNNSB && i <= MAXNNSB)
-	    dpoae.nnsb = i;
+	    dpoae.nnsb = (short)(i);
 	break;
     case 23:                    /* skips */
 	if (i >= 0)
-	    dpoae.skips = i;
+	    dpoae.skips = (short)(i);
 	break;
     case 24:                    /* DataFmt */
 	i = toupper(tokstr[0]);
@@ -967,28 +967,28 @@ set_dpoae(int c, double num)
 	if (num > 0)
 	    dpoae.ramp_ms = (float) num;
     case 29:			/* MinLevOrd */
-        dpoae.ord_min = i;
+        dpoae.ord_min = (short)(i);
 	break;
     case 30:			/* MaxLevOrd */
-        dpoae.ord_max = i;
+        dpoae.ord_max = (short)(i);
 	break;
     case 31:			/* MinLevAbs */
-        dpoae.abs_min = i;
+        dpoae.abs_min = (short)(i);
 	break;
     case 32:			/* MaxLevAbs */
-        dpoae.abs_max = i;
+        dpoae.abs_max = (short)(i);
 	break;
     case 33:			/* MinFrqOct */
-        dpoae.oct_min = i;
+        dpoae.oct_min = (short)(i);
 	break;
     case 34:			/* MaxFrqOct */
-        dpoae.oct_max = i;
+        dpoae.oct_max = (short)(i);
 	break;
     case 35:			/* RedThr */
         red_thr = (float) num;
 	break;
     case 36:                     /* NIC */
-        dpoae.nic = i;
+        dpoae.nic = (short)(i);
 	break;
     case 37:			/* calibrate */
 	strcpy(dpoae.calibrate, tokstr);
@@ -1013,7 +1013,7 @@ set_dpoae(int c, double num)
 	strcpy(dpoae.ths_file, tokstr);
 	break;
     case 44:                    /* Level_Unit */
-	dpoae.level_unit = set_level_unit(tokstr);
+	dpoae.level_unit = (short)(set_level_unit(tokstr));
 	break;
     case 45:                    /* ContAv */
 	i = toupper(tokstr[0]);
@@ -1049,11 +1049,11 @@ set_probe(int c, double num)
 	break;
     case 9:			/* FFTkHz */
 	if (i > 0)
-	    probe.fft_xrange = i;
+	    probe.fft_xrange = (short)(i);
 	break;
     case 10:			/* FFTdB */
 	if (i > 0)
-	    probe.fft_yrange = i;
+	    probe.fft_yrange = (short)(i);
 	break;
     case 11:			/* FFTref */
 	if (toupper(tokstr[0]) == 'S')
@@ -1075,7 +1075,7 @@ set_probe(int c, double num)
 	break;
     case 16:			/* Niter */
 	if (i > 0)
-	    probe.niter = i;
+	    probe.niter = (short)(i);
 	break;
     case 17:			/* Ext_iter */
         if (toupper(tokstr[0]) == 'T')
@@ -1091,7 +1091,7 @@ set_probe(int c, double num)
 	break;
     case 19:			/* Ncav */
 	if (i > 0)
-	    probe.ncav = i;
+	    probe.ncav = (short)(i);
 	break;
     case 20:			/* chk_skps (unused ) */
 	break;
@@ -1124,7 +1124,7 @@ set_probe(int c, double num)
     case 29:			/* scope */
 	break;
     case 30:			/* smooth */
-        numsmo = i;
+        numsmo = (short)(i);
 	break;
     case 31:                    /* write_txt */
 	write_txt = i;
@@ -1137,7 +1137,7 @@ set_probe(int c, double num)
 	break;
     case 33:			/* Nsrc */
 	if (i > 0)
-	    probe.nsrc = i;
+	    probe.nsrc = (short)(i);
 	break;
     case 34:                    /* Count */
 	if (probe_counter < i)
@@ -1146,7 +1146,7 @@ set_probe(int c, double num)
     case 35:			/* seed */
 	break;
     case 36:			/* surge */
-        probe.surge = i;
+        probe.surge = (short)(i);
 	break;
     }
 }
@@ -1167,7 +1167,7 @@ set_tone(int c, double num)
 	break;
     case 2:			/* size */
 	if (i > 0)
-	    tone.size = i;
+	    tone.size = (short)(i);
 	break;
     case 3:			/* frequency */
 	if (num > 0)
@@ -1321,7 +1321,7 @@ proc_batch(char *fn)
     efp = NULL;
     top_message("Batching");
     while (fgets(o_file_name, MAXNAME, fpt) != NULL) {
-	i = strlen(o_file_name) - 1;
+	i = (int)(strlen(o_file_name) - 1);
 	if (o_file_name[i] == '\n')
 	    o_file_name[i] = 0;
 	if (check_teoae_file(o_file_name, 0)) {

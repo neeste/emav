@@ -21,27 +21,27 @@ downldpar(int mode, int np, int skip, int ramp, int swps)
 {
     dsppar.mode = mode;		/* set channel mode */
     dsppar.npts = np;		/* number of points */
-    dsppar.sweeps = swps;
+    dsppar.sweeps = (short)(swps);
     if(skip <= 0) {
         dsppar.skip = 0;
         dsppar.scale = 0;
         dsppar.range = 0;
     } else {
-	dsppar.skip = skip;
+	dsppar.skip = (short)(skip);
 	if(ramp <= 0) {
 	    dsppar.scale = 0;
 	    dsppar.range = 0;
         } else if(ramp < np) {
-	    dsppar.scale = (int)(32768L / ramp);
-	    dsppar.range = ramp - 1;
+	    dsppar.scale = (short)((int)(32768L / ramp));
+	    dsppar.range = (short)(ramp - 1);
 	} else { 
-	    dsppar.scale = (int)(32768L / np);
-	    dsppar.range = np - 1;
+	    dsppar.scale = (short)((int)(32768L / np));
+	    dsppar.range = (short)(np - 1);
 	}
     }
-    dsppar.dac_a = (unsigned) base_addr;
-    dsppar.dac_b = dsppar.dac_a + maxnpts;
-    dsppar.acc = dsppar.dac_b + maxnpts;
+    dsppar.dac_a = (unsigned short)((unsigned) base_addr);
+    dsppar.dac_b = (unsigned short)(dsppar.dac_a + maxnpts);
+    dsppar.acc = (unsigned short)(dsppar.dac_b + maxnpts);
 
     rate = dspsetrt(rate);
     /* down load parameter */
@@ -110,7 +110,7 @@ set_intern_att(double att)
     int     i = 0;
 
     for (i = 0; i < buflen; i++)
-	outbuf[i] = (int) (stmbuf[i] / att + 0.5);
+	outbuf[i] = (short)((int) (stmbuf[i] / att + 0.5));
 }
 
 void

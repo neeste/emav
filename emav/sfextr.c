@@ -43,8 +43,8 @@ scan_line(char *s, int n)
 		p = s + 1;
 	    s++;
 	}
-	w[i] = (int) (s - b);
-	d[i] = p ? (int) (s - p) : 0;
+	w[i] = (char)((int) (s - b));
+	d[i] = (char)(p ? (int) (s - p) : 0);
     }
     return (i);
 }

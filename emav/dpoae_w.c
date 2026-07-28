@@ -114,16 +114,16 @@ grab_dpoae()
     dis_units(Sen.AD, Sen.MP);
 
     if (dpoae.size > maxnpts) {
-	dpoae.size = maxnpts;
+	dpoae.size = (short)(maxnpts);
     }
     buflen = dpoae.size;
     rate = dpoae.rate;
     acc_sets = dpoae.sets;
     numcav = 1;
     numsrc = 2;
-    sig_type = dpnr_mode.at;
+    sig_type = (int)(dpnr_mode.at);
     nnsb = dpoae.nnsb;
-    num_oct = dp_octave.at;
+    num_oct = (int)(dp_octave.at);
     limit_mv = dpoae.mvmax;
     chk_ramp_dpoae();
     pas_per_vlt = Sen.MP;
@@ -896,7 +896,7 @@ cali_chan(int c)
     for (i = 0; i < buflen; i++)
 	accbuf_a[i] += accbuf_b[i];
     if (c == 0) {
-	tmpbuf = (int32_t *) calloc(buflen, sizeof(int32_t));
+	tmpbuf = (unsigned long)((int32_t *) calloc(buflen, sizeof(int32_t)));
         memcpy(tmpbuf, accbuf_a, buflen * sizeof(int32_t));
     } else {
         memcpy(accbuf_b, accbuf_a, buflen * sizeof(int32_t));
@@ -1142,7 +1142,7 @@ add_data_lnk(int set)
     if (p == NULL)
 	return (0);
     p->next = NULL;
-    p->ctrl = disconnect;
+    p->ctrl = (short)(disconnect);
     p->f3 = 0;
     p->d3 = 0;
     p->f4 = 0;
@@ -1544,22 +1544,22 @@ proc_hdr()
 	swp1set = i;
 	break;
     case 15:                    /* MinLevAbs */
-	dpoae.abs_min = i;
+	dpoae.abs_min = (short)(i);
 	break;
     case 16:                    /* MaxLevAbs */
-	dpoae.abs_max = i;
+	dpoae.abs_max = (short)(i);
 	break;
     case 17:                    /* MinLevOrd */
-	dpoae.ord_min = i;
+	dpoae.ord_min = (short)(i);
 	break;
     case 18:                    /* MaxLevOrd */
-	dpoae.ord_max = i;
+	dpoae.ord_max = (short)(i);
 	break;
     case 19:                    /* MinFrqOct */
-	dpoae.oct_min = i;
+	dpoae.oct_min = (short)(i);
 	break;
     case 20:                    /* MaxFrqOct */
-	dpoae.oct_max = i;
+	dpoae.oct_max = (short)(i);
 	break;
     case 21:                    /* RedThr */
 	red_thr = (float) atof(tokstr);
@@ -1571,12 +1571,12 @@ proc_hdr()
 	break;
     case 23:                    /* modcyc */
 	if (i > 0) {
-	    modcyc = i;
+	    modcyc = (short)(i);
 	}
 	break;
     case 24:                    /* modper */
 	if (i > 0) {
-	    modper = i;
+	    modper = (short)(i);
 	}
 	break;
     case 25:                    /* Units  (obselete) */
@@ -1817,12 +1817,12 @@ do_dpoae_task()
     if(fbin != NULL) {
 	hdr = (struct BINhdr *) outmsg[0];
 	hdr->total = (unsigned) dp_items * dp_repeat;
-	hdr->wav_len = (unsigned) buflen;
+	hdr->wav_len = (unsigned short)((unsigned) buflen);
 	hdr->samp_rate = (float) rate;
 	hdr->int2volt = 1 / vlt_per_cnt;
 	hdr->volt2pas = 1 / pas_per_vlt;
-	hdr->swp1set = swp1set;
-	hdr->nic = dspnic;
+	hdr->swp1set = (unsigned short)(swp1set);
+	hdr->nic = (unsigned short)(dspnic);
 	fseek(fbin, 0L, SEEK_SET);
 	fwrite(hdr, sizeof(struct BINhdr), 1, fbin);
     }
@@ -1833,7 +1833,7 @@ do_dpoae_task()
     wr_dat_hdr(fout, outmsg[0]);
     calmode = 0;
     dsp_start();
-    run_time = each_time = clock();
+    run_time = (int32_t)(each_time = clock());
     j = 0;			/* use j as an Esc flag */
     bk_flg = 1;
     for (cnt = 0; cnt < dp_repeat; cnt++) {
@@ -1874,8 +1874,8 @@ do_dpoae_task()
 		    wavhdr.L3 = datptr->d3;
 		    wavhdr.f4 = (unsigned short) nint(datptr->f4);
 		    wavhdr.L4 = (short) nint(datptr->d4);
-		    wavhdr.N = acc_sets * swp1set;
-		    wavhdr.T = nint(datptr->tm);
+		    wavhdr.N = (unsigned short)(acc_sets * swp1set);
+		    wavhdr.T = (unsigned short)(nint(datptr->tm));
 		    fwrite(&wavhdr, sizeof(struct BINwav), 1, fbin);
 		    fwrite(accbuf_a, accnpts, 4, fbin);
 		    fwrite(accbuf_b, accnpts, 4, fbin);
@@ -1912,7 +1912,7 @@ do_dpoae_task()
 			    fdp[k] = cf2[k] * fst[1] + cf1[k] * fst[0];
 			}
 		    }
-		    idp = dpftype.at;
+		    idp = (int)(dpftype.at);
 		} else {
 		    fm = (float) (modcyc * rate / (double) buflen);
 		    fdp[0] = fst[1] - fm;   /* F2-FM */
@@ -1924,8 +1924,8 @@ do_dpoae_task()
 		}
                 rep = show_dp_fft(fst, ns, fdp, nd, pst, nst, ast, pdp, ndp, adp, 0);
 		dis_result(pst, nst, pdp[idp], ndp[idp], fdp[idp], fst[0] == fst[1]);
-		tel = (double) (clock() - each_time) / CLOCKS_PER_SEC;
-		each_time = clock();
+		tel = (clock_t)((double) (clock() - each_time) / CLOCKS_PER_SEC);
+		each_time = (int32_t)(clock());
 		wr_dat_rec(fout, nd, tel, rep, fdp, pdp, adp, ndp, fst, pst, ast, nst);
 		if (xtype.at == 1)
 		    f = fst[0];
@@ -2011,7 +2011,7 @@ do_dpoae_task()
 	i, outmsg[1]);
     fprintf(fout, ";limit: %f\n", limit_mv);
     sprintf(outmsg[2], "%d sweeps", swp1set);
-    flag = strlen(dpoae_file);
+    flag = (int)(strlen(dpoae_file));
     if (!flag) {
 	fprintf(fout, ";Comment F1: %.0f/%.0f  L1: %.0f/%.0f\n", F1b, F1e,
 	    L1b, L1e);

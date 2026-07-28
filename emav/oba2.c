@@ -65,10 +65,10 @@ wrinfo()
     printf("Test Time: %d sec\n", t->hitch.time);
     printf("Accepted: %s\n", t->hitch.outmsg[1]);
     printf("Sets x Sweeps: %s\n", t->hitch.outmsg[2]);
-    ndb = 20.0 * log10(t->hitch.target_level / 0.00002);
+    ndb = (float)(20.0 * log10(t->hitch.target_level / 0.00002));
     printf("Target Level=%.1f dB   %.1f mPa\n", ndb,
 	t->hitch.target_level * 1000);
-    ndb = 20.0 * log10(t->hitch.rejlmt / 0.02);
+    ndb = (float)(20.0 * log10(t->hitch.rejlmt / 0.02));
     printf("Noise:  Limit=%.1fmPa    %.1f dB pSPL\n", t->hitch.rejlmt, ndb);
     printf("Stimulus:  Stability=%4.1f%%  Mode=%d\n", t->hitch.stab,
 	t->hitch.mode);
@@ -101,7 +101,7 @@ oba(short *aa, short *bb, float aa_scale, float bb_scale, short op, short n,
 	    dc += v;
 	    sum += v * v;
 	}
-	i1 = itime2 - itime1;
+	i1 = (short)(itime2 - itime1);
 	rms = sqrt((sum - dc * dc / i1) / i1) / 2.0;
 	db = 20 * log10(rms / 0.020);
 	printf("1-2 pressure = %6.3f mPa (rms) = %4.1f dB SPL\n", rms, db);
@@ -132,7 +132,7 @@ oba(short *aa, short *bb, float aa_scale, float bb_scale, short op, short n,
 	if (sum <= 0) {
 	    d[j] = -99;
 	} else {
-	    d[j] = 10.0 * log10(sum / 2.0) - 20.0 * log10(0.020 * n);
+	    d[j] = (float)(10.0 * log10(sum / 2.0) - 20.0 * log10(0.020 * n));
             if (rflg == 0)
                 d[j] -= 10.0 * log10(1000.0 / dt);  /* level per cycle */
         }
@@ -164,10 +164,10 @@ cross(short *aa, short *bb, float aa_scale, float bb_scale, int op, int n, float
 	}
 	sum /= (float) m;
 	if (op == 0) {
-	    d[j] = sum;
+	    d[j] = (float)(sum);
 	} else {
 	    if (sum > 1e-39) {
-		d[j] = 10.0 * log10(sum * 2.0) - 20.0 * log10(0.020 * n);
+		d[j] = (float)(10.0 * log10(sum * 2.0) - 20.0 * log10(0.020 * n));
 		if (rflg == 0)
 		    d[j] -= 10.0 * log10(1000.0 / dt);  /* level per cycle */
 	    } else d[j] = -400;
@@ -209,7 +209,7 @@ gdelay(float *a, short n, float *d, float *f, short nf)
 	    sumd += dly;
 	    sume += nrg;
 	}
-	d[j] = sumd / sume;
+	d[j] = (float)(sumd / sume);
     }
 }
 
@@ -245,9 +245,9 @@ wrdata()
     static float cf1[2] = {0, 1.5};
     static float f1[2] = {0.5, 2.5};
     static float cf4[5] = {0.0, 0.5, 1.0, 2.0, 4.0};
-    static float f4[5] = {0.354, 0.707, 1.414, 2.828, 5.657};
+    static float f4[5] = (float)({0.354, 0.707, 1.414, 2.828, 5.657});
     static float cf5[6] = {0, 1, 2, 3, 4, 5};
-    static float f5[6] = {0.488, 1.465, 2.441, 3.418, 4.395, 5.371};
+    static float f5[6] = (float)({0.488, 1.465, 2.441, 3.418, 4.395, 5.371});
     static float cf12[13] =
     {
 	0.000, 0.397, 0.500, 0.630, 0.794, 1.000, 1.260,
@@ -282,7 +282,7 @@ wrdata()
     cross(r2, r2, r2_scale, r2_scale, 0, nto2, dbb, f, nf);
     cross(r1, r2, r1_scale, r2_scale, 0, nto2, dbc, f, nf);
     for (i = 0; i < nf; i++) {
-	dbd[i] = sqrt(dba[i] * dbb[i]);
+	dbd[i] = (float)(sqrt(dba[i] * dbb[i]));
 	dbr[i] = 100 * dbc[i] / dbd[i];
     }
     wrdtln("  REP:", dbr, nf, "% ");
@@ -346,7 +346,7 @@ main(int ac, char **av)
 		fprintf(stderr, "can't open %s\n", dfn);
 	    } else {
 		t = topen(dfn);
-		i = (int32_t) t->header.power10;
+		i = (short)((int32_t) t->header.power10);
 		rate = (int32_t) t->header.isf;
 		while (i-- > 0)
 			rate *= 10;
@@ -357,18 +357,18 @@ main(int ac, char **av)
 		nto2 = 1;
 		while (nto2 < npts)
 		    nto2 *= 2;
-		r1 = (short *) malloc(sizeof(short) * nto2);
-		r2 = (short *) malloc(sizeof(short) * nto2);
-		st = (short *) malloc(sizeof(short) * nto2);
+		r1 = (unsigned long)((short *) malloc(sizeof(short) * nto2));
+		r2 = (unsigned long)((short *) malloc(sizeof(short) * nto2));
+		st = (unsigned long)((short *) malloc(sizeof(short) * nto2));
 		tread(st, 1, t);
-		st_scale = t->car.scale * 1000.0;
+		st_scale = (float)(t->car.scale * 1000.0);
 		tread(r1, 2, t);
-		r1_scale = t->car.scale * 1000.0;
+		r1_scale = (float)(t->car.scale * 1000.0);
 		itime1 = t->car.rejt1;
 		itime2 = t->car.rejt2;
 		tread(r2, 3, t);
-		r2_scale = t->car.scale * 1000.0;
-		i = npts;
+		r2_scale = (float)(t->car.scale * 1000.0);
+		i = (short)(npts);
 		while (i < nto2) {
 		    r1[i] = r2[i] = st[i] = 0;
 		    i++;

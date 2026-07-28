@@ -323,7 +323,7 @@ z_surge(float *zl, int na)
 
     z_chr(zc);
     z0 = zc[0];
-    R = (double *) calloc(na * 2, sizeof(double));
+    R = (unsigned long)((double *) calloc(na * 2, sizeof(double)));
     c_ones(R, na);
     fd_window(R, na);
     w0 = mean_real(R, na);
@@ -374,7 +374,7 @@ thev_init()
     }
 
     os = MAX_NF * 2 * 3;	//allow for ps, zs, px
-    pzs = (float *) calloc(os * 2, sizeof(float));
+    pzs = (unsigned long)((float *) calloc(os * 2, sizeof(float)));
     if (pzs == NULL) {
         decide(0, 1, "Can't allocate thev memory (pzs)");
 	free(qq1);
@@ -383,7 +383,7 @@ thev_init()
 
     m = (nthc < 6) ? 6 : nthc;	//allow for pl, zl, pf, z0, pr, cd
     ol = MAX_NF * 2 * m;;
-    pzl = (float *) calloc(ol * 2, sizeof(float));
+    pzl = (unsigned long)((float *) calloc(ol * 2, sizeof(float)));
     if (pzl == NULL) {
         decide(0, 1, "Can't allocate thev memory (pzl)");
 	free(qq1);
@@ -536,7 +536,7 @@ thev_erf(int i1, int i2, int n, double df, float *lc, int cn)
     } else {		// all cavities
 	j1 = 0;
 	j2 = nthc;
-	xt = thv_xtk.at;
+	xt = (int)(thv_xtk.at);
     }
     s1 = s2 = 0;
     for (i = 1; i < n; i++) {    
@@ -732,8 +732,8 @@ smooth(float *pp, int n, int m)
 	}
         ir = 2 * i;
         ii = 2 * i + 1;
-        pp[ir] = sr / m;
-        pp[ii] = si / m;
+        pp[ir] = (float)(sr / m);
+        pp[ii] = (float)(si / m);
 	for (j = 0; j < mm; j++) {
 	    jr = 2 * j;
 	    ji = 2 * j + 1;
@@ -1039,7 +1039,7 @@ show_db(float *z, int n, WIND *wn, int levref, int reset, int db_range, int c)
     ibuf = (short *) z;
     ibuf[0] = -800;
     for (i = 0; i < n; i++) {
-	ibuf[i] = nint(z[i] + lpsval);
+	ibuf[i] = (short)(nint(z[i] + lpsval));
     }
     n1 = nint(nftf * f1 / rate);
     for (i = 1; i < n1; i++) {
@@ -1226,7 +1226,7 @@ cavity_length(float *pc, int nf, double vs)
     int i, ii, ir, i1, i2, m, n;
 
     n = nf * 2 + 2;
-    p = (float *) calloc(n, sizeof(float));
+    p = (unsigned long)((float *) calloc(n, sizeof(float)));
     for (i = 0; i < nf; i++) {
 	ir = 2 * i;
 	ii = 2 * i + 1;
@@ -1340,13 +1340,13 @@ thev_source(char *fn)
 	    if((nthc > 2) && ((thv_itr.at == 1) || 
 		((thv_itr.at == 2) && decide(1, 1, "Iterate?")))) {
 		stat_msg("Iterating lengths ...      ");
-		stime = clock();
+		stime = (long)(clock());
 		nv = nthc;
 		esc_flg = 0;
 		itr_flg = 1;
 		simpfit(lcv[j], nv, probe.niter, nv, thev_err, thev_rep, thev_esc);
 		if (!esc_flg && thv_ext.at) {
-		    extend = thv_ext.at;
+		    extend = (int)(thv_ext.at);
                     if (extend == 1) {
                         lcv[j][nv + 0] = diacav;
         	        lcv[j][nv + 1] = tmpcav;
@@ -1374,7 +1374,7 @@ thev_source(char *fn)
         strcpy(tfn,fn);
 	newext(tfn, "THS");
         select_chan(0);
-        sets = acc_sets;
+        sets = (short)(acc_sets);
         if (thev_src_sav(tfn, 
 	    zs, ps, px, lcv[0], 
 	    zs+os, ps+os, px+os, lcv[1], 
@@ -1697,7 +1697,7 @@ thev_load(char *cfn, char *sfn)
     strcpy(tfn, cali_file);
     newext(tfn, "THL");
     select_chan(0);
-    sets = acc_sets;
+    sets = (short)(acc_sets);
     sprintf(line, "surge impedance = %6.1f %6.1f", zl[0], zl[ol]);
     info_msg(line, 1);
     sprintf(line, "  cavity length = %6.2f %6.2f cm", lc[0], lc[1]);
@@ -1749,9 +1749,9 @@ thev_adjust(char *cfn, char *sfn, SAV_FFT *pft, int sil)
 	    free_null(iadj);
 	    free_null(refl);
 	    n = (nthf < pft[j].npts) ? nthf : pft[j].npts;
-	    padj = (float *) calloc(n, sizeof(float));
-	    iadj = (float *) calloc(n, sizeof(float));
-	    refl = (float *) calloc(n, sizeof(float));
+	    padj = (unsigned long)((float *) calloc(n, sizeof(float)));
+	    iadj = (unsigned long)((float *) calloc(n, sizeof(float)));
+	    refl = (unsigned long)((float *) calloc(n, sizeof(float)));
 	    for (i = 0; i < n; i++) {
 		ir = 2 * i;
 		ii = 2 * i + 1;

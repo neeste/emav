@@ -44,7 +44,7 @@ grab_tone()
     dis_units(Sen.AD, Sen.MP);
 
     if (tone.size > maxnpts) {
-	tone.size = maxnpts;
+	tone.size = (short)(maxnpts);
     }
     buflen = tone.size;
     rate = tone.rate = adjust_rate(tone.rate);
@@ -86,7 +86,7 @@ chk_due()
 	d = a;
     } else {
 	i = (int) (d / a + 0.5);
-	d = a * i;
+	d = (float)(a * i);
     }
     tone.duration = d;
     return 0;
@@ -151,7 +151,7 @@ unit_select(double in, double *out, int *dpl)
     };
     static double m[5] = {1e-12, 1e-9, 1e-6, 1e-3, 1};
 
-    p = distype.at;
+    p = (int)(distype.at);
     if (p)
 	in /= Sen.MP;
     v = fabs(in);
@@ -249,7 +249,7 @@ show_tone()
     short   data;
 
     tms = 1000 * (double) buflen / rate;
-    lbuf = (int32_t *) calloc(buflen, sizeof(int32_t));
+    lbuf = (unsigned long)((int32_t *) calloc(buflen, sizeof(int32_t)));
     dfgc = scrn_c[C_WAVE];
     dsprst(FALSE);
     while (cnt < acc_sets) {
@@ -275,7 +275,7 @@ show_tone()
 	    }
 	}
 	if (check_event()) {
-	    data = getevent();
+	    data = (short)(getevent());
 	    if (data == 3 || data == 27) {
 		esc_flg = 1;
 		break;
@@ -326,7 +326,7 @@ do_tone()
 
     swp1set_sav = swp1set;
     acc_sets_sav = acc_sets;
-    a = (tone.duration / buflen) * rate;
+    a = (float)((tone.duration / buflen) * rate);
     acc_sets = 1;
     if (a < 32000) {
 	swp1set = (int) (a + 0.5);
@@ -334,10 +334,10 @@ do_tone()
 	do {
 	    acc_sets++;
 	} while ((a / acc_sets) > 32000.0);
-	swp1set = (int) (a / acc_sets + 0.5);
+	swp1set = (float)((int) (a / acc_sets + 0.5));
     }
     R_clear();
-    chan = play_chan.at;
+    chan = (int)(play_chan.at);
 
     dsprst(TRUE);
     downldpar(2, buflen, 1, tone.ramp, swp1set);

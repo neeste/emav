@@ -1,0 +1,28 @@
+# makefile - for FFT library under Linux
+
+CFLAGS = -Wall -DANSI_C -I$(INCDIR)
+OFILES = fastc.o fsstc.o faip.o fsip.o fasubs.o fssubs.o unic.o
+LIBDIR=../lib/linux
+INCDIR=../include
+
+test: fmc
+	./fmc > fmc.txt
+
+fmc: fmc.o libfft.a
+	cc -o fmc fmc.o libfft.a -lm
+	
+libfft.a: $(OFILES)
+	ar rus libfft.a $(OFILES)
+
+$(LIBDIR)/libfft.a : libfft.a
+	mkdir -p $(LIBDIR)
+	cp libfft.a $(LIBDIR)
+
+$(INCDIR)/fftlib.h : fftlib.h
+	mkdir -p $(INCDIR)
+	cp fftlib.h $(INCDIR)
+
+install: $(LIBDIR)/libfft.a $(INCDIR)/fftlib.h
+
+clean:
+	rm -f *.o *.bak *.a fmc fmc.txt

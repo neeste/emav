@@ -1,0 +1,11 @@
+EMAV runs as a command-line program under OS X.  EMAV currently uses
+the X window system to provide a graphical user interface under MAC OS
+X. Soundcard functions are now implemented in ARSC (Jan 2015).
+
+EMAV installation:
+
+The executable program file "emav" should be placed in /usr/local/bin.
+The  configuration file "emav.ini" should be edited to have the desired
+default parameter values and placed either in a subdirectory created for
+EMAV data files or in /usr/local/etc. 
+

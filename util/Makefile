@@ -1,0 +1,33 @@
+# makefile - for UTIL library on Mac [8-Jun-2023]
+
+CC=gcc
+CFLAGS = -Wall -DALSA -DANSI_C -I$(INCDIR) -fPIC -O2
+OFILES= genfn.o hf.o nint.o rdils.o sfile.o newext.o match.o anafilt.o
+LIBDIR=../lib/mac
+INCDIR=../include
+
+all: libutil.a tstgfn
+
+tstgfn : genfn.c
+	$(CC) -DTEST -o tstgfn genfn.c
+
+libutil.a : $(OFILES)
+	ar rus libutil.a $(OFILES)
+
+# install
+
+$(LIBDIR)/libutil.a : libutil.a
+	mkdir -p $(LIBDIR)
+	cp  libutil.a $(LIBDIR)/libutil.a
+
+$(INCDIR)/util.h : util.h
+	mkdir -p $(INCDIR)
+	cp  util.h $(INCDIR)/util.h
+
+install : $(LIBDIR)/libutil.a $(INCDIR)/util.h
+
+clean:
+	rm -f *~ *.bak *.o *.a *.obj *.lib *.TOK *.exe tstgfn
+
+# dependencies
+

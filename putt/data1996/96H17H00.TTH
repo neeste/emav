@@ -1,0 +1,72 @@
+;HEARING
+
+;LastName: Neely
+;FirstName: Stephen
+;Ear:  Left
+;ID: 345-50-1631
+;Dob: 18-Sep-53  
+;Comment: 
+;Date: 17-Aug-96
+;Level_Ref = SPL
+;Thev_source=96H17P00.THS
+
+;Calibrate=96H17H00.CAL
+;Stimulus=swp.ils
+;Notch= 6783 Hz
+;Fz1__= 6783 Hz
+
+; Hearing Threshold Test (Y/N,UPDN)
+;Freq    SPL    G10   RET   sd  pfk  pfa  pfb   ET    nT  Level History (SPL) ...
+;
+ 495.3  22.7  -32.8  12.1  0.8 0.50 0.00 0.91 168.8  100  40n  45y  40y  35y  30y  25n  30y  25n  30n  35y  30y  25n  30y  25y  20n  25y  20n  25n  30y  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25n  30y  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20y  15n  20n  25y  20n  25y  20n  25n  30y  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y
+ 990.5  16.8  -26.3   9.1  0.8 0.50 0.00 0.91 167.3  100  40y  35y  30y  25n  30y  25y  20n  25y  20y  15n  20y  15y  10n  15n  20y  15y  10n  15y  10n  15n  20y  15y  10n  15n  20y  15y  10n  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15y  10n  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n
+2002.6  12.3  -26.9  15.0  0.7 0.50 0.10 0.99 167.8  100  40y  35y  30y  25y  20y  15y  10n  15y  10y   5n  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10y   5n  10n  15y  10n  15y  10y   5n  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10y   5n  10n  15y  10n  15y
+4005.2   7.3  -24.8  13.0  0.8 0.50 0.06 1.00 168.6  100  40y  35y  30y  25y  20y  15y  10y   5y   0n   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5y   0n   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10n  15y  10y   5y   0n   5y   0n   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5y   0n   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n
+8010.4  21.8  -20.9  14.0  0.7 0.50 0.00 0.98 166.5  100  40y  35y  30y  25y  20n  25y  20n  25y  20y  15n  20n  25y  20y  15n  20n  25y  20y  15n  20y  15n  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20y  15n  20n  25y  20n  25y  20y  15n  20n  25y  20n  25y
+;
+;Test_Time = 839.3 (sec)
+
+; Hearing Threshold Test (Y/N,UPDN)
+;Freq    SPL    G10   RET   sd  pfk  pfa  pfb   ET    nT  Level History (SPL) ...
+;
+3402.2  11.3  -26.6  14.5  0.8 0.50 0.00 1.00 168.0  100  40y  35y  30y  25y  20y  15y  10n  15y  10y   5n  10n  15y  10y   5n  10n  15y  10y   5n  10n  15y  10y   5n  10y   5n  10n  15y  10y   5n  10n  15y  10y   5n  10n  15y  10y   5n  10n  15y  10y   5n  10n  15y  10n  15y  10n  15y  10n  15y  10y   5n  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10y   5n  10n  15y  10y   5n  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y
+4026.7   5.9  -24.7  13.0  0.8 0.50 0.07 1.00 171.2  100  40y  35y  30y  25y  20y  15y  10y   5y   0n   5n  10y   5y   0n   5y   0n   5y   0n   5n  10y   5y   0n   5y   0n   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5y   0n   5n  10y   5y   0n   5n  10y   5y   0n   5n  10n  15y  10y   5y   0n   5n  10y   5y   0n   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10y   5y   0n   5n  10y   5n  10y   5y   0n   5y   0n   5n  10y   5n  10y   5n  10y   5y   0n   5y   0n   5y   0y  -5y -10n  -5n
+4801.9   3.5  -22.7  13.0  0.8 0.50 0.00 1.00 169.5  100  40y  35y  30y  25y  20y  15y  10y   5y   0n   5y   0n   5y   0n   5y   0n   5y   0n   5y   0n   5y   0n   5y   0n   5y   0n   5y   0n   5n  10y   5y   0n   5y   0n   5y   0y  -5n   0n   5y   0n   5y   0n   5y   0n   5n  10y   5y   0n   5y   0n   5n  10y   5y   0n   5y   0n   5y   0n   5n  10y   5y   0n   5n  10y   5y   0n   5n  10y   5y   0y  -5n   0y  -5n   0n   5n  10y   5n  10y   5y   0n   5n  10y   5y   0n   5y   0n   5n  10y   5y   0n   5y   0n   5n  10y   5n  10y   5n  10y   5y   0n   5y
+5706.3  10.0  -17.8  13.0  0.8 0.24 0.00 1.00 166.1  100  40y  35y  30y  25y  20y  15y  10y   5n  10n  15y  10n  15y  10y   5n  10n  15y  10n  15y  10n  15y  10y   5n  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10y   5n  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10y   5n  10y   5n  10y   5n  10n  15y  10n  15y  10n  15y  10y   5n  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10y   5n  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y
+6783.0  10.0  -10.6  13.4  0.8 0.50 0.08 1.00 167.8  100  40y  35y  30y  25y  20y  15y  10y   5n  10n  15y  10y   5n  10n  15y  10y   5n  10y   5n  10n  15y  10n  15y  10n  15y  10y   5n  10y   5n  10n  15y  10y   5n  10n  15y  10y   5n  10n  15y  10y   5n  10n  15y  10y   5n  10n  15y  10n  15y  10y   5n  10y   5n  10y   5n  10n  15y  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10n  15y  10y   5n  10y   5n  10n  15y  10y   5n  10n  15y  10y   5n  10n  15y  10y   5n  10n  15y  10y   5n  10n  15y  10n  15y  10y   5n  10n  15y  10y   5n  10n  15y
+8075.0  22.4  -21.2  14.0  0.7 0.47 0.00 0.90 167.8  100  40y  35y  30y  25y  20y  15n  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25n  30y  25y  20n  25n  30y  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20y  15n  20n  25y  20n  25n  30y  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25n  30y  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y  20n  25y
+9582.3  17.1  -25.1  14.0  0.8 0.50 0.05 0.90 168.2  100  40y  35y  30y  25y  20y  15n  20n  25y  20y  15n  20y  15y  10n  15n  20y  15n  20y  15y  10n  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15y  10n  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15y  10n  15n  20n  25y  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15y  10n  15n  20y  15y  10n  15n  20n  25y  20y  15n
+;
+;Test_Time = 1179.0 (sec)
+
+;Calibrate=96H17H01.CAL
+;Stimulus=swp.ils
+;Notch= 6783 Hz
+;Fz1__= 4694 Hz
+
+; Hearing Threshold Test (Y/N,UPDN)
+;Freq    SPL    G10   RET   sd  pfk  pfa  pfb   ET    nT  Level History (SPL) ...
+;
+ 495.3  25.4  -33.9  12.1  0.8 0.47 0.00 0.93 168.2  100  40n  45n  50y  45y  40y  35y  30n  35y  30y  25n  30y  25y  20n  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25y  20n  25y  20n  25n  30y  25n  30y  25y  20n  25n  30y  25y  20n  25y  20n  25n  30y  25y  20n  25n  30y  25y  20n  25y  20n  25n  30y  25y  20n  25y  20n  25n  30y  25y  20n  25n  30y  25n  30y  25n  30y  25y  20n  25n  30y  25n  30y  25n  30y  25y  20n  25n  30y  25n  30y  25n  30y  25y  20n  25n  30y  25y  20n  25n  30y  25n  30y  25y  20n  25n  30y  25n  30y  25y
+ 990.5  18.9  -26.1   9.1  0.8 0.49 0.00 0.99 170.4  100  40y  35y  30y  25y  20y  15n  20y  15n  20n  25y  20y  15n  20n  25y  20y  15n  20n  25y  20y  15n  20y  15n  20n  25y  20n  25y  20y  15n  20y  15y  10n  15n  20y  15n  20n  25y  20n  25y  20n  25n  30y  25y  20y  15n  20n  25y  20y  15n  20y  15n  20y  15n  20y  15n  20n  25y  20y  15n  20n  25y  20y  15n  20y  15n  20y  15n  20n  25y  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20n  25y  20y  15n  20y  15n  20n  25y  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n
+2002.6  12.8  -28.1  15.0  0.8 0.45 0.00 0.98 170.1  100  40y  35y  30y  25y  20y  15y  10y   5n  10n  15y  10y   5n  10n  15y  10y   5n  10y   5n  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10y   5n  10y   5n  10y   5n  10n  15y  10y   5n  10n  15y  10n  15y  10n  15y  10n  15y  10n  15n  20y  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15n  20y  15y  10n  15n  20y  15y  10n  15n  20n  25y  20y  15n  20y  15y  10n  15n  20y  15y  10n  15y  10n  15n  20y  15y  10n  15y  10n  15n  20y  15y  10n  15n  20y  15n  20y  15y  10n  15n
+4005.2   3.5  -17.5  13.0  0.8 0.50 0.00 0.90 167.2  100  40y  35y  30y  25y  20y  15y  10y   5y   0n   5y   0n   5n  10y   5y   0n   5n  10y   5y   0n   5y   0n   5n  10n  15y  10y   5n  10n  15y  10y   5y   0y  -5n   0n   5n  10y   5y   0n   5n  10n  15y  10y   5y   0n   5y   0n   5n  10n  15y  10y   5y   0n   5n  10n  15y  10y   5n  10n  15y  10y   5y   0n   5n  10y   5y   0n   5n  10y   5y   0n   5y   0n   5y   0n   5y   0n   5y   0n   5y   0n   5y   0n   5y   0n   5y   0n   5y   0n   5y   0n   5y   0n   5y   0n   5y   0n   5y   0n   5y   0n   5y
+8010.4  30.0  -28.8  14.0  0.8 0.50 0.00 0.95 167.4  100  40y  35y  30y  25n  30n  35y  30n  35y  30n  35y  30n  35y  30y  25n  30n  35y  30y  25n  30n  35y  30y  25n  30n  35y  30y  25n  30n  35y  30n  35y  30n  35y  30n  35y  30y  25n  30n  35y  30y  25n  30n  35y  30y  25n  30n  35y  30n  35y  30n  35y  30y  25n  30n  35y  30y  25n  30n  35y  30n  35y  30y  25n  30y  25n  30n  35y  30y  25n  30n  35y  30y  25n  30y  25n  30y  25n  30y  25n  30n  35y  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30n  35y  30y  25n  30n  35y  30y  25n  30n  35y
+;
+;Test_Time = 843.5 (sec)
+
+; Hearing Threshold Test (Y/N,UPDN)
+;Freq    SPL    G10   RET   sd  pfk  pfa  pfb   ET    nT  Level History (SPL) ...
+;
+3402.2  10.6  -23.2  14.5  0.8 0.50 0.10 1.00 167.7  100  40y  35y  30y  25y  20y  15y  10y   5n  10y   5n  10y   5n  10n  15y  10n  15y  10y   5n  10y   5y   0n   5n  10y   5n  10n  15y  10n  15y  10n  15y  10y   5n  10n  15y  10y   5n  10y   5n  10y   5n  10n  15y  10n  15y  10n  15y  10y   5n  10n  15y  10y   5n  10y   5n  10n  15y  10y   5n  10y   5n  10y   5y   0n   5n  10n  15y  10y   5n  10y   5n  10y   5n  10n  15y  10n  15y  10y   5n  10n  15y  10y   5n  10y   5n  10n  15y  10y   5n  10y   5n  10n  15y  10y   5n  10y   5n  10n  15y  10y   5n
+4026.7   0.4  -17.2  13.0  0.8 0.50 0.00 1.00 235.5  100  40y  35y  30y  25y  20y  15y  10y   5y   0y  -5y -10n  -5n   0n   5y   0y  -5n   0n   5y   0n   5y   0n   5y   0y  -5n   0n   5n  10y   5y   0n   5y   0n   5y   0n   5y   0n   5y   0n   5y   0y  -5n   0n   5y   0y  -5n   0n   5y   0n   5y   0n   5y   0y  -5n   0n   5y   0y  -5n   0n   5y   0n   5n  10y   5y   0n   5y   0y  -5n   0y  -5n   0n   5y   0y  -5n   0y  -5n   0y  -5n   0y  -5n   0y  -5n   0y  -5n   0n   5y   0n   5y   0n   5y   0n   5y   0y  -5n   0y  -5n   0n   5y   0y  -5n   0y  -5n
+4801.9  -4.1  -11.3  13.0  0.8 0.50 0.00 1.00 168.6  100  40y  35y  30y  25y  20y  15y  10y   5y   0y  -5n   0y  -5y -10n  -5n   0y  -5y -10n  -5n   0y  -5y -10n  -5y -10n  -5n   0y  -5n   0y  -5y -10n  -5y -10n  -5n   0y  -5y -10y -15n -10n  -5y -10n  -5n   0y  -5n   0y  -5y -10n  -5y -10n  -5n   0y  -5n   0y  -5n   0y  -5n   0y  -5n   0y  -5n   0y  -5y -10n  -5n   0y  -5n   0y  -5y -10n  -5n   0y  -5n   0y  -5n   0y  -5n   0y  -5y -10n  -5n   0y  -5n   0y  -5n   0y  -5y -10n  -5n   0y  -5n   0y  -5n   0y  -5n   0y  -5n   0y  -5n   0y  -5n   0y  -5n
+5706.3  12.2  -19.9  13.0  0.8 0.50 0.00 0.90 169.8  100  40y  35y  30y  25y  20y  15n  20y  15y  10n  15n  20y  15y  10n  15n  20n  25y  20y  15y  10n  15n  20y  15y  10n  15y  10n  15y  10n  15y  10n  15n  20y  15n  20y  15y  10y   5n  10n  15y  10n  15n  20y  15n  20y  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10y   5n  10y   5n  10y   5n  10y   5n  10y   5n  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y  10n  15y
+6783.0  26.2  -26.0  13.4  0.7 0.50 0.00 0.98 167.7  100  40y  35y  30y  25y  20n  25y  20n  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25y  20n  25n  30y  25n  30y  25y  20n  25y  20n  25n  30y  25n  30y  25n  30y  25n  30y  25y  20n  25y  20n  25y  20n  25n  30y  25y  20n  25n  30y  25n  30y  25y  20n  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n
+8075.0  29.2  -28.8  14.0  0.8 0.41 0.00 0.90 168.2  100  40y  35y  30n  35y  30n  35y  30n  35y  30y  25n  30y  25n  30n  35y  30n  35y  30n  35y  30y  25y  20n  25n  30n  35y  30n  35y  30n  35y  30n  35y  30n  35y  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30n  35y  30n  35y  30n  35y  30n  35y  30n  35y  30n  35y  30n  35y  30y  25n  30y  25n  30y  25n  30n  35y  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30y  25n  30n  35y  30y  25n  30n  35y  30y  25n  30n  35y  30n  35y
+9582.3  17.8  -27.8  14.0  0.7 0.50 0.00 0.99 167.4  100  40y  35y  30y  25y  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20n  25y  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20n  25y  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20y  15n  20n  25y  20y  15n  20n  25y  20y  15n  20n  25y  20y  15n  20y  15y  10n  15n  20y  15n  20y  15n  20y  15n  20y  15n
+;
+;Test_Time = 1245.1 (sec)
+
+;FileName: 96H17H00.TTH
+;Elapsed_Time = 4434.2 (sec)

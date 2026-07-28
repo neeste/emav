@@ -1,0 +1,25 @@
+EmAv for Windows version 3.37, 18-Jun-2021
+Copyright 1988-2021 Boys Town National Research Hospital
+Non-profit redistribution permitted.
+
+Description:
+EmAv measures and displays otoacoustic emissions. Either transient-evoked otoacoustic emissions (TEOAE) or distortion product otoacoustic emissions (DPOAE) can be measured.
+
+Installation:
+
+(1) Run Setup.
+
+(2) EMAV requires Microsoft C-runtime libraries. If Windows complains that
+'This application has failed to start because the application configuration
+is incorrect.', download the C-runtime installation program from
+http://audres.org/downloads/vcredist_x86.exe.
+
+(3) The environment variable EMAV.INI may be to specify an alternate location
+for EMAV's configuration file.
+
+Web page:
+http://audres.org/rc/emav/
+
+Download:
+http//audres.org/downloads/emav-setup.zip
+

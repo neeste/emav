@@ -1,0 +1,41 @@
+# makefile - for MENU library using MinGW compiler
+
+CC=gcc
+LIBDIR=../lib/mgw
+INCDIR=../include
+CFLAGS = -DMGW -O2 -Wall -DANSI_C -I$(INCDIR) -fpack-struct
+CFILES = menu.c mainmenu.c decide.c print.c g_w32.c wmenu.c
+OFILES = menu.o mainmenu.o decide.o print.o g_w32.o wmenu.o
+WINLIB = -lwinmm -lkernel32 -luser32 -lgdi32 -lcomdlg32
+LIBS = $(WINLIB) -lm
+PGMS= test keycode
+
+all: $(PGMS)
+
+test: test.o libmenu.a
+	gcc -o test test.c libmenu.a $(LIBS)
+
+libmenu.a : $(OFILES)
+	ar rus libmenu.a $(OFILES)
+
+keycode: keycode.o 
+	gcc -o keycode keycode.o 
+
+$(LIBDIR)/libmenu.a : libmenu.a
+	cp libmenu.a $(LIBDIR)
+
+$(INCDIR)/menu.h : menu.h
+	cp menu.h $(INCDIR)
+
+install: $(INCDIR)/menu.h $(LIBDIR)/libmenu.a
+
+clean:
+	rm -f *.a *.o *.obj *.bak *.exe *.lib *.log *.ps
+	rm -f *.ncb *.plg *.opt *~ $(PGMS)
+
+# (makedep will replace everything after this line) 
+
+evnt.o: menu.h
+mainmenu.o: menu.h
+menu.o: menu.h
+test.o: menu.h

@@ -1,0 +1,16 @@
+# Object files
+*.o
+*.obj
+*.ko
+*.obj
+*.elf
+
+# Executables
+binmat
+calmat
+tokmat
+oba2
+
+# OS files
+.DS_Store
+Thumbs.db

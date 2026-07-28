@@ -1,0 +1,14 @@
+EMAV uses the X window system to provide a graphical user interface under
+Linux and an ALSA driver is assumed to be available for the soundcard
+to be used with EMAV. The Linux version of EMAV has been tested with
+Mandriva Linux 2008 and the Indigo IO soundcard.
+
+The Linux version of EMAV is online at http://audres.org/emav-linux.zip.
+
+EMAV installation:
+
+The executable program file "emav" should be placed in /usr/local/bin.
+The  configuration file "emav.ini" should be edited to have the desired
+default parameter values and placed in a subdirectory created for EMAV
+data files. 
+

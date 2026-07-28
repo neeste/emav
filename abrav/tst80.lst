@@ -1,0 +1,9 @@
+; tst80.lst - masker level test
+;
+;Stimulus_Type=1
+;Sweeps_per_Set=100
+;
+0 0 0 1000 80 1000
+0 0 0 1000 80 1000
+0 0 0 1000 80 1000
+0 0 0 1000 80 1000

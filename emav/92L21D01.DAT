@@ -1,0 +1,26 @@
+;DPOAE
+;LastName:  syringe
+;FirstName: 
+;Ear:  Left
+;ID: 
+;Comment: 
+;Date: 12/21/92
+;Sweeps=50
+;List=std.lst
+;Stimulus=sweep.ils
+;Calibrate=92L21D01.CAL
+;Items=5
+;Repeat=1
+;Abscissa=F2
+;DP_freq=2*F1-F2
+;f2      f1        L2      L1       T      DP+    DP-
+8007.81 6689.45   49.32   40.71   16.38  -32.99  -31.02
+3955.08 3320.31   49.87   60.15    4.10  -21.90  -39.40
+1953.13 1660.16   50.41   59.99   10.24  -33.77  -32.38
+ 976.56  830.08   50.59   60.01   63.49  -22.07  -19.83
+ 488.28  390.63   50.26   60.57   63.49  -15.29   -7.47
+;
+;FileName: 92L21D01.DAT
+;Time: 193
+;Accepted: 85% (154/182)
+;limit: 1.953185

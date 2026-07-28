@@ -1,0 +1,27 @@
+ABRAv for Windows version 1.32, 14-Mar-10
+
+Copyright 1988-2010 Boys Town National Research Hospital 
+Non-profit redistribution permitted.
+
+
+Description:
+
+ABRAv measures and displays auditory brainstem responses (ABR).
+
+
+Installation:
+
+(1) Run Setup.
+
+(2) ABRAV requires Microsoft C-runtime libraries. If Windows complains that
+'This application has failed to start because the application configuration
+is incorrect.', download the C-runtime installation program from
+http://audres.org/downloads/vcredist_x86.exe.
+
+
+Web page:
+http://audres.org/rc/abrav/
+
+Download:
+http//audres.org/downloads/abrav-setup.zip
+

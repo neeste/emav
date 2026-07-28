@@ -1,0 +1,82 @@
+# makefile - for EMAV under Linux
+
+LIBDIR=../lib/linux
+INCDIR=../include
+BINDIR=/usr/local/bin
+CFLAGS = -Wall -DANSI_C -I$(INCDIR) -fpack-struct 
+LFLAGS = -L$(LIBDIR) -L/usr/X11R6/lib
+LIBS = -ldsp -larsc -lasound -lfft -lmenu -ltok -lutil -lX11 -lm 
+
+CFILES = emav.c savage.c naverage.c disadbuf.c \
+    event.c infowind.c dofft.c teoae_w.c \
+    repro.c dpoae_w.c rdwrdram.c tone_w.c file.c param.c \
+    screen.c view.c wind.c  showdp.c \
+    sfextr.c calfile.c probe_w.c simp.c
+OFILES=emav.o savage.o naverage.o disadbuf.o \
+     event.o infowind.o dofft.o teoae_w.o \
+    repro.o dpoae_w.o rdwrdram.o tone_w.o file.o param.o \
+    screen.o view.o wind.o showdp.o \
+    sfextr.o calfile.o probe_w.o simp.o
+EXEFILES=emav oba2 binmat calmat tokmat
+
+all: $(EXEFILES)
+
+emav : $(OFILES)
+	gcc $(LFLAGS) -o emav $(OFILES) $(LIBS)
+
+oba2 : oba2.o
+	gcc $(LFLAGS) -o oba2 oba2.o -lfft -ltok -lm
+
+binmat : binmat.o
+	gcc $(LFLAGS) -o binmat binmat.o -lm
+
+calmat : calmat.o
+	gcc $(LFLAGS) -o calmat calmat.o -ltok -lm
+
+tokmat : tokmat.o
+	gcc $(LFLAGS) -o tokmat tokmat.o -ltok -lm
+
+$(BINDIR)/emav : emav
+	mkdir -p $(BINDIR)
+	install -m 755 $< $(BINDIR)
+
+install: $(BINDIR)/emav
+
+clean:
+	rm -f *.bak *.o *.out *.pdb *.hex *.map *.log *.ncb *.opt
+	rm -f *.plg *.cnt *.cv4 *.sts *.ps *~ *.mat
+	rm -f $(EXEFILES) *.exe
+	rm -f rf*.txt rt*.txt dx*.txt
+
+version: 
+	perl version.pl
+
+emav-linux.zip: emav 
+	zip emav-linux README.lnx emav.ini emav 
+
+emav-mat.zip: binmat calmat tokmat
+	zip emav-mat binmat     calmat     tokmat
+	zip emav-mat binmat.m   calmat.m   tokmat.m
+	zip emav-mat binmat.c   calmat.c   tokmat.c
+
+dist: emav-linux.zip
+	mv -f emav-linux.zip ../../dist
+
+# C file dependencies
+# (makedep will replace everything after this line) 
+
+disadbuf.o: savage.h color.h emav.h
+dofft.o: savage.h color.h
+dpoae_w.o: savage.h color.h emav.h screen.h version.h fk.h
+emav.o: savage.h color.h version.h emav.h screen.h
+event.o: savage.h color.h version.h emav.h
+file.o: savage.h color.h version.h screen.h
+infowind.o: savage.h color.h
+naverage.o: savage.h color.h emav.h screen.h
+param.o: savage.h color.h emav.h screen.h
+rdwrdram.o: savage.h color.h
+repro.o: savage.h
+savage.o: savage.h color.h emav.h
+screen.o: screen.h color.h
+teoae_w.o: savage.h color.h emav.h screen.h
+tone_w.o: savage.h color.h screen.h emav.h

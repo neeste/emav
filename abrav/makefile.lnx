@@ -1,0 +1,67 @@
+# makefile - for ABRAV under linux
+
+LIBDIR=../lib/linux
+INCDIR=../include
+BINDIR=/usr/local/bin
+CFLAGS = -Wall -DANSI_C -I$(INCDIR) -fpack-struct 
+LFLAGS = -L$(LIBDIR) -L/usr/X11R6/lib
+LIBS = -ldsp -larsc -lasound -lfft -lmenu -ltok -lutil -lX11 -lm 
+
+CFILES = abrav.c savage.c naverage.c dcremo.c \
+    disadbuf.c event.c dofft.c screen.c \
+    infowind.c abr_w.c rdwrdram.c edit.c \
+    tone_w.c file.c var.c epamp.c 
+OFILES=abrav.o savage.o naverage.o dcremo.o \
+    disadbuf.o event.o dofft.o screen.o \
+    infowind.o abr_w.o rdwrdram.o edit.o \
+    tone_w.o file.o var.o epamp.o 
+EXEFILES=abrav
+
+all: $(EXEFILES) 
+
+abrav : $(OFILES)
+	gcc $(LFLAGS) -o abrav $(OFILES) $(LIBS)
+
+install: $(BINDIR)/abrav 
+
+$(BINDIR)/abrav : abrav
+	mkdir -p $(BINDIR)
+	install -m 755 $< $(BINDIR)
+
+clean:
+	rm -f *.bak *.o *.out *.pdb *.hex *.map *.log *.ncb *.opt
+	rm -f *.plg *.cnt *.cv4 *.sts abrav abrav.exe *~
+
+abrav.zip: $(EXEFILES)
+	zip abrav abrav.exe abrav.ini 93i14a0?.abr 
+
+version: 
+	perl version.pl
+
+abrav-setup.zip: version
+	../../setup/iscc.exe abrav.iss
+	zip -j abrav-setup Output/setup.exe wabrav/readme.txt
+	rm -rf Output
+
+setup: abrav-setup.zip
+
+dist: abrav.zip abrav-setup.zip
+	mv -f abrav.zip ../../dist
+	mv -f abrav-setup.zip ../../dist
+
+# C file dependencies
+# (makedep will replace everything after this line) 
+
+abr_w.o: savage.h color.h screen.h version.h
+abrav.o: savage.h color.h screen.h version.h abrav.h
+disadbuf.o: savage.h color.h
+dofft.o: savage.h color.h
+edit.o: savage.h color.h screen.h
+event.o: color.h abrav.h
+file.o: savage.h color.h screen.h version.h abrav.h
+infowind.o: savage.h color.h
+naverage.o: savage.h color.h screen.h version.h
+rdwrdram.o: savage.h color.h
+savage.o: savage.h color.h
+screen.o: screen.h color.h
+tone_w.o: savage.h color.h screen.h

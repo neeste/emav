@@ -1,0 +1,8 @@
+; tstlev.lst - masker level test
+;
+;Stimulus_Type=1
+;
+0 0 0 1000 80 1000
+0 0 0 1000 80 1000
+0 0 0 1000 80 1000
+0 0 0 1000 80 1000

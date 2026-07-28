@@ -1,0 +1,33 @@
+# makefile - for utilities library using MINGW compiler
+
+CC=gcc
+CFLAGS=-Wall
+OFILES= genfn.o hf.o nint.o rdils.o sfile.o newext.o anafilt.o
+LIBDIR=../lib/mgw
+INCDIR=../include
+
+all: libutil.a tstgfn
+
+tstgfn : genfn.c
+	$(CC) -DTEST -o tstgfn genfn.c
+
+libutil.a : $(OFILES)
+	ar rus libutil.a $(OFILES)
+
+# install
+
+$(LIBDIR)/libutil.a : libutil.a
+	cp  libutil.a $(LIBDIR)/libutil.a
+
+$(INCDIR)/util.h : util.h
+	cp  util.h $(INCDIR)/util.h
+
+install : $(LIBDIR)/libutil.a $(INCDIR)/util.h
+
+clean:
+	rm -f *~ *.bak *.o *.a *.obj *.lib *.TOK *.exe tstgfn
+
+all: libutil.a tstgfn
+
+# dependencies
+

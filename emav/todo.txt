@@ -1,0 +1,21 @@
+* check THS for compatibility with CAL variables
+* check DPOAE spectral display when NIC=2
+==================== DONE ==========================
+--- Feb-08 ---
+* Fix File/New function
+* Add Thev_load after CAL append in Probe test
+* Fix ~bbn stimulus
+--- Nov-07 ---
+* compensate for AD/DA sensitivity ratio in THL & THS files
+--- Apr-01 ---
+* check wa_devsel_byname
+* facilitate SFOAE measurement
+* add ramp to tboae2.asm
+* clean up abscissa labels
+* ramp tones
+* restore screen when exiting DPOAE VIEW mode
+* check what happens if GREG=0 (OK)
+* make DPOAE the default for File/Open?
+* Allow MaxFreqOct and MinFreqOct defaults to be set in config file.
+* zero right channel before DPOAE check fit
+* change background color of Print label (top line) to blue

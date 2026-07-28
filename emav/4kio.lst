@@ -1,0 +1,15 @@
+; 4kio.lst - f2=4000
+;
+;Abscissa=L2
+;MinLevAbs=20
+;MaxLevAbs=80
+;NNSB=-5
+;Datafmt=Extended
+;SaveBin=Yes
+;
+;  f2    f1  L2  L1   T   Ln  SNR    f3    L3
+ 4000  3247  40  68   8  -90   90     0     0
+ 4000  3239  45  70   8  -90   90     0     0
+ 4000  3230  50  71   8  -90   90     0     0
+ 4000  3220  55  73   8  -90   90     0     0
+ 4000  3209  60  74   8  -90   90     0     0

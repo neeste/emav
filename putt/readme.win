@@ -1,0 +1,26 @@
+PUTT for Windows version 2.38, 13-Nov-10
+
+Copyright 1988-2010 Boys Town National Research Hospital
+Non-profit redistribution permitted.
+
+Description:
+
+PUTT calibrates the internal impedance of the ER-10C probe and performs a
+hearing threshold test.
+
+Installation:
+
+(1) Run Setup.
+
+(2) PUTT requires Microsoft C-runtime libraries. If Windows complains that
+'This application has failed to start because the application configuration
+is incorrect.', download the C-runtime installation program from
+http://audres.org/downloads/vcredist_x86.exe.
+
+
+Web page:
+http://audres.org/rc/putt/
+
+Download:
+http//audres.org/downloads/putt-setup.zip
+

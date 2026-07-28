@@ -1,0 +1,28 @@
+# configure AV source code for Linux & Mac
+if (test `uname` == "Darwin"); then
+    echo "Configure AV for Mac.";
+    rm -f makefile
+    cp -f makefile.mac Makefile
+    cp -f dsp/makefile.mac dsp/Makefile
+    cp -f fft/makefile.mac fft/Makefile
+    cp -f menu/makefile.mac menu/Makefile
+    cp -f tok/makefile.mac tok/Makefile
+    cp -f util/makefile.mac util/Makefile
+    cp -f abrav/makefile.mac abrav/Makefile
+    cp -f emav/makefile.mac emav/Makefile
+    cp -f putt/makefile.mac putt/Makefile
+    echo "Type 'make'."
+else
+    echo "Configure AV for Linux.";
+    rm -f makefile
+    cp -f makefile.lnx Makefile
+    cp -f dsp/makefile.lnx dsp/Makefile
+    cp -f fft/makefile.lnx fft/Makefile
+    cp -f menu/makefile.lnx menu/Makefile
+    cp -f tok/makefile.lnx tok/Makefile
+    cp -f util/makefile.lnx util/Makefile
+    cp -f abrav/makefile.lnx abrav/Makefile
+    cp -f emav/makefile.lnx emav/Makefile
+    cp -f putt/makefile.lnx putt/Makefile
+    echo "Type 'make'."
+fi

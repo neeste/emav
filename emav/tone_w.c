@@ -249,7 +249,7 @@ show_tone()
     short   data;
 
     tms = 1000 * (double) buflen / rate;
-    lbuf = (unsigned long)((int32_t *) calloc((size_t)(buflen), sizeof(int32_t)));
+    lbuf = ((int32_t *) calloc((size_t)(buflen), sizeof(int32_t)));
     dfgc = scrn_c[C_WAVE];
     dsprst(FALSE);
     while (cnt < acc_sets) {

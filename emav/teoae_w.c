@@ -267,8 +267,8 @@ len_est(int32_t *acc, short *stm, int npt, double vs)
     int i, ii, ir, n;
 
     n = npt + 2;
-    a = (unsigned long)((float *) calloc((size_t)(n), sizeof(float)));
-    s = (unsigned long)((float *) calloc((size_t)(n), sizeof(float)));
+    a = ((float *) calloc((size_t)(n), sizeof(float)));
+    s = ((float *) calloc((size_t)(n), sizeof(float)));
     p = a;
     for (i = 0; i < npt; i++) {
         a[i] = (float) acc[i];

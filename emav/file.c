@@ -819,7 +819,7 @@ open_file(char *use2chk)
         strcpy(lastfn, o_file_name);
     }
     end = limit(1, start + nrow, nf);
-    files = (unsigned long)((char *) malloc((ncfn + 1) * (end - start)));
+    files = ((char *) malloc((ncfn + 1) * (end - start)));
     if (files == NULL) {
 	decide(0, 2, "Error allocating space for filename holder",
 	    "Press any key to continue");

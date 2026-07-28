@@ -91,7 +91,7 @@ typedef struct {
     short inputlen;	/* input length in characters */
     char decpts;	/* how many decimal points if applicable */
     char status;	/* 1 for enabled, 0 for disabled */
-    int (*exe)(void);       /* execute this each time get_str is invoked */
+    int (*exe)();       /* execute this each time get_str is invoked */
 } MENUITEM;
 
 /* =======================================================================
@@ -258,7 +258,7 @@ void    (*get_bg_exe(void))(void);
 
 typedef struct {
 	char *menustr;
-	int (*exe)(void);
+	int (*exe)();
 } MAIN_MENU;
 
 int     menu_step(int);

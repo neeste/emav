@@ -896,7 +896,7 @@ cali_chan(int c)
     for (i = 0; i < buflen; i++)
 	accbuf_a[i] += accbuf_b[i];
     if (c == 0) {
-	tmpbuf = (unsigned long)((int32_t *) calloc((size_t)(buflen), sizeof(int32_t)));
+	tmpbuf = ((int32_t *) calloc((size_t)(buflen), sizeof(int32_t)));
         memcpy(tmpbuf, accbuf_a, (size_t)(buflen) * sizeof(int32_t));
     } else {
         memcpy(accbuf_b, accbuf_a, (size_t)(buflen) * sizeof(int32_t));

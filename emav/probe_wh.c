@@ -318,7 +318,7 @@ z_surge(float *zo, int na)
     z_chr(zc);
     z0 = zc[0];
     nk = probe.surge;
-    R = (unsigned long)((float *) calloc((size_t)(na * 2), sizeof(float)));
+    R = ((float *) calloc((size_t)(na * 2), sizeof(float)));
     c_ones(R, na);
     fd_window(R, na);
     w0 = mean_real(R, na);
@@ -369,7 +369,7 @@ thev_init()
     }
 
     os = MAX_NF * 2 * 3;	//allow for ps, zs, px
-    pzs = (unsigned long)((float *) calloc((size_t)(os * 2), sizeof(float)));
+    pzs = ((float *) calloc((size_t)(os * 2), sizeof(float)));
     if (pzs == NULL) {
         decide(0, 1, "Can't allocate thev memory (pzs)");
 	free(qq1);
@@ -378,7 +378,7 @@ thev_init()
 
     m = (nthc < 6) ? 6 : nthc;	//allow for pl, zl, pf, z0, pr, cd
     ol = MAX_NF * 2 * m;;
-    pzl = (unsigned long)((float *) calloc((size_t)(ol * 2), sizeof(float)));
+    pzl = ((float *) calloc((size_t)(ol * 2), sizeof(float)));
     if (pzl == NULL) {
         decide(0, 1, "Can't allocate thev memory (pzl)");
 	free(qq1);
@@ -1222,7 +1222,7 @@ cavity_length(float *pc, int nf, double vs)
     int i, ii, ir, i1, i2, m, n;
 
     n = nf * 2 + 2;
-    p = (unsigned long)((float *) calloc((size_t)(n), sizeof(float)));
+    p = ((float *) calloc((size_t)(n), sizeof(float)));
     for (i = 0; i < nf; i++) {
 	ir = 2 * i;
 	ii = 2 * i + 1;
@@ -1500,7 +1500,7 @@ thev_cmp_zl()
     int     i, ii, ir;
     static float eps = 1e-9F;
  
-    pc = (unsigned long)((float *) calloc((size_t)(nthf * 2), sizeof(float)));
+    pc = ((float *) calloc((size_t)(nthf * 2), sizeof(float)));
     sg = surge_gain(zl, zs, ps, pl, nthf);
     zl[0] = pl[0] = eps;
     zl[1] = pl[1] = 0;
@@ -1738,9 +1738,9 @@ thev_adjust(char *cfn, char *sfn, SAV_FFT *pft, int sil)
 	    free_null(iadj);
 	    free_null(refl);
 	    n = (nthf < pft[j].npts) ? nthf : pft[j].npts;
-	    padj = (unsigned long)((float *) calloc((size_t)(n), sizeof(float)));
-	    iadj = (unsigned long)((float *) calloc((size_t)(n), sizeof(float)));
-	    refl = (unsigned long)((float *) calloc((size_t)(n), sizeof(float)));
+	    padj = ((float *) calloc((size_t)(n), sizeof(float)));
+	    iadj = ((float *) calloc((size_t)(n), sizeof(float)));
+	    refl = ((float *) calloc((size_t)(n), sizeof(float)));
 	    for (i = 0; i < n; i++) {
 		ir = 2 * i;
 		ii = 2 * i + 1;

@@ -60,11 +60,11 @@ alloc_space(int create)
 		free(sbuf);
 	    }
 	    size = 0;
-	    abuf = (unsigned long)((float *) calloc((size_t)((n + 2)), sizeof(float)));
-	    bbuf = (unsigned long)((float *) calloc((size_t)((n + 2)), sizeof(float)));
-	    fbuf = (unsigned long)((float *) calloc((size_t)((n + 2)), sizeof(float)));
-	    phbf = (unsigned long)((float *) calloc((size_t)((n + 2)), sizeof(float)));
-	    sbuf = (unsigned long)((float *) calloc((size_t)((n + 2)), sizeof(float)));
+	    abuf = ((float *) calloc((size_t)((n + 2)), sizeof(float)));
+	    bbuf = ((float *) calloc((size_t)((n + 2)), sizeof(float)));
+	    fbuf = ((float *) calloc((size_t)((n + 2)), sizeof(float)));
+	    phbf = ((float *) calloc((size_t)((n + 2)), sizeof(float)));
+	    sbuf = ((float *) calloc((size_t)((n + 2)), sizeof(float)));
 	    if (fbuf != NULL)
 		size = n;
 	}
@@ -388,8 +388,8 @@ cal_gain(SAV_FFT *pft, int npts)
             free(pft->rp);
         if (pft->ph != NULL)
             free(pft->ph);
-	pft->rp = (unsigned long)((float *) malloc((size_t)(npts) * sizeof(float)));
-	pft->ph = (unsigned long)((float *) malloc((size_t)(npts) * sizeof(float)));
+	pft->rp = ((float *) malloc((size_t)(npts) * sizeof(float)));
+	pft->ph = ((float *) malloc((size_t)(npts) * sizeof(float)));
 	pft->npts = (short)(npts);
     }
     memcpy(pft->rp, sbuf, (size_t)(npts) * sizeof(float));
@@ -595,8 +595,8 @@ get_level(double fr, int nsb, int typ, double df, float *slv, float *nlv, float 
 	j = nint((df * size) / rate);
     }
     n = 1 + 2 * ns;
-    asp = (unsigned long)((float *) calloc(n, 2 * sizeof(float)));
-    bsp = (unsigned long)((float *) calloc(n, 2 * sizeof(float)));
+    asp = ((float *) calloc(n, 2 * sizeof(float)));
+    bsp = ((float *) calloc(n, 2 * sizeof(float)));
     fetch_spec(fr, ns, asp, bsp);
 
 /* remove correlated noise to reduce artifacts */
@@ -685,8 +685,8 @@ check_noise(double f, double df, double nf_max_dif, short nfsb)
     ns = nfsb;
     j = nint((df * size) / rate);
     n = 1 + 2 * ns;
-    asp = (unsigned long)((float *) calloc(n, 2 * sizeof(float)));
-    bsp = (unsigned long)((float *) calloc(n, 2 * sizeof(float)));
+    asp = ((float *) calloc(n, 2 * sizeof(float)));
+    bsp = ((float *) calloc(n, 2 * sizeof(float)));
     fetch_spec(f, ns, asp, bsp);
 
 /* compute noise level */
@@ -762,7 +762,7 @@ mp_transfer_set(int nf, float *fr, float *mg, float *ph)
     mps_nf = buflen / 2;
     mps_df = rate / (float) buflen; // df=Hz
     mps_fm = (float)(mps_df * mps_nf);
-    mps_mg = (unsigned long)((float *) calloc((size_t)(mps_nf * 2), sizeof(float)));
+    mps_mg = ((float *) calloc((size_t)(mps_nf * 2), sizeof(float)));
     mps_ph = mps_mg + mps_nf;
     j = 0;
     for (i = 0; i < mps_nf; i++) {
@@ -796,7 +796,7 @@ mp_transfer_mat(char *fn)
 	fd = mptrans_open(fn, &n);
 	if (fd > 0 && n > 0) {
 	    nf = n / 2 + 1;
-	    fr = (unsigned long)((float *) calloc((size_t)(nf * 3), sizeof(float)));
+	    fr = ((float *) calloc((size_t)(nf * 3), sizeof(float)));
 	    mg = fr + nf;
 	    ph = mg + nf;
 	    mptrans_read(fd, fr, mg, ph);
@@ -823,7 +823,7 @@ mp_transfer_txt(char *fn)
 	}
 	fclose(fp);
 	if (nf > 0) {
-	    fr = (unsigned long)((float *) calloc((size_t)(nf * 3), sizeof(float)));
+	    fr = ((float *) calloc((size_t)(nf * 3), sizeof(float)));
 	    mg = fr + nf;
 	    ph = mg + nf;
 	    tpi = (float) (2 * M_PI);

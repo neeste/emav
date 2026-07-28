@@ -245,9 +245,9 @@ wrdata()
     static float cf1[2] = {0, 1.5};
     static float f1[2] = {0.5, 2.5};
     static float cf4[5] = {0.0, 0.5, 1.0, 2.0, 4.0};
-    static float f4[5] = (float)({0.354, 0.707, 1.414, 2.828, 5.657});
+    static float f4[5] = {0.354, 0.707, 1.414, 2.828, 5.657};
     static float cf5[6] = {0, 1, 2, 3, 4, 5};
-    static float f5[6] = (float)({0.488, 1.465, 2.441, 3.418, 4.395, 5.371});
+    static float f5[6] = {0.488, 1.465, 2.441, 3.418, 4.395, 5.371};
     static float cf12[13] =
     {
 	0.000, 0.397, 0.500, 0.630, 0.794, 1.000, 1.260,
@@ -357,9 +357,9 @@ main(int ac, char **av)
 		nto2 = 1;
 		while (nto2 < npts)
 		    nto2 *= 2;
-		r1 = (unsigned long)((short *) malloc(sizeof(short) * nto2));
-		r2 = (unsigned long)((short *) malloc(sizeof(short) * nto2));
-		st = (unsigned long)((short *) malloc(sizeof(short) * nto2));
+		r1 = ((short *) malloc(sizeof(short) * nto2));
+		r2 = ((short *) malloc(sizeof(short) * nto2));
+		st = ((short *) malloc(sizeof(short) * nto2));
 		tread(st, 1, t);
 		st_scale = (float)(t->car.scale * 1000.0);
 		tread(r1, 2, t);

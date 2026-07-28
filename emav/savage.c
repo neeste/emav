@@ -145,9 +145,9 @@ static int data_opt(char *);
 static int dp_stim_opt(char *);
 static int hpf_opt(char *);
 static int noise_opt(char *);
-static int pb_opt(void);
-static int p_c_opt(void);
-static int p_t_opt(void);
+static int pb_opt(char*);
+static int p_c_opt(char*);
+static int p_t_opt(char*);
 
 static  int text_wind_flag = 0;
 static  int upperv = 0;

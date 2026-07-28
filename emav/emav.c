@@ -164,9 +164,9 @@ alloc_buffers()
     wo = (dsppar.nic == 2) ? 2 : 1;
     maxnpts = (dspprm - base_addr) / (2 * (wi + wo));
     accnpts = maxnpts * wi;
-    accbuf_a = (unsigned long)((int32_t *) calloc(accnpts, 2 * sizeof(int32_t)));
-    outbuf = (unsigned long)((short *) calloc(accnpts, 4 * sizeof(short)));
-    stmbuf = (unsigned long)((short *) calloc(maxnpts, 4 * sizeof(short)));
+    accbuf_a = ((int32_t *) calloc(accnpts, 2 * sizeof(int32_t)));
+    outbuf = ((short *) calloc(accnpts, 4 * sizeof(short)));
+    stmbuf = ((short *) calloc(maxnpts, 4 * sizeof(short)));
     if (accbuf_a == NULL || outbuf == NULL || stmbuf == NULL) {
         print_version();
 	fprintf(stderr, "Not enough memory!  Program aborted!\n");

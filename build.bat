@@ -1,4 +1,5 @@
 @echo off
+pushd "%~dp0"
 REM build.bat - Automated MSVC Build Script for EMAV
 
 echo ===================================================
@@ -56,4 +57,5 @@ if exist "VS16\Release\aemav.exe" (
 )
 
 pause
+popd
 exit /b 0

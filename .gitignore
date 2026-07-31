@@ -2,7 +2,6 @@
 *.o
 *.obj
 *.ko
-*.obj
 *.elf
 
 # Executables
@@ -10,6 +9,34 @@ binmat
 calmat
 tokmat
 oba2
+*.exe
+*.out
+*.app
+
+# Libraries
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+
+# Visual Studio / MSVC
+.vs/
+*.pdb
+*.idb
+*.tlog
+*.lastbuildstate
+*.recipe
+*.ilk
+*.suo
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Diagnostic and Log files
+diagnostic_*.txt
+*.log
 
 # OS files
 .DS_Store

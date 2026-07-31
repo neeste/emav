@@ -865,8 +865,7 @@ open_file(char *use2chk)
 	if (use2chk != NULL && !eventintime()) {
 	    status = 0;
 	    text_color(menucolor.mfg, menucolor.mbg);
-	    strcpy(line, ofiledir);
-	    strcat(line, files + (ptr - start) * (ncfn + 1));
+	    snprintf(line, MAXLINE, "%s%s", ofiledir, files + (ptr - start) * (ncfn + 1));
 	    trim(line);
 	    if (filetypes.at == 1) {
 		fpt = fopen(line, "rt");
@@ -1073,8 +1072,7 @@ open_file(char *use2chk)
     } while (acpt == 0);
 
     if (acpt > 0) {
-	strcpy(o_file_name, ofiledir);
-	strcat(o_file_name, files + (ptr - start) * (ncfn + 1));
+	snprintf(o_file_name, sizeof(o_file_name), "%s%s", ofiledir, files + (ptr - start) * (ncfn + 1));
 	trim(o_file_name);
 	if (use2chk != NULL)
 	    set_trailer((void (*)(void)) rd_file[filetypes.at]);

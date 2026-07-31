@@ -1,3 +1,4 @@
+#include <math.h>
 /* edit.c */
 
 #include <menu.h>

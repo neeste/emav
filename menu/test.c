@@ -1,3 +1,4 @@
+#include <stdlib.h>
 /* test.c */
 
 #include <stdio.h>

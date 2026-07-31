@@ -334,7 +334,7 @@ do_tone()
 	do {
 	    acc_sets++;
 	} while ((a / acc_sets) > 32000.0);
-	swp1set = (float)((int) (a / acc_sets + 0.5));
+	swp1set = (int) (a / acc_sets + 0.5);
     }
     R_clear();
     chan = (int)(play_chan.at);

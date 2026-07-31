@@ -1,3 +1,5 @@
+#include <string.h>
+#include <stdlib.h>
 /* g_w32.c - graphics using WIN32 */
 
 #include <windows.h>

@@ -1,3 +1,4 @@
+#include <string.h>
 /* g_grx.c - graphics using DJC and GRX */
 
 #include <stdio.h>

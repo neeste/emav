@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#ifdef WIN32
+#if defined(_WIN32) || defined(WIN32)
 #include <io.h>
 #else
 #include <unistd.h>
@@ -31,7 +31,7 @@ genfn(char *c, char *e, char *f, int *count)
     int     i, y, m, d;
 
     get_date(&m, &d, &y);
-    sprintf(f, "%02d%c%02d%.1s00.%s", y, m + 'A', d, c, e);
+    snprintf(f, 64, "%02d%c%02d%.1s00.%s", y, m + 'A', d, c, e);
     c = f + 6;
     e = c + 1;
     for (i = *count; i < 100; i++) {	/* 00 ... 99 */

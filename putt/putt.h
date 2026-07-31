@@ -1,3 +1,4 @@
+#include <stdlib.h>
 /* putt.h */
 
 double  adjustf(double);

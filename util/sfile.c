@@ -1,22 +1,17 @@
-/* sfile.c - system dependent file routines */
+/* sfile.c */
 
 #include <stdio.h>
-#include <string.h>
-#include <fcntl.h>
-#ifdef WIN32
-#include <windows.h>
-#endif /* WIN32 */
-#ifdef linux
 #include <stdlib.h>
+#include <string.h>
+#include "util.h"
+
+#if defined(_WIN32) || defined(WIN32)
+#include <windows.h>
+#else
+#include <sys/types.h>
 #include <dirent.h>
-int amatch();
-#endif /* linux */
+#endif /* WIN32 */
 
-#define ATTRIB (_A_NORMAL | _A_RDONLY | _A_HIDDEN)
-
-void fillinblank(char *, int);
-
-extern char line[];
 extern char o_file_name[];
 extern char pr_port[];
 extern char tokstr[];
@@ -30,7 +25,7 @@ int ncfn = 24;
 int
 count_files()
 {
-#ifdef WIN32
+#if defined(_WIN32) || defined(WIN32)
     int     nf = 0;
     HANDLE  hnd;
     WIN32_FIND_DATA dest;
@@ -57,14 +52,15 @@ count_files()
         }
         free(namlst);
     }
-return (c);
+    return (c);
 #endif /* linux */
+    return (0);
 }
 
 void
 take_files_bwt(int start, int end, char *files)
 {
-#ifdef WIN32
+#if defined(_WIN32) || defined(WIN32)
     char   *s;
     int     i;
     HANDLE  hnd;
@@ -106,18 +102,19 @@ take_files_bwt(int start, int end, char *files)
 int
 today_file(char *fn)
 {
-#ifdef WIN32    /* NYI */
+#if defined(_WIN32) || defined(WIN32)    /* NYI */
     return (0);
 #endif /* WIN32 */
 #ifdef linux
     return (0);
 #endif /* linux */
+    return (0);
 }
 
 void
 file_flush(FILE *fp)
 {
-#ifdef WIN32
+#if defined(_WIN32) || defined(WIN32)
     fflush(fp);
 #endif /* WIN32 */
 #ifdef DJ

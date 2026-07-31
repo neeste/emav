@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <math.h>
 /* version.h */
 
 #define VERSION         "EMAV  version 3.37, 18-Jun-2021"

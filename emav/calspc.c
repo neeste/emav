@@ -1,3 +1,5 @@
+#include <string.h>
+#include <stdlib.h>
 /* calspc.c - computes spectrum of CAL file */
 
 #include <stdio.h>

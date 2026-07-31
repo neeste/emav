@@ -1,3 +1,4 @@
+#include <stdlib.h>
 /* chkfit.c */
 
 #include <stdio.h>

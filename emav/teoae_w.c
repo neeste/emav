@@ -384,12 +384,12 @@ dis_cali()
 int
 O_options(char *no_use)
 {
-    void    (*func) ();
+    void    (*func) (void);
     int     mode;
 
     mode = (int)(Stim_mode.at);
     func = get_bg_exe();
-    set_bg_exe((void (*)())0);
+    set_bg_exe((void (*)(void))0);
     Option_wind();
     set_bg_exe(func);
 
@@ -410,10 +410,10 @@ O_options(char *no_use)
 int
 I_info(char *no_use)
 {
-    void    (*func) ();
+    void    (*func) (void);
 
     func = get_bg_exe();
-    set_bg_exe((void (*)())0);
+    set_bg_exe((void (*)(void))0);
     Info_wind();
     set_bg_exe(func);
     draw_w(&w_info);
@@ -510,7 +510,7 @@ S_set_tar(char *no_use)
     int     j, k, n;
     char    str[20] = { 20*0 };
 
-    set_bg_exe((void (*)())0);
+    set_bg_exe((void (*)(void))0);
     k = open_text_w(&j);
     gprintf(j, k, "Target p-p Stimulus = %.3fV, %.3fPas, %.1fdB SPL ", 
 	target_voltage,	target_voltage / Sen.MP, vtodb(target_voltage));
@@ -659,9 +659,9 @@ check_fit()
     fft_flag = 1;
     chk_fit_flag = cal_stim_flag = rd_cal_flag = 0;
     reset_chkfit_time();
-    set_bg_exe(chk_fit_upld);
+    set_bg_exe((void (*)(void))chk_fit_upld);
     simple_submenu(w_msg.xtop, w_msg.ytop, mi);
-    set_bg_exe((void (*)())0);
+    set_bg_exe((void (*)(void))0);
     dsprst(TRUE);
     return (chk_fit_flag);
 }
@@ -755,7 +755,7 @@ compute_rec(int32_t *rsp, int n)
     }
     fsst(recrsd, RECNFT);	/* inverse FFT */
     for (i = 0; i < reclen; i++)/* add to error correction */
-	rec[i] = (float)((int) (rec[i] + recrsd[i]));
+	rec[i] = (int) (rec[i] + recrsd[i]);
 }
 
 static void
@@ -874,9 +874,9 @@ calculate_it()
     display_reset = 1;
     fft_flag = 0;
     cal_stim_flag = 1;
-    set_bg_exe(calibr_upld);
+    set_bg_exe((void (*)(void))calibr_upld);
     i = simple_submenu(w_msg.xtop, w_msg.ytop, bwt);
-    set_bg_exe((void (*)())0);
+    set_bg_exe((void (*)(void))0);
     if(!i && differ_flag && !probe_flag) {
 	sprintf(s, "by more than %.0f dB ppSPL", tolerance);
 	i = !decide(1, 3, "Warning: Measured level differs from target level",

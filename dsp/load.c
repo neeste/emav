@@ -1,3 +1,4 @@
+#include <string.h>
 /* loader.c */
 //
 //      Notes:

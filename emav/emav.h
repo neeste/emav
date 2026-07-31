@@ -1,3 +1,4 @@
+#include <stdlib.h>
 /* ANSI function prototypes */
 #include <stdint.h>
 

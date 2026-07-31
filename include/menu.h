@@ -1,3 +1,4 @@
+#include <stdlib.h>
 /* ============================== menu.h =====================================
 Minimenu is a library of C callable simple menu routines on IBM-PC's video
 graphics mode.

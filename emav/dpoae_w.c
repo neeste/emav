@@ -1924,7 +1924,7 @@ do_dpoae_task()
 		}
                 rep = show_dp_fft(fst, ns, fdp, nd, pst, nst, ast, pdp, ndp, adp, 0);
 		dis_result(pst, nst, pdp[idp], ndp[idp], fdp[idp], fst[0] == fst[1]);
-		tel = (clock_t)((double) (clock() - each_time) / CLOCKS_PER_SEC);
+		tel = (double) (clock() - each_time) / CLOCKS_PER_SEC;
 		each_time = (int32_t)(clock());
 		wr_dat_rec(fout, nd, tel, rep, fdp, pdp, adp, ndp, fst, pst, ast, nst);
 		if (xtype.at == 1)

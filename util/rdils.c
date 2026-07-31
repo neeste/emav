@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <fcntl.h>
-#ifdef WIN32
+#if defined(_WIN32) || defined(WIN32)
 #include <io.h>
 #else
 #include <unistd.h>

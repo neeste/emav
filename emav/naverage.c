@@ -74,12 +74,12 @@ dis_artifact()
     i = (limit_mv < 100) ? 1 : 0;
     gprintf(j, k, "%4.*f mPa", i, limit_mv);
 
-    ppc = (_Bool)((Sen.AD && Sen.MP) ? (Sen.AD * Sen.MP) : 1);
+    ppc = (Sen.AD && Sen.MP) ? (Sen.AD * Sen.MP) : 1;
     ind_mv = t_ind.new * 1000 / ppc;
     max_mv = (ind_mv > limit_mv) ? ind_mv : limit_mv;
     range_mv = (float) ceil(max_mv * 1.1 / 5) * 5;
     j = (w_ind.xbot - w_ind.xtop);
-    k = (float)((int) (w_ind.xtop + limit_mv / range_mv * j));
+    k = (short)((int) (w_ind.xtop + limit_mv / range_mv * j));
     mouse_exclude(w_ind.xtop, w_ind.ytop, w_ind.xbot, w_ind.ybot);
     gr_rectf(w_ind.xtop + 1, t_ind.top + 4, t_ind.old1, t_ind.bot, scrn_c[C_INDB]);
     gr_rectf(t_ind.old, t_ind.top, t_ind.old, t_ind.bot, scrn_c[C_INDB]);
@@ -491,12 +491,12 @@ teoae_aver()
     tok_store(sweeps, accbuf_b);
 
     genfn("T", "TOK", file_name, &teoae_counter);
-    sprintf(outmsg[0], "%2d/%c%c/%c%c", (int) (file_name[2] - 'A' + 1),
+    snprintf(outmsg[0], sizeof(outmsg[0]), "%2d/%c%c/%c%c", (int) (file_name[2] - 'A' + 1),
 	file_name[3], file_name[4], file_name[0], file_name[1]);
     i = (int) ((float) -run_time / CLOCKS_PER_SEC);
-    sprintf(outmsg[2], "%dx%d sweeps", sweeps, swp1set);
+    snprintf(outmsg[2], sizeof(outmsg[2]), "%dx%d sweeps", sweeps, swp1set);
     sweeps *= 2;
-    sprintf(outmsg[1], "%.0f%% (%d/%d)", (float) sweeps * 100.0 / cnt,
+    snprintf(outmsg[1], sizeof(outmsg[1]), "%.0f%% (%d/%d)", (float) sweeps * 100.0 / cnt,
 	sweeps, cnt);
     t->hitch.time = (int16_t)(i);
     t->hitch.stab = t_stab;

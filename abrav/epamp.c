@@ -1,3 +1,5 @@
+#include <string.h>
+#include <stdlib.h>
 /* epamp.c */
 
 #include <math.h>

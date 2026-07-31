@@ -7,18 +7,35 @@ echo   EMAV MSVC Local Build Script
 echo ===================================================
 echo.
 
+set "ARCH_VCVARS=x86"
+set "ARCH_MSBUILD=Win32"
+set "TOOLSET=v143"
+
+if /i "%PROCESSOR_ARCHITECTURE%"=="ARM64" (
+    set "ARCH_VCVARS=arm64"
+    set "ARCH_MSBUILD=ARM64"
+) else if /i "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
+    set "ARCH_VCVARS=amd64"
+    set "ARCH_MSBUILD=x64"
+)
+
 REM Locate Visual Studio vcvarsall.bat
 set "VCVARS="
 if exist "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" (
     set "VCVARS=C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat"
+    set "TOOLSET=v143"
 ) else if exist "C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\vcvarsall.bat" (
     set "VCVARS=C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\vcvarsall.bat"
+    set "TOOLSET=v143"
 ) else if exist "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" (
     set "VCVARS=C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"
+    set "TOOLSET=v143"
 ) else if exist "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Auxiliary\Build\vcvarsall.bat" (
     set "VCVARS=C:\Program Files\Microsoft Visual Studio\18\Community\VC\Auxiliary\Build\vcvarsall.bat"
+    set "TOOLSET=v145"
 ) else if exist "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" (
     set "VCVARS=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat"
+    set "TOOLSET=v142"
 )
 
 if "%VCVARS%"=="" (
@@ -30,17 +47,6 @@ if "%VCVARS%"=="" (
 
 echo [1/3] Initializing MSVC Developer Environment...
 
-set "ARCH_VCVARS=x86"
-set "ARCH_MSBUILD=Win32"
-
-if /i "%PROCESSOR_ARCHITECTURE%"=="ARM64" (
-    set "ARCH_VCVARS=arm64"
-    set "ARCH_MSBUILD=ARM64"
-) else if /i "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
-    set "ARCH_VCVARS=amd64"
-    set "ARCH_MSBUILD=x64"
-)
-
 call "%VCVARS%" %ARCH_VCVARS% > nul
 if errorlevel 1 (
     echo [ERROR] Failed to initialize MSVC environment for %ARCH_VCVARS%.
@@ -49,7 +55,7 @@ if errorlevel 1 (
 )
 
 echo [2/3] Building EMAV Solution...
-msbuild VS16\av.sln /p:Configuration=Release /p:Platform=%ARCH_MSBUILD% /nologo /verbosity:minimal
+msbuild VS16\av.sln /p:Configuration=Release /p:Platform=%ARCH_MSBUILD% /p:PlatformToolset=%TOOLSET% /nologo /verbosity:minimal
 if errorlevel 1 (
     echo.
     echo [FAIL] MSBuild compilation failed!

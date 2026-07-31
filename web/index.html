@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Boys Town National Research Hospital">
+    <meta name="description" content="EMAV is a program for measuring and displaying otoacoustic emissions, featuring DPOAE and TEOAE tests.">
+    <title>EMAV: Otoacoustic Emissions Measurement</title>
+    
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-hover: #4338CA;
+            --secondary: #10B981;
+            --bg-dark: #0F172A;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.6;
+        }
+
+        /* Glassmorphism Navigation */
+        nav {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            margin-right: 1.5rem;
+        }
+
+        nav a:hover {
+            color: var(--secondary);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            flex-grow: 1;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #60A5FA, #A78BFA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: -0.05em;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Glassmorphism Card */
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .card p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #CBD5E1;
+        }
+
+        .highlight {
+            color: #60A5FA;
+            font-weight: 600;
+        }
+
+        /* Interactive Links Grid */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .action-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem 1.5rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .action-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255,255,255,0.08);
+            border-color: var(--primary);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+        }
+
+        .action-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .action-card.primary {
+            background: var(--primary);
+            border-color: var(--primary-hover);
+        }
+        
+        .action-card.primary:hover {
+            background: var(--primary-hover);
+            box-shadow: 0 15px 30px rgba(79, 70, 229, 0.5);
+        }
+
+        .action-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .action-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: auto;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .card { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            <a href="../../index.html">audres.org</a>
+        </div>
+        <div class="links">
+            <a href="../index.html">Research Computing</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <h1>EMAV</h1>
+            <p>Measurement and display of otoacoustic emissions.</p>
+        </div>
+
+        <div class="card">
+            <p>
+                <strong>EMAV</strong> is a program for measuring and displaying otoacoustic emissions.
+            </p>
+            <p>
+                The <span class="highlight">distortion-product otoacoustic emission (DPOAE)</span> test features artifact rejection, measurement-based stopping rules, and noise estimation at the same frequency as the distortion product.
+            </p>
+            <p>
+                The <span class="highlight">transient evoked otoacoustic emission (TEOAE)</span> test features octave-band analysis and transducer-artifact correction.
+            </p>
+            <p style="font-size: 0.95rem; color: var(--text-muted); margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem;">
+                <em>Note:</em> EMAV requires a high-quality sound card for stimulus generation and synchronous averaging (e.g., RME audio devices).
+            </p>
+
+            <div class="links-grid">
+                <a href="../../downloads/EMAV_Setup.exe" class="action-card primary" id="download-btn">
+                    <div class="action-icon">⬇️</div>
+                    <div class="action-title">Download EMAV Setup</div>
+                    <div style="font-size: 0.85rem; opacity: 0.8; margin-top: 0.5rem;">For Windows</div>
+                </a>
+                
+                <a href="screenshot.html" class="action-card">
+                    <div class="action-icon">🖥️</div>
+                    <div class="action-title">View Screenshots</div>
+                </a>
+
+                <a href="../../downloads/emav-mat.zip" class="action-card">
+                    <div class="action-icon">🔧</div>
+                    <div class="action-title">MATLAB Tools</div>
+                    <div style="font-size: 0.85rem; opacity: 0.8; margin-top: 0.5rem;">Conversion Utilities</div>
+                </a>
+
+                <a href="../../downloads/emavtm.pdf" class="action-card">
+                    <div class="action-icon">📄</div>
+                    <div class="action-title">User's Manual</div>
+                    <div style="font-size: 0.85rem; opacity: 0.8; margin-top: 0.5rem;">PDF Guide</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; Boys Town National Research Hospital. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

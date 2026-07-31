@@ -9,16 +9,22 @@ echo.
 
 REM Locate Visual Studio vcvarsall.bat
 set "VCVARS="
+set "TOOLSET=v143"
 if exist "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" (
     set "VCVARS=C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat"
+    set "TOOLSET=v143"
 ) else if exist "C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\vcvarsall.bat" (
     set "VCVARS=C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\vcvarsall.bat"
+    set "TOOLSET=v143"
 ) else if exist "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" (
     set "VCVARS=C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"
+    set "TOOLSET=v143"
 ) else if exist "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Auxiliary\Build\vcvarsall.bat" (
     set "VCVARS=C:\Program Files\Microsoft Visual Studio\18\Community\VC\Auxiliary\Build\vcvarsall.bat"
+    set "TOOLSET=v144"
 ) else if exist "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" (
     set "VCVARS=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat"
+    set "TOOLSET=v142"
 )
 
 if "%VCVARS%"=="" (
@@ -37,7 +43,7 @@ if errorlevel 1 (
 )
 
 echo [2/3] Building EMAV Solution...
-msbuild VS16\av.sln /p:Configuration=Release /p:Platform=Win32 /nologo /verbosity:minimal
+msbuild VS16\av.sln /p:Configuration=Release /p:Platform=Win32 /p:PlatformToolset=%TOOLSET% /nologo /verbosity:minimal
 if errorlevel 1 (
     echo.
     echo [FAIL] MSBuild compilation failed!

@@ -7,7 +7,7 @@
 
 /**********************************************************************
 * version 2.39 20-Aug-2020
-- Moved from VS9 to VS16
+- Moved from VS9 to VS18
 * version 2.38 - 13-Nov-10
 - Removed calculation of cal_vpc & cal_ppc to mat_read
 - Test (n != size) in alloc_space()

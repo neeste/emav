@@ -169,7 +169,7 @@ action when exiting the menu window.
 int	simple_submenu(int x, int y, MENUITEM * m);
 
 /* draw a short underline at (x, y) */
-void	underline(int x, int y);
+void	gr_underline(int x, int y);
 
 /* give back the area previously saved and remove the top of STACK
 Gives back the area specified in the WIND data structure pointed by w.  Pops
@@ -250,10 +250,10 @@ int     lookahead(void);
 void	set_capture_event(void (*)(int));
 
 /* sets the background process function */
-void	set_bg_exe(void (*)(void));
+void	set_bg_exe(void (*)());
 
 /* returns the current background process function */
-void    (*get_bg_exe(void))(void);
+void    (*get_bg_exe(void))();
 
 /* ----------- mainmenu --------------- */
 
@@ -275,12 +275,12 @@ void    mainmenu_driver(void);
 
 int     pgm_done(void);
 void    pgm_exit(void);
-#ifdef WIN32
+#if defined(WIN32) || defined(__APPLE__)
 #define MAIN_PGM(ac,av)    pgm_main(ac,av)
 int     pgm_main(int, char **);
-#else   /* WIN32 */
+#else   /* WIN32 || __APPLE__ */
 #define MAIN_PGM(ac,av)    main(ac,av)
-#endif  /* WIN32 */
+#endif  /* WIN32 || __APPLE__ */
 void    set_title(char *);
 
 /* ----------- dialog functions --------------- */

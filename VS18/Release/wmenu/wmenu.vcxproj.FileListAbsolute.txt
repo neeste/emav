@@ -1,0 +1,3 @@
+N:\STN\RC_src\av\VS16\Release\wmenu\wmenu.lib
+O:\STN\RC_src\av\VS16\Release\wmenu\wmenu.lib
+M:\STN\RC_src\av\VS16\Release\wmenu\wmenu.lib

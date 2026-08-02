@@ -12,7 +12,7 @@ DefaultGroupName=BTNRH
 Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"; MinVersion: 4,4
 
 [Files]
-Source: "..\VS16\Release\aemav.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\VS18\Release\aemav.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "emav.ini"; DestDir: "{app}"; Flags: promptifolder
 Source: "std.lst"; DestDir: "{app}"; Flags: ignoreversion
 Source: "fdpswp.lst"; DestDir: "{app}"; Flags: ignoreversion

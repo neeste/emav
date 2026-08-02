@@ -208,7 +208,7 @@ draw_sub(int i, int active, WIND * w)
     }
     j += cw * n;
     txtpar.text_wind_len -= (int) strlen(submenu[i].menustr);
-    underline(j, k);
+    gr_underline(j, k);
     return (c);
 }
 
@@ -367,7 +367,7 @@ simple_submenu(int x, int y, MENUITEM *m)
 }
 
 void
-underline(int x, int y)
+gr_underline(int x, int y)
 {
     y++;
     mouse_exclude(x, y, x + cw, y);

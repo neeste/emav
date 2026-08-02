@@ -7,7 +7,7 @@
 #include "color.h"
 
 int     submenu_driver(WIND *);
-int     dec_ear(char **), dis_patient(), num_items();
+int     dec_ear(char **), dis_patient();
 int     nop();
 
 TOGGLETYPE ears = {

@@ -12,7 +12,7 @@ DefaultGroupName=BTNRH
 Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"; MinVersion: 4,4
 
 [Files]
-Source: "..\VS16\Release\aputt.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\VS18\Release\aputt.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "putt.ini"; DestDir: "{app}"; Flags: promptifolder
 Source: "swp.ils"; DestDir: "{app}"; Flags: ignoreversion
 Source: "probe.fnf"; DestDir: "{app}"; Flags: ignoreversion

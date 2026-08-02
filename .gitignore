@@ -41,3 +41,7 @@ diagnostic_*.txt
 # OS files
 .DS_Store
 Thumbs.db
+
+# Build scripts
+[Mm]akefile
+makefile.*

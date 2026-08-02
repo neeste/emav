@@ -44,28 +44,23 @@ double  (*variance) (float *pv);
 void    (*report) (float *pv);
 int     (*early_exit) ();
 
-static int sfconvergence();
-static void sfinflate();
-static void sfhilo();
-static void sfcentroid();
-static void sfreflect();
-static void sfaccept();
-static void sfsavelo();
-static void sfexpansion();
-static void sfcontraction();
-static void sfshrink();
+static int sfconvergence(void);
+static void sfinflate(float iniv[MXNV]);
+static void sfhilo(int ii, int ir);
+static void sfcentroid(float cent[MXNV]);
+static void sfreflect(float cent[MXNV], float nxtv[MXNV]);
+static void sfaccept(float nxtv[MXNV]);
+static void sfsavelo(float iniv[MXNV]);
+static void sfexpansion(float cent[MXNV], float nxtv[MXNV]);
+static void sfcontraction(float cent[MXNV], float nxtv[MXNV]);
+static void sfshrink(void);
 
 static double lores, hires, lstres;
 static int npar, nval, hiidx, loidx, lastii;
 static float simp[MXNV][MXNV];
 
 void 
-simpfit(iniv, npv, mxiter, mniter, pvar, prep, peex)
-float  *iniv;
-int     npv, mxiter, mniter;
-double  (*pvar) (float *);
-void    (*prep) (float *);
-int     (*peex) ();
+simpfit(float *iniv, int npv, int mxiter, int mniter, double (*pvar)(float *), void (*prep)(float *), int (*peex)(void))
 {
     int     i;
     float   cent[MXNV], nxtv[MXNV], nxres;
@@ -112,8 +107,7 @@ int     (*peex) ();
 }
 
 static void 
-sfinflate(iniv)
-float   iniv[MXNV];
+sfinflate(float iniv[MXNV])
 {
     int     i, j;
     float   d;
@@ -137,8 +131,7 @@ float   iniv[MXNV];
 }
 
 static void 
-sfhilo(ii, ir)
-int     ii, ir;
+sfhilo(int ii, int ir)
 {
     int     i;
 
@@ -173,8 +166,7 @@ int     ii, ir;
 }
 
 static void 
-sfcentroid(cent)
-float   cent[MXNV];
+sfcentroid(float cent[MXNV])
 {
     int     i, j;
 
@@ -190,8 +182,7 @@ float   cent[MXNV];
 }
 
 static void 
-sfreflect(cent, nxtv)
-float   cent[MXNV], nxtv[MXNV];
+sfreflect(float cent[MXNV], float nxtv[MXNV])
 {
     int     i;
 
@@ -203,8 +194,7 @@ float   cent[MXNV], nxtv[MXNV];
 }
 
 static void 
-sfaccept(nxtv)
-float   nxtv[MXNV];
+sfaccept(float nxtv[MXNV])
 {
     int     i;
 
@@ -215,8 +205,7 @@ float   nxtv[MXNV];
 }
 
 static void 
-sfsavelo(iniv)
-float   iniv[MXNV];
+sfsavelo(float iniv[MXNV])
 {
     int     i;
 
@@ -227,8 +216,7 @@ float   iniv[MXNV];
 }
 
 static void 
-sfexpansion(cent, nxtv)
-float   cent[MXNV], nxtv[MXNV];
+sfexpansion(float cent[MXNV], float nxtv[MXNV])
 {
     int     i;
 
@@ -240,8 +228,7 @@ float   cent[MXNV], nxtv[MXNV];
 }
 
 static void 
-sfcontraction(cent, nxtv)
-float   cent[MXNV], nxtv[MXNV];
+sfcontraction(float cent[MXNV], float nxtv[MXNV])
 {
     int     i;
 
@@ -253,7 +240,7 @@ float   cent[MXNV], nxtv[MXNV];
 }
 
 static void 
-sfshrink()
+sfshrink(void)
 {
     int     i, j;
 
@@ -267,7 +254,7 @@ sfshrink()
 }
 
 static int 
-sfconvergence()
+sfconvergence(void)
 {
     int     i, j;
     double  error, hi[MXNV], lo[MXNV];

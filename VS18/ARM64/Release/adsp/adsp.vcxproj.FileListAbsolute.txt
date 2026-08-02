@@ -1,0 +1,3 @@
+O:\STN\RC_src\av\VS16\ARM64\Release\adsp\adsp.lib
+N:\STN\RC_src\av\VS16\ARM64\Release\adsp\adsp.lib
+M:\STN\RC_src\av\VS16\ARM64\Release\adsp\adsp.lib

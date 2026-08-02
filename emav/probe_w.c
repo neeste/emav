@@ -32,7 +32,7 @@
 #define MAX_NF          (MAXNPTS/FFRAC+1)
 #define MAX_SM		32
 #define free_null(x)	if(x){free(x);x=NULL;}
-void    simpfit();
+int     set_sweep(), check_escape(), test_time(), fz();
 
 extern char line[], ths_file[];
 extern float cal_attn, chk_attn;
@@ -75,6 +75,8 @@ static int nthc = 0;
 static int necv = 0;
 static int os = 0;
 static int ol = 0;
+
+void simpfit(float *iniv, int npv, int mxiter, int mniter, double (*pvar)(float *), void (*prep)(float *), int (*peex)(void));
 
 /* make the probe paramters current */
 

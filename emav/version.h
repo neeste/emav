@@ -2,16 +2,18 @@
 #include <math.h>
 /* version.h */
 
-#define VERSION         "EMAV  version 3.37, 18-Jun-2021"
+#define VERSION         "EMAV  version 4.00, 1-Aug-2026"
 #define PGM_NAME        "Otoacoustic Emission Averager"
-#define COPYRIGHT       "Copyright 1992-2021"
+#define COPYRIGHT       "Copyright 1992-2026"
 #define BTNRH           "Boys Town National Research Hospital"
 
 /**********************************************************************
+* version 4.00 1-Aug-2026
+- future proof code with Gemini
 * version 3.37 17-Jun-2021
 - Recompiled for latest version of ARSC
 * version 3.36 20-Aug-2020
-- Moved from VS9 to VS16
+- Moved from VS9 to VS18
 * version 3.35 7-Feb-2019
 - Modiefied for 64-bit Linux compatibility
 * version 3.34 3-Dec-2018

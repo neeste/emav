@@ -70,16 +70,21 @@ lookahead()
 /* get an event from event queue, while waiting for the event to come,
    background process is executed
 */
+#include <unistd.h>
 int
 getevent()
 {
     int     c;
 
-    while (check_event() == 0)
-        if (pgm_terminate)
+    while (check_event() == 0) {
+        if (pgm_terminate) {
             event_q = Ctrl_C;
-    	else if (execute_it != NULL)
-	    (*execute_it) ();
+        } else if (execute_it != NULL) {
+            (*execute_it) ();
+        } else {
+            usleep(1000);
+        }
+    }
 
     c = event_q;
     event_q = 0;

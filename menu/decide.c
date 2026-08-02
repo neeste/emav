@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdarg.h>
 #include <ctype.h>
+#include <stdio.h>
 #include <time.h>
 #include "menu.h"
 
@@ -106,6 +107,7 @@ decide(int set, int item, char *s, ...)
 	    }
 	}
     } else if (set < 0) {
+        fprintf(stderr, "[DEBUG] decide: waiting for event\n"); fflush(stderr);
 	n = wait_event(-set);	// wait "set" ms
     } else {
 	n = getevent();

@@ -75,7 +75,7 @@ draw_menu(int i, int active)
     } else {
         loc = s++ - mm[i].menustr;
         (void) gprintf(x, y, "%.*s%s", loc, mm[i].menustr, s);
-        underline(x + 8 * loc, y);
+        gr_underline(x + 8 * loc, y);
         c = *s;
     }
     return (c);

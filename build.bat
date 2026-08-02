@@ -35,16 +35,26 @@ if "%VCVARS%"=="" (
 
 echo [1/3] Initializing MSVC Developer Environment...
 
-call "%VCVARS%" x86 > nul
+set "ARCH_VCVARS=x86"
+set "ARCH_MSBUILD=Win32"
+
+if /i "%PROCESSOR_ARCHITECTURE%"=="ARM64" (
+    set "ARCH_VCVARS=arm64"
+    set "ARCH_MSBUILD=ARM64"
+) else if /i "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
+    set "ARCH_VCVARS=amd64"
+    set "ARCH_MSBUILD=x64"
+)
+
+call "%VCVARS%" %ARCH_VCVARS% > nul
 if errorlevel 1 (
-    echo [ERROR] Failed to initialize MSVC environment for x86.
-    echo NOTE: Since you are on an ARM64 PC, you MUST install the "C++ x86/x64 build tools" in the Visual Studio Installer!
+    echo [ERROR] Failed to initialize MSVC environment for %ARCH_VCVARS%.
     pause
     exit /b 1
 )
 
 echo [2/3] Building EMAV Solution...
-msbuild VS16\av.sln /p:Configuration=Release /p:Platform=Win32 /p:PlatformToolset=%TOOLSET% /nologo /verbosity:minimal
+msbuild VS18\av.sln /p:Configuration=Release /p:Platform=%ARCH_MSBUILD% /p:PlatformToolset=%TOOLSET% /nologo /verbosity:minimal
 if errorlevel 1 (
     echo.
     echo [FAIL] MSBuild compilation failed!
@@ -52,15 +62,20 @@ if errorlevel 1 (
     exit /b 1
 )
 
+set "OUT_DIR=Release"
+if not "%ARCH_MSBUILD%"=="Win32" (
+    set "OUT_DIR=%ARCH_MSBUILD%\Release"
+)
+
 echo.
 echo [3/3] Verifying Output Executable...
-if exist "VS16\Release\aemav.exe" (
+if exist "VS18\%OUT_DIR%\aemav.exe" (
     echo ===================================================
     echo   [SUCCESS] EMAV Build Succeeded!
-    echo   Executable: VS16\Release\aemav.exe
+    echo   Executable: VS18\%OUT_DIR%\aemav.exe
     echo ===================================================
 ) else (
-    echo [FAIL] Executable VS16\Release\aemav.exe was not produced.
+    echo [FAIL] Executable VS18\%OUT_DIR%\aemav.exe was not produced.
 )
 
 pause

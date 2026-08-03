@@ -22,10 +22,8 @@ void pgm_title();
 static int  xpix = 640, ypix = 480;
 static int  xwin = 640, ywin = 480;
 
-#ifndef MGW
 static char ea[EASZ], path[PATHSZ];
 static int  ep = 0;
-#endif
 
 LRESULT CALLBACK 
 WndProc (HWND hwnd, UINT iMsg, WPARAM wParam, LPARAM lParam)

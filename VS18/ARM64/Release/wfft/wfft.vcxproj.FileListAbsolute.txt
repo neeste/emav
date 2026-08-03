@@ -1,3 +1,4 @@
 O:\STN\RC_src\av\VS16\ARM64\Release\wfft\wfft.lib
 N:\STN\RC_src\av\VS16\ARM64\Release\wfft\wfft.lib
 M:\STN\RC_src\av\VS16\ARM64\Release\wfft\wfft.lib
+P:\STN\RC_src\av\VS18\ARM64\Release\wfft\wfft.lib

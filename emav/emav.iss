@@ -5,7 +5,7 @@ AppPublisher=Boys Town Nationial Research Hospital
 AppPublisherURL=http://audres.org/
 AppSupportURL=http://audres.org/rc/emav/
 AppUpdatesURL=http://audres.org/downloads/emav-setup.zip
-DefaultDirName={pf}\BTNRH\EMAV
+DefaultDirName={autopf}\BTNRH\EMAV
 DefaultGroupName=BTNRH
 
 [Tasks]

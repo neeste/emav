@@ -5,7 +5,7 @@ AppPublisher=Boys Town Nationial Research Hospital
 AppPublisherURL=http://audres.org/
 AppSupportURL=http://audres.org/rc/abrav/
 AppUpdatesURL=http://audres.org/downloads/abrav-setup.zip
-DefaultDirName={pf}\BTNRH\ABRAV
+DefaultDirName={autopf}\BTNRH\ABRAV
 DefaultGroupName=BTNRH
 
 [Tasks]

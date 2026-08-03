@@ -2,7 +2,7 @@
 AppName=EMAV
 AppVersion=1.0
 AppVerName=EMAV 1.0
-DefaultDirName={pf}\EMAV
+DefaultDirName={autopf}\EMAV
 DefaultGroupName=EMAV
 OutputDir=Output
 OutputBaseFilename=EMAV_Setup

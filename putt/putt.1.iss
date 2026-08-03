@@ -5,7 +5,7 @@ AppPublisher=Boys Town Nationial Research Hospital
 AppPublisherURL=http://audres.org/
 AppSupportURL=http://audres.org/rc/putt/
 AppUpdatesURL=http://audres.org/downloads/putt-setup.zip
-DefaultDirName={pf}\BTNRH\PUTT
+DefaultDirName={autopf}\BTNRH\PUTT
 DefaultGroupName=BTNRH
 
 [Tasks]

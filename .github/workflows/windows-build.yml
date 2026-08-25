@@ -18,19 +18,19 @@ jobs:
       uses: microsoft/setup-msbuild@v2
       
     - name: Build EMAV Solution (Release)
-      run: msbuild VS16\av.sln /p:Configuration=Release /p:Platform=Win32 /nologo /verbosity:minimal
+      run: msbuild VS18\av.sln /p:Configuration=Release /p:Platform=Win32 /nologo /verbosity:minimal
       
     - name: Verify build artifacts
       run: |
-        if (!(Test-Path "VS16\Release\aemav.exe")) {
+        if (!(Test-Path "VS18\Release\aemav.exe")) {
             Write-Error "aemav.exe was not created!"
             exit 1
         }
-        if (!(Test-Path "VS16\Release\tstdsp.exe")) {
+        if (!(Test-Path "VS18\Release\tstdsp.exe")) {
             Write-Error "tstdsp.exe was not created!"
             exit 1
         }
-        if (!(Test-Path "VS16\Release\tstmenu.exe")) {
+        if (!(Test-Path "VS18\Release\tstmenu.exe")) {
             Write-Error "tstmenu.exe was not created!"
             exit 1
         }

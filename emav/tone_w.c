@@ -1,3 +1,13 @@
+void grab_tone(void);
+int adjust_tone_f(void);
+int chk_due(void);
+void dis_tone(void);
+void spec_volt(void);
+static void ramp_down(void);
+void show_tone(void);
+int do_tone(void);
+void Tone_wind(void);
+
 /* ================================= tone_w.c =============================== */
 
 #include <stdio.h>
@@ -36,8 +46,7 @@ static double rms_out = 0;
 static int esc_flg = 0;
 
 /* make the tone option current */
-void
-grab_tone()
+void grab_tone(void)
 {
     mp_transfer(Sys.MPfn);
     Sen = Sys;
@@ -66,16 +75,14 @@ adjustf(double f)
 }
 
 /* adjust the freq for MENUITEM tone data structure */
-int
-adjust_tone_f()
+int adjust_tone_f(void)
 {
     tone.freq = (float) adjustf(tone.freq);
     return (0);
 }
 
 /* check tone duration for MENUITEM tone */
-int
-chk_due()
+int chk_due(void)
 {
     float   a, d;
     int     i;
@@ -182,8 +189,7 @@ unit_select(double in, double *out, int *dpl)
 }
 
 /* display tone level and etc */
-void
-dis_tone()
+void dis_tone(void)
 {
     char *u;
     double v;
@@ -220,8 +226,7 @@ dis_tone()
     u = unit_select(sig_v.dco, &v, &d);
     gprintf(j, k, "  %-6.*f %s", d, v, u);
 }
-void
-spec_volt()
+void spec_volt(void)
 {
     mic_v = sig_v.rms;
     rec_v[0] = (float) (rms_out / Sen.DA[0]);
@@ -231,8 +236,7 @@ spec_volt()
     simple_submenu(menu_x(), 0, preamp_voltage);
 }
 
-static void
-ramp_down()
+static void ramp_down(void)
 {
     dspend();                       // tell dsp to ramp down
     msleep(nint(tone.ramp_ms));     // wait for ramp down
@@ -240,8 +244,7 @@ ramp_down()
 }
 
 /* graphical display of the tone */
-void
-show_tone()
+void show_tone(void)
 {
     double  tms;
     int     cnt = 0, mx, my;
@@ -318,8 +321,7 @@ gen_tone(float f, int c)
 }
 
 /* do the tone task */
-int
-do_tone()
+int do_tone(void)
 {
     int     acc_sets_sav, swp1set_sav, chan, tone_cnt;
     float   a;
@@ -361,11 +363,10 @@ do_tone()
 }
 
 /* this function is associated to the mainmenu TONE item */
-void 
-Tone_wind()
+void Tone_wind(void)
 {
     if (dsp_init() > 0)
-	return;
+    return;
     top_message("Tone       ");
     grab_tone();
     adjust_tone_f();

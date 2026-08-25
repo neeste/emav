@@ -1,3 +1,16 @@
+void grab_teoae(void);
+int dis_patient(void);
+void dis_info(void);
+void dis_cali(void);
+int R_clear(void);
+static void chk_fit_upld(void);
+int check_fit(void);
+void zero_rec(void);
+void calibr_upld(void);
+int calculate_it(void);
+static void do_teoae_task(void);
+void TEOAE_wind(void);
+
 /* =============================== teoae_w.c ============================= */
 
 #include <stdio.h>
@@ -34,15 +47,12 @@ int     display_reset = 0;
 int     rd_cal_flag = 0;
 float	tolerance = 1.0;	/* dB */
 
-static void calibr_upld(void);
-
 static SIG_V sav_v;
 static int chk_fit_flag = 0;
 static int cal_stim_flag = 0;
 
 /* make the TEOAE paramters current ones */
-void
-grab_teoae()
+void grab_teoae(void)
 {
     float  tmax;
 
@@ -203,8 +213,7 @@ units_conv(double in)
 }
 
 /* display patient (or subject) information */
-int
-dis_patient()
+int dis_patient(void)
 {
     int     i, k, j, cw, ch;
     char    str[82];
@@ -293,8 +302,7 @@ len_est(int32_t *acc, short *stm, int npt, double vs)
 }
 
 /* display the Check Fit information */
-void
-dis_info()
+void dis_info(void)
 {
     double  val, lc, fp, vs;
     int     k, i, cw;
@@ -338,8 +346,7 @@ dis_info()
 }
 
 /* display the calibration info */
-void
-dis_cali()
+void dis_cali(void)
 {
     int     i, j, k;
     double  u;
@@ -421,8 +428,7 @@ I_info(char *no_use)
 }
 
 /* clears the current display box */
-int
-R_clear()
+int R_clear(void)
 {
     mouse_exclude(w_dis->xtop, w_dis->ytop, w_dis->xbot, w_dis->ybot);
     gr_rectf(w_dis->xtop + 1, w_dis->ytop + 1, w_dis->xbot - 1, w_dis->ybot - 1,
@@ -561,8 +567,7 @@ proc_art(int i)
     return (0);
 }
 
-static void
-chk_fit_upld()
+static void chk_fit_upld(void)
 {
     double  tms;
     int     min;
@@ -625,8 +630,7 @@ MENUITEM dp_chk[] = {
     {NULL, NULL, NONE, 0, 0, 0, proc_art}
 };
 
-int
-check_fit()
+int check_fit(void)
 {
     MENUITEM *mi;
 
@@ -675,8 +679,7 @@ int     rec[100], reclen = 25;
 int     reslen = 125, resrmp = 25;
 static float recstm[RESSIZ], recrsp[RESSIZ], recrsd[RESSIZ];
 
-void
-zero_rec()
+void zero_rec(void)
 {
     int     i;
 
@@ -784,8 +787,7 @@ MENUITEM bwt[] = {
     {NULL, NULL, NONE, 0, 0, 0, proc_art}
 };
 
-void
-calibr_upld()
+void calibr_upld(void)
 {
     double  tms;
     int     i, ns;
@@ -846,8 +848,7 @@ calibr_upld()
     }
 }
 
-int
-calculate_it()
+int calculate_it(void)
 {
     int     i;
     char    s[40];
@@ -885,8 +886,7 @@ calculate_it()
     return (i);
 }
 
-static void
-do_teoae_task()
+static void do_teoae_task(void)
 {
     extern TOKENFILE *t;
     extern int teoae_counter;
@@ -906,13 +906,12 @@ do_teoae_task()
     }
 }
 
-void
-TEOAE_wind()
+void TEOAE_wind(void)
 {
     extern MENUITEM file_opt[];
 
     if (dsp_init() > 0)
-	return;
+    return;
     init_wind();
     top_message("TEOAE      ");
     teoae.rate = adjust_rate(teoae.rate);
@@ -927,7 +926,7 @@ TEOAE_wind()
 	    set_test_opt(1, 1, 1);
 	    top_message("           ");
 	    dsprst(TRUE);
-	    return;
+    return;
 	}
 	R_clear();
         strcpy(stmfn, teoae.stim_file);

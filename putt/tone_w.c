@@ -1,3 +1,10 @@
+int chk_due(void);
+void dis_tone(void);
+void spec_volt(void);
+void show_tone(void);
+int do_tone(void);
+void Tone_wind(void);
+
 /* tone_w.c */
 
 #include <stdio.h>
@@ -48,8 +55,7 @@ adjust_tone_f(float **f)
 }
 
 /* check tone duration for MENUITEM tone */
-int
-chk_due()
+int chk_due(void)
 {
     float   a, d;
     int     i;
@@ -78,8 +84,7 @@ MENUITEM tone_menu[] = {
 };
 
 /* display tone signal level and etc */
-void
-dis_tone()
+void dis_tone(void)
 {
     double  fft_lev;
     int     j, k;
@@ -149,8 +154,7 @@ MENUITEM preamp_voltage[] = {
     {NULL, NULL, NONE, 0, 0, 1, NULL}
 };
 
-void
-spec_volt()
+void spec_volt(void)
 {
     mic_v = sig_v.rms;
     rec_v[0] = (float) (rms_out / Sen.DA[0]);
@@ -161,8 +165,7 @@ spec_volt()
 }
 
 /* graphical display of the tone signal */
-void
-show_tone()
+void show_tone(void)
 {
     int     cnt = 0, mx, my;
     short   data;
@@ -225,8 +228,7 @@ gen_tone(float f, int c)
 }
 
 /* do the tone task */
-int
-do_tone()
+int do_tone(void)
 {
     int     nsets_s, swp1set_s, chan, ramp;
     float   a;
@@ -275,11 +277,10 @@ do_tone()
 }
 
 /* this function is associated to the mainmenu TONE item */
-void 
-Tone_wind()
+void Tone_wind(void)
 {
     if (dsp_init() > 0)
-        return;
+    return;
     top_message("Tone    ");
     Sen = Sys;
     dis_units(Sen.AD, Sen.MP);

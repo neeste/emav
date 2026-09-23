@@ -163,6 +163,7 @@ alloc_buffers()
     wi = (dsppar.code == 2) ? 2 : 1;
     wo = (dsppar.nic == 2) ? 2 : 1;
     maxnpts = (dspprm - base_addr) / (2 * (wi + wo));
+    if (maxnpts < 16384) maxnpts = 16384;
     accnpts = maxnpts * wi;
     accbuf_a = ((int32_t *) calloc(accnpts, 2 * sizeof(int32_t)));
     outbuf = ((short *) calloc(accnpts, 4 * sizeof(short)));
@@ -1409,7 +1410,7 @@ Test_menu()
 static int
 set_dpoae_wind()
 {
-    init_wind();
+    printf("init_wind\n"); fflush(stdout); init_wind();
     top_message("DPOAE ");
     set_trailer(DPOAE_wind);
     top_message("     ");
@@ -1420,7 +1421,7 @@ set_dpoae_wind()
 static int
 set_teoae_wind()
 {
-    init_wind();
+    printf("init_wind\n"); fflush(stdout); init_wind();
     top_message("TEOAE ");
     set_trailer(TEOAE_wind);
     top_message("     ");
@@ -1431,7 +1432,7 @@ set_teoae_wind()
 static int
 set_probe_wind()
 {
-    init_wind();
+    printf("init_wind\n"); fflush(stdout); init_wind();
     top_message("Probe ");
     set_trailer(Probe_wind);
     top_message("     ");
@@ -1442,7 +1443,7 @@ set_probe_wind()
 static int
 set_cav_wind()
 {
-    init_wind();
+    printf("init_wind\n"); fflush(stdout); init_wind();
     top_message("Cavity");
     set_trailer(Cavity_wind);
     top_message("     ");
@@ -1453,7 +1454,7 @@ set_cav_wind()
 static int
 set_tone_wind()
 {
-    init_wind();
+    printf("init_wind\n"); fflush(stdout); init_wind();
     top_message("Tone  ");
     set_trailer(Tone_wind);
     top_message("     ");
@@ -1466,7 +1467,7 @@ void
 quit_pgm(char *no_use)
 {
     end_gr();
-    dsprst(TRUE);	/* Assert the TMS 320 reset	 */
+    printf("dsprst\n"); fflush(stdout); dsprst(TRUE);	/* Assert the TMS 320 reset	 */
     if (t != NULL)
 	tclose(t);
     if (_access(tmpbatchfile, 0) == 0)
@@ -1479,30 +1480,30 @@ MAIN_PGM(int ac, char **av)
 {
     argc = ac;
     argv = av;
-    defpar();
-    set_title("EMAV");
+    printf("defpar\n"); fflush(stdout); defpar();
+    printf("set_title\n"); fflush(stdout); set_title("EMAV");
     set_prn_title("EMAV");
-    init_alloc_space();
-    genfn("B", "TMP", tmpbatchfile, &tmp_counter);
+    printf("init_alloc_space\n"); fflush(stdout); init_alloc_space();
+    printf("genfn\n"); fflush(stdout); genfn("B", "TMP", tmpbatchfile, &tmp_counter);
     teoae_counter = 0;
-    read_counter_file();
-    read_init_file();
-    read_args();
+    printf("read_counter_file\n"); fflush(stdout); read_counter_file();
+    printf("read_init_file\n"); fflush(stdout); read_init_file();
+    printf("read_args\n"); fflush(stdout); read_args();
     Sen = Sys;
-    dis_units(Sen.AD, Sen.MP);
+    printf("dis_units\n"); fflush(stdout); dis_units(Sen.AD, Sen.MP);
 
-    init_graphics();
-    mouse_init();
-    mainmenu_init(mainmenu);
-    dsprst(TRUE);
+    printf("REACHED init_graphics\n"); init_graphics();
+    printf("mouse_init\n"); fflush(stdout); mouse_init();
+    printf("mainmenu_init\n"); fflush(stdout); mainmenu_init(mainmenu);
+    printf("dsprst\n"); fflush(stdout); dsprst(TRUE);
 
     while (!pgm_done()) {
-	clr_scr();
+	printf("clr_scr\n"); fflush(stdout); clr_scr();
 	text_color(menucolor.mfg, menucolor.mbg);
-	init_wind();
-        mainmenu_show(NULL);
-        batch();
-	mainmenu_driver();
+	printf("init_wind\n"); fflush(stdout); init_wind();
+        printf("mainmenu_show\n"); fflush(stdout); mainmenu_show(NULL);
+        printf("batch\n"); fflush(stdout); batch();
+	printf("mainmenu_driver\n"); fflush(stdout); mainmenu_driver();
     }
     quit_pgm(0);
 

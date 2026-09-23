@@ -1,3 +1,8 @@
+int savethelist(void);
+void cal_conds(void);
+static void list_info(void);
+int gen_param_list(void);
+
 /* ================================= param.c ============================== */
 
 #include <stdio.h>
@@ -145,8 +150,7 @@ MENUITEM param_fdp[] =
 };
 
 /* write the list into a file */
-int
-savethelist()
+int savethelist(void)
 {
     WIND    w;
     int     i, j, saved, accept, k;
@@ -242,8 +246,7 @@ f1_compute(double fdp, double f2)
 }
 
 /* # of conditions */
-void
-cal_conds()
+void cal_conds(void)
 {
     int i;
 
@@ -255,8 +258,7 @@ cal_conds()
 }
 
 /* display list file info */
-static void
-list_info()
+static void list_info(void)
 {
     int i, j, k;
 
@@ -273,8 +275,7 @@ list_info()
 }
 
 /* generate a list of parameters */
-int
-gen_param_list()
+int gen_param_list(void)
 {
     float   L1i, L2i, F1i, F2i, ATi;
     int     i, j, k = 0, cnt = 0;

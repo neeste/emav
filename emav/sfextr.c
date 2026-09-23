@@ -1,3 +1,5 @@
+static void close_bin(void);
+
 /* sfextr.c - extract SFOAE from DPOAE DAT file */
 
 #include <stdio.h>
@@ -100,8 +102,7 @@ read_bin(int ild, int ipd, int itm, int chn)
     v[ipd] = adp[0];
 }
 
-static void
-close_bin()
+static void close_bin(void)
 {
     if (fbin) {
 	fclose(fbin);

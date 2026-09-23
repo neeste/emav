@@ -1,7 +1,7 @@
 [Setup]
 AppName=EMAV
-AppVersion=1.0
-AppVerName=EMAV 1.0
+AppVersion={#APP_VERSION}
+AppVerName=EMAV {#APP_VERSION}
 DefaultDirName={autopf}\EMAV
 DefaultGroupName=EMAV
 OutputDir=Output

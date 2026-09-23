@@ -1,3 +1,7 @@
+void usage(void);
+void wrinfo(void);
+void wrdata(void);
+
 /* oba2.c */
 
 #include <stdio.h>
@@ -36,8 +40,7 @@ newext(char *f, char *e)
     *f++ = '\0';
 }
 
-void
-usage()
+void usage(void)
 {
     printf("usage:\n");
     printf("    oba2 [-option] file ...\n");
@@ -53,8 +56,7 @@ usage()
     exit(0);
 }
 
-void
-wrinfo()
+void wrinfo(void)
 {
     float   ndb;
 
@@ -235,8 +237,7 @@ wrdtln(char *s, float *d, short n, char *u)
     printf("  %s\n", u);
 }
 
-void
-wrdata()
+void wrdata(void)
 {
     float  *cf, *f;
     float   dbs[13], dbn[13], dbr[13], dly[13];

@@ -622,7 +622,7 @@ tok_store(int c, int32_t *p)
     short  *sbuf;
 
     if (c == 0)
-	return;
+    return;
     sbuf = (short *) calloc((size_t)(buflen), sizeof(short));
     amax = rescale(p, sbuf, buflen, MAXPOSINT);
     tmax = findmax(sbuf, buflen);

@@ -1,3 +1,8 @@
+void set_menu_colors(void);
+void set_text_par(void);
+void set_screen_element_colors(void);
+void set_screen_element_mono_colors(void);
+
 /* screen.c */
 
 #include <stdio.h>
@@ -39,8 +44,7 @@ int scrn_c[NUM_SCRN_COLORS] = {
     LIGHTMAGENTA,	/* C_AMBS - A-B spectrum */
 };
 
-void
-set_menu_colors()
+void set_menu_colors(void)
 {
     menucolor.mfg = BLACK;	/* non active menu fg and bg colors */
     menucolor.mbg = WHITE;
@@ -51,8 +55,7 @@ set_menu_colors()
     menucolor.boxc = DARKGRAY;	/* menu frame color */
 }
 
-void
-set_text_par()
+void set_text_par(void)
 {
     txtpar.menu_height = 13;	/* each menu item height in pixels */
     txtpar.font_height = 10;	/* the font height in pixels */
@@ -67,8 +70,7 @@ set_text_par()
     txtpar.mono = 0;		/* mono flag */
 }
 
-void
-set_screen_element_colors()
+void set_screen_element_colors(void)
 {
     scrn_c[C_INFF] = LIGHTBLUE;	    /* C_INFF - info panel foreground */
     scrn_c[C_INFB] = LIGHTGRAY;	    /* C_INFB - info panel background */
@@ -103,8 +105,7 @@ set_screen_element_colors()
     scrn_c[C_AMBS] = LIGHTMAGENTA;  /* C_AMBS - A-B spectrum */
 }
 
-void
-set_screen_element_mono_colors()
+void set_screen_element_mono_colors(void)
 {
     int i;
 

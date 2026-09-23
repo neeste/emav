@@ -1,3 +1,29 @@
+void grab_dpoae(void);
+void zero_acc(void);
+void zero_out(void);
+void zero_sav(void);
+static void pre_adj_F1(void);
+static void reload_F1(void);
+static void dsp_start(void);
+static void dsp_stim(void);
+static int dsp_ready(void);
+static void ramp_down(void);
+static void dsp_reject(void);
+static int proc_accu(void);
+static int rd_cal(void);
+static void dis_processing(void);
+void del_data_lnk(void);
+int create_list(void);
+void proc_hdr(void);
+static int rdlstfn(void);
+static void close_swp(void);
+static void recalibrate(void);
+static struct datlnk * previous_ptr(void);
+static int do_dpoae_task(void);
+int chkfit_calibr(void);
+static int getcal(void);
+void DPOAE_wind(void);
+
 /* ============================ dpoae_w.c ================================ */
 
 #include <stdio.h>
@@ -106,8 +132,7 @@ static SAV_FFT AB_fft[2];
 
 /* make the dpoae paramters current */
 
-void
-grab_dpoae()
+void grab_dpoae(void)
 {
     mp_transfer(Sys.MPfn);
     Sen = Sys;
@@ -145,8 +170,7 @@ grab_dpoae()
 }
 
 /* zero accbuff */
-void
-zero_acc()
+void zero_acc(void)
 {
     int     i, accnpts;
 
@@ -158,8 +182,7 @@ zero_acc()
 }
 
 /* zero outbuf */
-void
-zero_out()
+void zero_out(void)
 {
     int     i;
 
@@ -169,8 +192,7 @@ zero_out()
 }
 
 /* zero savbuf */
-void
-zero_sav()
+void zero_sav(void)
 {
     int     i;
 
@@ -283,7 +305,7 @@ gen_stim(double f, double db, double ph, int c, int a, short mc, short mp)
     static int n1 = 0, n2 = 0;
 
     if ((f <= 0) || (f >= (rate / 2))) {
-	return;
+    return;
     }
 #ifdef LONG_STIM
     mxam = pow(2,31) - 1;   // maximum stimulus amplitude
@@ -392,8 +414,7 @@ gen_stim(double f, double db, double ph, int c, int a, short mc, short mp)
     }
 }
 
-static void
-pre_adj_F1()
+static void pre_adj_F1(void)
 {
     int     i, c, tfgc_s, tbgc_s;
 
@@ -410,11 +431,10 @@ pre_adj_F1()
     text_color(tfgc_s, tbgc_s);
 }
 
-static void
-reload_F1()
+static void reload_F1(void)
 {
     if (f1adj_db == db_adj && f1adj_ph == ph_adj)
-        return;
+    return;
     gen_stim(datptr->f1, datptr->d1 + f1adj_db, datptr->p1 + f1adj_ph, 1, 0, 0, 0);
     dwnld_dac(1, 1, dsp_scale[1], stmtyp);
     dsprst(TRUE);
@@ -432,7 +452,7 @@ adjust_F1(int i)
         f1adj = 0;
         pre_dis_ind("Artifact", "Limit");
         dis_artifact();
-        return;
+    return;
     } else if (i == FK_Up_Arrow) {
         f1adj_db += 1;
     } else if (i == FK_Down_Arrow) {
@@ -464,8 +484,7 @@ adjust_F1(int i)
 
 /* ======================================================================= */
 
-static void
-dsp_start()
+static void dsp_start(void)
 {
     if (r_mode.at == 2) {
 	if (fswp) {
@@ -484,8 +503,7 @@ dsp_start()
     }
 }
 
-static void
-dsp_stim()
+static void dsp_stim(void)
 {
     if (r_mode.at == 2) {
         zero_acc();
@@ -542,8 +560,7 @@ dsp_count(int n)
     }
 }
 
-static int
-dsp_ready()
+static int dsp_ready(void)
 {
     short data;
 
@@ -560,8 +577,7 @@ dsp_ready()
     return (0);
 }
 
-static void
-ramp_down()
+static void ramp_down(void)
 {
     dspend();                       // tell dsp to ramp down
     msleep(nint(dpoae.ramp_ms));    // wait for ramp down
@@ -642,8 +658,7 @@ dsp_chk_sync(int32_t nsw)
     return (0);
 }
 
-static void
-dsp_reject()
+static void dsp_reject(void)
 {
     if (r_mode.at == 1) {
 	if (fswp && !calmode) {
@@ -654,8 +669,7 @@ dsp_reject()
 
 /* ======================================================================= */
 
-static int
-proc_accu()
+static int proc_accu(void)
 {
     double  fdp = 0, fdif = 0;
     float   dpp, dpa, dpn;
@@ -909,8 +923,7 @@ cali_chan(int c)
 }
 
 /* read calibration from file and compute gain */
-static int
-rd_cal()
+static int rd_cal(void)
 {
     int ok = 0;
 
@@ -1031,8 +1044,7 @@ calnswp(double tm)
 }
 
 /* put the message */
-static void
-dis_processing()
+static void dis_processing(void)
 {
     int     i, j;
 
@@ -1114,8 +1126,7 @@ dis_result(float *pst, float *nst, double rtp, double rtn, double fdp, int sf)
 }
 
 /* deallocate the data linked list */
-void
-del_data_lnk()
+void del_data_lnk(void)
 {
     struct datlnk *prev;
 
@@ -1193,8 +1204,7 @@ add_data_lnk(int set)
     return (1);
 }
 
-int
-create_list()
+int create_list(void)
 {
     strcpy(dpoae_file, dpoae.file);
     grab_dpoae();
@@ -1455,8 +1465,7 @@ wr_dat_rec(FILE *fout, int nd, double tel, double rep,
 }
 
 /* process header in DAT file */
-void
-proc_hdr()
+void proc_hdr(void)
 {
     int     i, j, k;
     static char *ky[] = {
@@ -1587,8 +1596,7 @@ proc_hdr()
 }
 
 /* read list file */
-static int
-rdlstfn()
+static int rdlstfn(void)
 {
     FILE   *fptr;
     int     j, k, cnt, gflg;
@@ -1678,8 +1686,7 @@ chk_freqs(double f1, double f2, double f3, double f4)
     return (err);
 }
 
-static void
-close_swp()
+static void close_swp(void)
 {
     if (r_mode.at && fswp) {
 	fclose(fswp);
@@ -1687,8 +1694,7 @@ close_swp()
     }
 }
 
-static void
-recalibrate()
+static void recalibrate(void)
 {
     cali_file[0] = 0;
     open_stim_w(dpoae.calibrate);
@@ -1714,8 +1720,7 @@ recalibrate()
 
 /* find the previous pointer of the data linked list */
 
-static struct datlnk *
-previous_ptr()
+static struct datlnk * previous_ptr(void)
 {
     struct datlnk *ptr;
 
@@ -1730,8 +1735,7 @@ previous_ptr()
 
 /* Do the DPOAE task */
 
-static int
-do_dpoae_task()
+static int do_dpoae_task(void)
 {
     char    outmsg[3][16];
     double  pct, f, tel, rep;
@@ -2082,8 +2086,7 @@ inf_msg(char *s)
     check_event();
 }
 
-int
-chkfit_calibr()
+int chkfit_calibr(void)
 {
     char *ext;
     int icav = 0, cal_ok = 0, ybot;
@@ -2131,8 +2134,7 @@ chkfit_calibr()
     return (cal_ok);
 }
 
-static int
-getcal()
+static int getcal(void)
 {
     char tmp_id[8];
     int ok = 0, swpver = 0;
@@ -2189,12 +2191,11 @@ getcal()
     return (ok);
 }
 
-void
-DPOAE_wind()
+void DPOAE_wind(void)
 {
     if (r_mode.at != 2) {
 	if (dsp_init() > 0)
-	    return;
+    return;
     }
     top_message("DPOAE      ");
     dpoae.rate = adjust_rate(dpoae.rate);

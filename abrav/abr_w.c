@@ -1,3 +1,28 @@
+void grab_abr(void);
+void init_spec(void);
+void init_wind(void);
+int dis_patient(void);
+void download(void);
+void clear_display(void);
+void flush_dsp(void);
+void chk_fit_upld(void);
+int check_fit(void);
+void proc_hdr(void);
+int add_data(void);
+void read_param_list(void);
+void delete_param_list(void);
+int numb_params(void);
+int rdlsfile(void);
+int verify_info(void);
+void save_calibr(void);
+int proc_accu(void);
+void save_cali_tokens(void);
+int rd_cal(void);
+int calibrate_ite(void);
+int begin_series(void);
+void end_series(void);
+int ABR_wind(void);
+
 /* abr_w.c */
 
 #include <stdio.h>
@@ -118,8 +143,7 @@ static MENUITEM lev_opt[] = {
 static SIG_V sav_v;
 static SAV_FFT A_fft, B_fft;
 
-void
-grab_abr()
+void grab_abr(void)
 {
     static int stmtyp[3] = {1, 2, 3};
     static int msktyp[3] = {0, 5, 4};
@@ -269,15 +293,13 @@ open_stim_w(char *file)
     (void) dis_stim(1, outbuf, INT);
 }
 
-void
-init_spec()
+void init_spec(void)
 {
     w_spec.ytop = w_msg.ybot + 1;
     (void) draw_w(&w_spec);
 }
 
-void
-init_wind()
+void init_wind(void)
 {
     w_text.xtop = 100;
     w_text.xbot = xpix - 100;
@@ -390,8 +412,7 @@ units_conv(double in)
     return (in);
 }
 
-int
-dis_patient()
+int dis_patient(void)
 {
     int     i, k, j;
     char    str[82];
@@ -539,8 +560,7 @@ void dis_pos_info(double lcurr, double vcurr, double lv, double vv, double lvp, 
     gprintf(j, k, "Volts(%s)%8.2f%8.2f%8.2f%8.2f", unit, dis_vcurr, dis_vv, dis_vvp, dis_vv-dis_vvp);
 }
 
-void
-download()
+void download(void)
 {
     int j, k, t0, t1, skip = 0;
 
@@ -590,8 +610,7 @@ set_level(int tstlev)
     download();
 }
 
-void
-clear_display()
+void clear_display(void)
 {
     mouse_exclude(w_dis->xtop, w_dis->ytop, w_dis->xbot, w_dis->ybot);
     gr_rectf(w_dis->xtop + 1, w_dis->ytop + 1, w_dis->xbot - 1, w_dis->ybot - 1,
@@ -648,8 +667,7 @@ take_the_aver(int len, float *p)
 	p[i] -= tmp;
 }
 
-void
-flush_dsp()
+void flush_dsp(void)
 {
     short     data;
 
@@ -657,8 +675,7 @@ flush_dsp()
 	(void) dspdread(&data);
 }
 
-void
-chk_fit_upld()
+void chk_fit_upld(void)
 {
     float  *resp_ptr = (float *) outbuf;
     short   data;
@@ -689,8 +706,7 @@ chk_fit_upld()
     }
 }
 
-int
-check_fit()
+int check_fit(void)
 {
     int     i, j, k;
 
@@ -756,8 +772,7 @@ check_fit()
 }
 
 /* read in header in data file */
-void
-proc_hdr()
+void proc_hdr(void)
 {
     int     i, k;
     static char *ky[] = {
@@ -803,8 +818,7 @@ proc_hdr()
 }
 
 /* add data value to stim_lev list */
-int
-add_data()
+int add_data(void)
 {
     int i, c;
 
@@ -856,8 +870,7 @@ add_param_list(struct stimParam r)
 }
 
 //this will read the "line" value, get the values, and pass them along to the add_param_list function
-void 
-read_param_list()
+void read_param_list(void)
 {
     float f1, l1, d1, s1, f2, l2, d2;
     int swps;
@@ -911,8 +924,7 @@ read_param_list()
 
 }
 
-void 
-delete_param_list()
+void delete_param_list(void)
 {
     struct stimParam *curr;
     struct stimParam *next;
@@ -980,8 +992,7 @@ set_curr_param(struct stimParam *p)
     download();
 }
 
-int 
-numb_params()
+int numb_params(void)
 {
     int rval = 0;
     struct stimParam *curr = head_param;
@@ -995,8 +1006,7 @@ numb_params()
 }
 
 /* read list file */
-int
-rdlsfile()
+int rdlsfile(void)
 {
     FILE  *fptr;
     int j, k;
@@ -1055,8 +1065,7 @@ rdlsfile()
     return (1);
 }
 
-int 
-verify_info()
+int verify_info(void)
 {
     char s1[82], s2[22], s3[42], s4[42];
     
@@ -1145,8 +1154,7 @@ closebin(int num)
     fclose(binfp);
 }
 
-void
-save_calibr()
+void save_calibr(void)
 {
     int scal = 0;
 
@@ -1168,8 +1176,7 @@ save_calibr()
 
 /******************************************************************************/
 
-int
-proc_accu()
+int proc_accu(void)
 {
     int     i, mx, my, np;
     int     pair = 0, cnt = 0, total = 0;
@@ -1336,8 +1343,7 @@ compute_cal_gain(int c)
 }
 
 /* save ITE calibration responses into a token file */
-void
-save_cali_tokens()
+void save_cali_tokens(void)
 {
     t = tcreat(cali_file);
     if (t == NULL) {
@@ -1362,8 +1368,7 @@ MENUITEM cfn[] = {
 };
 
 /* read ITE calibration from file and compute gain */
-int
-rd_cal()
+int rd_cal(void)
 {
     int x, y;
     
@@ -1387,8 +1392,7 @@ rd_cal()
 }
 
 /* in-the-ear (ITE) calibration */
-int
-calibrate_ite()
+int calibrate_ite(void)
 {
     int ok;
 
@@ -1424,8 +1428,7 @@ calibrate_ite()
 /******************************************************************************/
 
 // this is called when we start a series
-int 
-begin_series()
+int begin_series(void)
 {
     int j, k;
 
@@ -1456,8 +1459,7 @@ begin_series()
     return (1);
 }
 
-void
-end_series()
+void end_series(void)
 {
     int res;
     char stuff[30];
@@ -1486,8 +1488,7 @@ end_series()
 
 }
 
-int 
-ABR_wind()
+int ABR_wind(void)
 {
     int j = 0;
 

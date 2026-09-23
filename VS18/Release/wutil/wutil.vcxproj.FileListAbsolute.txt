@@ -2,3 +2,5 @@ N:\STN\RC_src\av\VS16\Release\wutil\wutil.lib
 O:\STN\RC_src\av\VS16\Release\wutil\wutil.lib
 M:\STN\RC_src\av\VS16\Release\wutil\wutil.lib
 P:\STN\RC_src\av\VS18\Release\wutil\wutil.lib
+R:\STN\RC_src\av\VS18\Release\wutil\wutil.lib
+T:\STN\RC_src\av\VS18\Release\wutil\wutil.lib

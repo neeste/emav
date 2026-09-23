@@ -1,3 +1,11 @@
+void init_wind(void);
+int dis_patient(void);
+void dis_cali(void);
+void dis_info(void);
+int R_clear(void);
+void chk_fit_upld(void);
+int check_fit(void);
+
 #include <stdlib.h>
 /* chkfit.c */
 
@@ -109,8 +117,7 @@ stim_title(char *file)
     w_stim.ybot = w_stim_fft.ybot = w_stim.ytop + 7 * txtpar.font_height + 1;
 }
 
-void
-init_wind()
+void init_wind(void)
 {
     w_text.xtop = 100;
     w_text.xbot = xpix - 100;
@@ -178,8 +185,7 @@ units_conv(double in)       /* in = V */
     return (in * 1000);     /* return = mV or mPa */
 }
 
-int
-dis_patient()
+int dis_patient(void)
 {
     int     i, k, j;
     char    str[82];
@@ -209,8 +215,7 @@ dis_patient()
     return (k);
 }
 
-void
-dis_cali()
+void dis_cali(void)
 {
     double  u, hobl, chng;
     int     i, j, k;
@@ -240,8 +245,7 @@ dis_cali()
     }
 }
 
-void
-dis_info()
+void dis_info(void)
 {
     int     k, i;
     double  val, hobl, chng;
@@ -313,8 +317,7 @@ I_info(char *no_use)
 }
 
 /* clears the current display box */
-int
-R_clear()
+int R_clear(void)
 {
     mouse_exclude(w_dis->xtop, w_dis->ytop, w_dis->xbot, w_dis->ybot);
     gr_rectf(w_dis->xtop + 1, w_dis->ytop + 1, w_dis->xbot - 1, w_dis->ybot - 1,
@@ -357,8 +360,7 @@ MENUITEM bwt[] = {
     {NULL, NULL, NONE, 0, 0, 0, NULL}
 };
 
-void
-chk_fit_upld()
+void chk_fit_upld(void)
 {
     short     data;
 
@@ -397,8 +399,7 @@ chk_fit_upld()
     }
 }
 
-int
-check_fit()
+int check_fit(void)
 {
     swp1set = probe.chk_swps;
     attenu.att1 = probe.cal_atten;

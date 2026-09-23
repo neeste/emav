@@ -1,3 +1,8 @@
+void init_gr(void);
+void end_gr(void);
+void gr_beep(void);
+void toggle_mono(void);
+
 /* g_grx.c - graphics using DJC and GRX */
 
 #include <stdio.h>
@@ -12,8 +17,7 @@
 static int txtfgc = 0;
 static int txtbgc = 0;
 
-void
-init_gr()
+void init_gr(void)
 {
     int     ncolors = 16;
 
@@ -24,8 +28,7 @@ init_gr()
     signal(SIGINT, SIG_IGN);
 }
 
-void
-end_gr()
+void end_gr(void)
 {
     GrSetMode(GR_default_text);
 }
@@ -138,10 +141,10 @@ g_savscr(x1, y1, x2, y2)
     if (nss < MAXNSS) {
         nb = gr_imagesize(x1, y1, x2, y2);
         if (nb >= 65000)
-    	    return;
+    return;
         scrnbuf[nss] = (unsigned char *) malloc((size_t) nb);
         if (scrnbuf[nss] == NULL)
-            return;
+    return;
         gr_getimage(x1, y1, x2, y2, scrnbuf[nss]);
         nss++;
     }
@@ -164,8 +167,7 @@ gr_settc(int fgc, int bgc)
     txtbgc = bgc;
 }
 
-void
-gr_beep()
+void gr_beep(void)
 {
 }
 
@@ -196,8 +198,7 @@ gr_dotty(int t)
 {
 }
 
-void
-toggle_mono()
+void toggle_mono(void)
 {
 }
 

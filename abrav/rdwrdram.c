@@ -1,3 +1,5 @@
+void zero_out(void);
+
 /* rdwrdram.c */
 
 #include <stdio.h>
@@ -49,8 +51,7 @@ downldpar(int mode, int np, int skip, int out)
     }
 }
 
-void
-zero_out()
+void zero_out(void)
 {
     int     i;
 
@@ -100,7 +101,7 @@ create_wind_tone(int c, double scl)
 
     if (scl == 0 || stim_.sig_freq[c] <= 0 || stim_.sig_dur[c] <= 0) {
 	zero_out();
-	return;
+    return;
     }
     startpt = 0.001 * stim_.sig_start[c] * rate;
     stoppt = 0.001 * (stim_.sig_start[c] + stim_.sig_dur[c]) * rate;
@@ -138,7 +139,7 @@ create_ramp_tone(int c, double scl)
 
     if (scl == 0 || stim_.sig_freq[c] <= 0 || stim_.sig_dur[c] <= 0) {
 	zero_out();
-	return;
+    return;
     }
     t0 = stim_.sig_start[c];
     t1 = t0 + 0.001 * stim_.sig_ramp[c] * rate;
@@ -173,7 +174,7 @@ create_cont_tone(int c, double scl)
 
     if (scl == 0 || stim_.sig_freq[c] <= 0) {
 	zero_out();
-	return;
+    return;
     }
     pi = 4 * atan(1.0);
     dp = 2 * pi * stim_.sig_freq[c] / rate;

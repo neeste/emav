@@ -1,3 +1,8 @@
+void zero_all(void);
+int proc_accu(void);
+int test_dsp(void);
+void save_cali_tokens(void);
+
 /* calibr.c */
 
 #include <stdio.h>
@@ -62,8 +67,7 @@ int32_t    run_time = 0;
 
 static int cal_ramp = 0;
 
-void
-zero_all()
+void zero_all(void)
 {
     int     i;
 
@@ -126,8 +130,7 @@ proc_art(int i)
     } 
 }
 
-int
-proc_accu()
+int proc_accu(void)
 {
     float  *lp;
     int     i, j, k, m, mx, my;
@@ -308,8 +311,7 @@ set_channel(int c)
         "Calibrate channel A ..." : "Calibrate channel B ...");
 }
 
-int
-test_dsp()
+int test_dsp(void)
 {
     int timeout = 1000;
     short data;
@@ -337,8 +339,7 @@ test_dsp()
 }
 
 /* save the calibration responses into a token file */
-void
-save_cali_tokens()
+void save_cali_tokens(void)
 {
     int     mo, da, yr, rts, close_it = 0;
     static char outmsg[3][16] = {{0}};

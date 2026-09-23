@@ -1,3 +1,6 @@
+void init_wind(void);
+int R_clear(void);
+
 /* chkfit.c */
 
 #include <stdio.h>
@@ -34,8 +37,7 @@ extern TOGGLETYPE distype, thv_chk;
 int     fft_flag = 0, stim_flag = 0;
 int     display_reset = 0;
 
-void
-init_wind()
+void init_wind(void)
 {
     w_text.xtop = 100;
     w_text.xbot = xpix - 100;
@@ -100,8 +102,7 @@ units_conv(double in)       /* in = V */
 
 
 /* clears the current display box */
-int
-R_clear()
+int R_clear(void)
 {
     mouse_exclude(w_dis->xtop, w_dis->ytop, w_dis->xbot, w_dis->ybot);
     gr_rectf(w_dis->xtop + 1, w_dis->ytop + 1, w_dis->xbot - 1, w_dis->ybot - 1,

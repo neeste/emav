@@ -28,7 +28,7 @@ swppol(char *fn, int rflg)
     fp = fopen(fn, "r+b");
     if (fp == NULL) {
         printf("can't open %s\n", fn);
-        return;
+    return;
     }
     fread(key, 4, 1, fp);
     fread(&lv, 4, 1, fp);

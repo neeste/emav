@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 // util.h - prototypes for utilities library
 #include <stdint.h>
 

@@ -1,3 +1,6 @@
+int File_wind(void);
+int Info_wind(void);
+
 #include <stdlib.h>
 /* test.c */
 
@@ -94,15 +97,13 @@ quit_pgm(char *no_use)
     return(ESCAPE);
 }
 
-int
-File_wind()
+int File_wind(void)
 {
     return(simple_submenu(menu_x(), menu_y(), file_item));
 }
 
 
-int
-Info_wind()
+int Info_wind(void)
 {
     return(simple_submenu(menu_x(), menu_y(), info));
 }

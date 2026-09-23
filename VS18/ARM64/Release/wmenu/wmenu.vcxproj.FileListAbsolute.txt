@@ -2,3 +2,4 @@ O:\STN\RC_src\av\VS16\ARM64\Release\wmenu\wmenu.lib
 N:\STN\RC_src\av\VS16\ARM64\Release\wmenu\wmenu.lib
 M:\STN\RC_src\av\VS16\ARM64\Release\wmenu\wmenu.lib
 P:\STN\RC_src\av\VS18\ARM64\Release\wmenu\wmenu.lib
+T:\STN\RC_src\av\VS18\ARM64\Release\wmenu\wmenu.lib

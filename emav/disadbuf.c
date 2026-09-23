@@ -440,7 +440,7 @@ show_xlabel(double vb, double vr, int bv, char *u)
         rs -= rm;
     }
     if (vr <= 0)
-	return;
+    return;
     dx = (w_dis->xbot - w_dis->xtop) / vr;
     wx = ((vr < 20) ? 1 : ((vr < 200) ? 2 : 3)) * cw;
     if (dx < wx * 0.05) {

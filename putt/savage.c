@@ -1,3 +1,9 @@
+void close_text_w(void);
+int Option_wind(void);
+int chk_drspc(void);
+void dsp_vfs(void);
+int dsp_init(void);
+
 /* savage.c */
 
 #include <stdio.h>
@@ -20,9 +26,9 @@
 #include <unistd.h>
 #endif /* WIN32 */
 
-int 	pb_opt();
-int 	p_c_opt();
-int 	p_t_opt();
+int 	pb_opt(char* no_use);
+int 	p_c_opt(char* no_use);
+int 	p_t_opt(char* no_use);
 int     average();
 int     do_meer_sel();
 int     do_ml_sel();
@@ -285,16 +291,14 @@ open_text_w(int *i)
     return (w_text.ytop + txtpar.font_height);
 }
 
-void
-close_text_w()
+void close_text_w(void)
 {
     if (text_wind_flag)
 	close_w(&w_text);
     text_wind_flag = 0;
 }
 
-int
-Option_wind()
+int Option_wind(void)
 {
     return (simple_submenu(menu_x(), menu_y(), option));
 }
@@ -429,14 +433,12 @@ set_drspc(int i)
     drspc = i;
 }
 
-int
-chk_drspc()
+int chk_drspc(void)
 {
     return (drspc);
 }
 
-void
-dsp_vfs()
+void dsp_vfs(void)
 {
     float ad_vfs[2], da_vfs[2];
 
@@ -453,8 +455,7 @@ dsp_vfs()
     Sen = Sys;
 }
 
-int
-dsp_init()
+int dsp_init(void)
 {
     int     err;
 

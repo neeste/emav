@@ -1,3 +1,8 @@
+static int prn_status(void);
+static int check_sys_call(void);
+static void display_label(void);
+static void erase_label(void);
+
 /* print.c */
 
 #include <stdio.h>
@@ -42,14 +47,12 @@ prn_setup(char *no_use)
     return (simple_submenu(menu_step(3), txtpar.menu_height * 4, prn_opt));
 }
 
-static int
-prn_status()
+static int prn_status(void)
 {
     return (0);
 }
 
-static int
-check_sys_call()
+static int check_sys_call(void)
 {
     int     i, ret;
 
@@ -63,13 +66,12 @@ check_sys_call()
     return (ret);
 }
 
-static void
-display_label()
+static void display_label(void)
 {
     int     fg, bg, wid;
 
     if (label[0] == 0)
-	return;
+    return;
     rd_text_color(&fg, &bg);
     text_color(txtpar.cbg, txtpar.cbg);
     mainmenu_clear();
@@ -81,8 +83,7 @@ display_label()
     txtpar.text_wind_len = wid;
 }
 
-static void
-erase_label()
+static void erase_label(void)
 {
     gr_rectf(4, 0, 
 	strlen(label) * txtpar.font_width + 4, txtpar.font_height - 1, 
@@ -102,7 +103,7 @@ colorps_pr(char *name)
 
     fpt = fopen(name, "wt");
     if (fpt == NULL)
-        return;
+    return;
     xx = xpix;
     yy = ypix;
     tt = time(&tt);
@@ -149,7 +150,7 @@ postscript_pr(char *name)
 
     fpt = fopen(name, "wt");
     if (fpt == NULL)
-        return;
+    return;
     xx = xpix;
     yy = ypix;
     tt = time(&tt);
@@ -235,7 +236,7 @@ pcl_pr(char *name)
 
     fpt = fopen(name, "wb");
     if (fpt == NULL)
-        return;
+    return;
 #ifdef _MSC_CODE
     set_binary(_fileno(fpt));
 #endif /* _MSC_CODE */
@@ -308,7 +309,7 @@ prn_screen(void)
     ps = prn_status();
     if (ps) {
 	(void) decide(0, 3, "Printer Port", pr_port, prn_stat[ps]);
-	return;
+    return;
     }
     display_label();
     check_event();

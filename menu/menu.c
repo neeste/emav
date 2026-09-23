@@ -1,3 +1,8 @@
+int get_resume(void);
+int is_mono(void);
+int menu_y(void);
+void clr_scr(void);
+
 /*  ============================= menu.c =================================
     This is the library for the simple menu system
     ====================================================================== */
@@ -64,14 +69,12 @@ set_resume(int c)
     resume = c;
 }
 
-int
-get_resume()
+int get_resume(void)
 {
     return (resume);
 }
 
-int
-is_mono()
+int is_mono(void)
 {
     return (txtpar.mono);
 }
@@ -212,8 +215,7 @@ draw_sub(int i, int active, WIND * w)
     return (c);
 }
 
-int
-menu_y()
+int menu_y(void)
 {
     return (isub ? ysub[isub] : txtpar.menu_height);
 }
@@ -230,8 +232,9 @@ submenu_driver(WIND * w)
     while (submenu[num_item].menustr != NULL)
 	num_item++;
     for (ch = 0; ch < num_item; ch++)
-	if (ch != index)
+	if (ch != index) {
 	    keys[ch] = draw_sub(ch, 0, w);
+        }
     keys[index] = draw_sub(index, 1, w);
     i = index;
     while (!cancel) {
@@ -416,8 +419,7 @@ save_w(WIND * w)
     return (0);
 }
 
-void
-clr_scr()
+void clr_scr(void)
 {
     mouse_show(0);
     gr_clear(txtpar.cbg);

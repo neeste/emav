@@ -18,6 +18,8 @@
 #define DAC_DELAY 	0
 #define limit(min,val,max)	((val<min)?min:((val>max)?max:val))
 
+#pragma pack(push, 1)
+
 struct _upload {
     short   mode;
     short   npts;
@@ -136,6 +138,8 @@ typedef struct {
     int32_t rate;
     float *rp;
 } SAV_FFT;
+
+#pragma pack(pop)
 
 extern SAV_FFT A_fft, B_fft;
 

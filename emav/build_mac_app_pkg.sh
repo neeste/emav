@@ -17,6 +17,8 @@ cat <<EOF > "$APP_DIR/Contents/Info.plist"
     <string>org.btnrh.emav</string>
     <key>CFBundleName</key>
     <string>EMAV</string>
+    <key>CFBundleIconFile</key>
+    <string>emav.icns</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
@@ -41,6 +43,7 @@ chmod +x "$APP_DIR/Contents/MacOS/EMAV_Launcher"
 cp emav "$APP_DIR/Contents/MacOS/"
 chmod +x "$APP_DIR/Contents/MacOS/emav"
 cp emav.ini "$APP_DIR/Contents/Resources/"
+cp emav.icns "$APP_DIR/Contents/Resources/"
 
 # Build the .pkg installer
 echo "Building EMAV_App.pkg..."

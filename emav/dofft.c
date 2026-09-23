@@ -1,3 +1,6 @@
+void modulesqr(void);
+// static void dump_fft(void);
+
 /* =============================== dofft.c =============================== */
 
 #include <stdio.h>
@@ -82,8 +85,7 @@ press_ref(double fr, float *ph)
     return (b * b / 2);
 }
 
-void
-modulesqr()
+void modulesqr(void)
 {
     double  a, b, c, d, fr;
     float   ph;
@@ -202,8 +204,7 @@ retrieve_fft(float *p, int n)
 }
 
 #ifdef DUMP_FFT
-static void
-dump_fft()
+static void dump_fft(void)
 {
     int i, n;
     double a, dt, lpsval, f, m;
@@ -236,7 +237,7 @@ show_fft(int xrange, int yrange, int levref, int color, int reset)
     lpsflg = levref;
     ibuf = (short *) fbuf;
     if (size < 2)
-	return;
+    return;
 
     if (xrange < 3) {
 	n = size;
@@ -287,10 +288,10 @@ fft_A_B(int32_t *p, int32_t *q, int addflg, int sets, int flag, int chan)
     int     i, n;
 
     if (swp1set <= 0 || !sets)
-	return;
+    return;
 
     if (!alloc_space(1))
-	return;
+    return;
 
     if (chan) {
 	p += buflen;
@@ -397,7 +398,7 @@ cal_gain(SAV_FFT *pft, int npts)
 
     i = fft_short(stmbuf, 1);
     if (!i)
-	return;
+    return;
     save_fft(fbuf, i);
     a = pft->rp;
     b = pft->ph;
@@ -582,7 +583,7 @@ get_level(double fr, int nsb, int typ, double df, float *slv, float *nlv, float 
         *slv = dbmin;
 	*sph = 0;
         *nlv = dbmin;
-	return;
+    return;
     }
 
 /* fetch sidebands */

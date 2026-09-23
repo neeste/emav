@@ -1,3 +1,20 @@
+void print_version(void);
+void alloc_buffers(void);
+void init_alloc_space(void);
+void usage(void);
+char   * atline(void);
+int check_starter(void);
+void read_init_file(void);
+void read_counter_file(void);
+void write_counter_file(void);
+void daily_calibration(void);
+void batch(void);
+static int Test_wind(void);
+static int set_abr_wind(void);
+static int set_tone_wind(void);
+static int set_probe_wind(void);
+int nxt_lst(void);
+
 /* abrav.c */
 
 #include <stdio.h>
@@ -173,15 +190,13 @@ static MENUITEM testmenu[] = {
 };
 
 /* print the verison number and copyright info */
-void
-print_version()
+void print_version(void)
 {
     fprintf(stderr, "%s\n%s\n%s %s\n", VERSION, PGM_NAME, COPYRIGHT, BTNRH);
 }
 
 /* allocate space for data buffers, */
-void
-alloc_buffers()
+void alloc_buffers(void)
 {
     maxnpts = MAXNPTS;
     accbuf = (float *) malloc((unsigned) (8 * MAXNPTS) * sizeof(float));
@@ -200,8 +215,7 @@ alloc_buffers()
 }
 
 /* initialize memory model and allocate space for data buffers */
-void
-init_alloc_space()
+void init_alloc_space(void)
 {
     dsppar.code = 1;		// ABR mode
     dsppar.greg = dspgreg(3);	// 1=16kw, 2=65kw, 3=97kw, 4=129kw
@@ -272,8 +286,7 @@ testexist(char *n)
     return (0);
 }
 
-void
-usage()
+void usage(void)
 {
     printf("usage:  abrav [-options] [filename ...]\n");
     printf("options:\n");
@@ -393,8 +406,7 @@ is_delim(char c)
 static int cnt = 0;
 static int linelen;
 
-char   *
-atline()
+char   * atline(void)
 {
     int     i;
 
@@ -443,8 +455,7 @@ check_list(char *s, char **lp)
     return (0);
 }
 
-int
-check_starter()
+int check_starter(void)
 {
     char   *keys[] =
     {
@@ -875,22 +886,21 @@ set_tone(int c, double num)
     }
 }
 
-void
-read_init_file()
+void read_init_file(void)
 {
     FILE   *fptr;
     double  num;
     int     c, flag;
 
     if (!testexist(init_file))
-	return;
+    return;
     fptr = fopen(init_file, "rt");
     if (fptr == NULL)
-	return;
+    return;
 
     do {
 	if (fgets(line, MAXLINE, fptr) == NULL)
-	    return;
+    return;
 	get_token(1);
 	flag = check_starter();
     } while (!flag);
@@ -920,8 +930,7 @@ read_init_file()
     fclose(fptr);
 }
 
-void
-read_counter_file()
+void read_counter_file(void)
 {
     FILE   *fpt;
 
@@ -936,14 +945,13 @@ read_counter_file()
 	bin_count = 0;
 }
 
-void
-write_counter_file()
+void write_counter_file(void)
 {
     FILE   *fpt;
 
     fpt = fopen(abravcounter, "wt");
     if (fpt == NULL)
-	return;
+    return;
     fprintf(fpt, "%5d %5d", abr_count, bin_count);
     fclose(fpt);
 }
@@ -987,7 +995,7 @@ proc_batch(char *fn)
 
     fpt = fopen(fn, "rt");
     if (fpt == NULL)
-	return;
+    return;
     efp = NULL;
     top_message("Batching");
     while (fgets(o_file_name, 128, fpt) != NULL) {
@@ -1040,8 +1048,7 @@ proc_batch(char *fn)
 
 /* handles daily calibration
 */
-void
-daily_calibration()
+void daily_calibration(void)
 {
     int     mo, da, yr;
     char    *env;
@@ -1083,8 +1090,7 @@ daily_calibration()
 
 /* handles batch processing
 */
-void
-batch()
+void batch(void)
 {
     int     c;
 
@@ -1109,16 +1115,14 @@ batch()
 }
 
 /* Tests menu */
-static int
-Test_wind()
+static int Test_wind(void)
 {
     (void) simple_submenu(menu_x(), menu_y(), testmenu);
     return(0);
 }
 
 /* set to run ABR test */
-static int
-set_abr_wind()
+static int set_abr_wind(void)
 {
     calibr_flag = 0;
     top_message("ABR   ");
@@ -1127,8 +1131,7 @@ set_abr_wind()
 }
 
 /* set to run tone test */
-static int
-set_tone_wind()
+static int set_tone_wind(void)
 {
     top_message("TONE  ");
     set_trailer(Tone_wind);
@@ -1136,8 +1139,7 @@ set_tone_wind()
 }
 
 /* set to run tone test */
-static int
-set_probe_wind()
+static int set_probe_wind(void)
 {
     calibr_flag = 1;
     top_message("CAVITY");
@@ -1157,8 +1159,7 @@ ini_lst(char *fn)
     return (nxt_lst());
 }
 
-int
-nxt_lst()
+int nxt_lst(void)
 {
     int i;
  

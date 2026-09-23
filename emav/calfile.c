@@ -473,7 +473,7 @@ mat_update(char *fn, int nadc)	    // adjust nadc
 
     mfd = _open(fn, OFLAG, PMODE);  // open the file
     if (mfd < 0) {
-        return;
+    return;
     }
     numadc = nadc;
     while(mat_rd_hdr(mfd, type, hdr, nam)) {

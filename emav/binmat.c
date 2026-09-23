@@ -1,3 +1,5 @@
+void usage(void);
+
 /* binmat.c - BIN to MAT file converter */
 
 #include <stdio.h>
@@ -190,7 +192,7 @@ dp_bin_mat(char *fn)
         newext(fn, "mat");
         mfd = _open(fn, OFLAG, PMODE);    /* open the file */
         if (mfd == -1)
-            return;
+    return;
         mat_wr1_s(mfd, "DPOAE_BIN", bh.total);
         mat_wr1_f(mfd, "rate", (float) bh.samp_rate);
         mat_wr1_s(mfd, "npts", bh.wav_len);
@@ -243,8 +245,7 @@ dp_bin_mat(char *fn)
     }
 }
 
-void
-usage()
+void usage(void)
 {
     printf("usage:\n");
     printf("    binmat [-v] file.bin ...\n");

@@ -1,3 +1,9 @@
+int Start_New(void);
+int File_wind(void);
+int eventintime(void);
+void rd_cal_file(void);
+void rd_hearing_file(void);
+
 /* file.c */
 
 #include <stdio.h>
@@ -164,8 +170,7 @@ savefile(char *no_use)
     return (1);
 }
 
-int
-Start_New()
+int Start_New(void)
 {
     defpar();
     read_init_file();
@@ -202,10 +207,52 @@ toggle_type(char **s)
     return (0);
 }
 
+int browse_file_action(char *no_use) {
+    char filter[128];
+    char path[MAXPATH*2];
+    path[0] = '\0';
+    
+    // Create the filter
+    sprintf(filter, "%s Files (*%s)", filetypes.strs[filetypes.at], sf[filetypes.at] + 1);
+    int len = strlen(filter);
+    filter[len] = '\0';
+    strcpy(&filter[len+1], sf[filetypes.at]);
+    filter[len + 1 + strlen(sf[filetypes.at]) + 1] = '\0';
+
+#ifdef _WIN32
+    extern int w32_browse_file(char *path, int max_len, const char *filter);
+    if (w32_browse_file(path, sizeof(path), filter)) {
+#elif defined(__APPLE__)
+    FILE *fp = popen("osascript -e 'POSIX path of (choose file with prompt \"Select Data File:\")' 2>/dev/null", "r");
+    if (fp) {
+        if (fgets(path, sizeof(path), fp) != NULL) {
+            int L = strlen(path);
+            while (L > 0 && (path[L-1] == '\n' || path[L-1] == '\r')) path[--L] = '\0';
+        }
+        pclose(fp);
+    }
+    if (path[0] != '\0') {
+#else
+    if (0) {
+#endif
+        struct PATH p;
+        split_path(path, p.drive, p.dir, p.name, p.ext);
+        
+        strcpy(ofiledir, p.drive);
+        strcat(ofiledir, p.dir);
+        
+        strcpy(o_file_name, path);
+        set_trailer((void (*)(void)) rd_and_show[filetypes.at]);
+        return (27);
+    }
+    return (0);
+}
+
 MENUITEM sub_file[] = {
     {"&Open File", NULL, NONE, 0, 0, 1, open_file},
     {"File &Type =", (char *) &filetypes, TOGGLE, 0, 0, 1, toggle_type},
     {"File &Name :=", o_file_name, STRING, 127, 0, 1, savedir},
+    {"&Browse...", NULL, NONE, 0, 0, 1, browse_file_action},
     {NULL, NULL, NONE, 0, 0, 0, NULL}
 };
 
@@ -268,16 +315,14 @@ file_items(char *no_use)
     return (27);
 }
 
-int
-File_wind()
+int File_wind(void)
 {
     return (simple_submenu(0, txtpar.menu_height, file_opt));
 }
 
 #define ATTRIB (_A_NORMAL | _A_RDONLY | _A_HIDDEN)
 
-int
-eventintime()
+int eventintime(void)
 {
     int32_t    timer;
     int     rv;
@@ -601,8 +646,7 @@ open_file(char *use2chk)
     return (rc);
 }
 
-void 
-rd_cal_file()
+void rd_cal_file(void)
 {
     init_wind();
     thev_source(o_file_name, o_file_name);
@@ -646,8 +690,7 @@ check_hearing_file(char *fn, int flag)
     return(1);
 }
 
-void
-rd_hearing_file()
+void rd_hearing_file(void)
 {
     int     i, j, k, cflg, swp, tim, cmt, otim, itecnt, iteacc, shwflg, datfmt;
     float   spl, sil, fpl, cond;
@@ -665,7 +708,7 @@ rd_hearing_file()
     };
 
     if (!check_hearing_file(o_file_name, 1)) {
-        return;
+    return;
     }
     fpt = fopen(o_file_name, "rt");
     init_wind();

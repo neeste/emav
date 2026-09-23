@@ -1,3 +1,5 @@
+void modulesqr(void);
+
 /* dofft.c */
 
 #include <stdio.h>
@@ -15,7 +17,7 @@
 #define     _hypot      hypot
 #endif
 
-void gr_rectf();
+
 
 int     lpsflg = 0;
 
@@ -74,8 +76,7 @@ retrieve_fft(float *p, int n)
 	p[i] = fbuf[i] * s;
 }
 
-void
-modulesqr()
+void modulesqr(void)
 {
     double   a, b, c, tpi;
     int     i, ii, ir;
@@ -123,7 +124,7 @@ show_fft(int xrange, int yrange, int levref, int color, int reset)
 
     n = size / 2;
     if (n < 1)
-        return;
+    return;
     dt = ((float) n) / rate;
     lpsflg = levref;
     lpsval = levref ? 10 * log10(dt) : 0;
@@ -156,9 +157,9 @@ fft_A_B(float *p, float *q, int addflg, int sets)
     int     i;
 
     if (swp1set <= 0 || sets <= 0) 
-        return;
+    return;
     if (!alloc_space(1))
-        return;
+    return;
 
     if (addflg) {
 	for (i = 0; i < buflen; i++)
@@ -219,10 +220,10 @@ minph_f(float *z, int nf, double fill)
     float  *gbuf, d;
 
     if (nf <= 0)
-	return;
+    return;
     gbuf = (float *) calloc(size + 2, sizeof(float));
     if (gbuf == NULL)
-    	return;
+    return;
 
     n = nf * 2;
     d = (float) log(fill);
@@ -309,7 +310,7 @@ cal_gain(SAV_FFT *x_fft)
 
     i = fft_short(stimulus, 1);
     if (!i)
-	return;
+    return;
     save_fft(fbuf, i);
     for (i = 0; i < x_fft->npts; i++)
 	x_fft->rp[i] /= fbuf[i];

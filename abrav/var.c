@@ -1,3 +1,5 @@
+void init_mp(void);
+
 /* var.c */
 
 #include <stdio.h>
@@ -164,8 +166,7 @@ cor_sum(float *a1, float *a2)
     return (1e-9);
 }
 
-void
-init_mp()
+void init_mp(void)
 {
     int i, j;
 

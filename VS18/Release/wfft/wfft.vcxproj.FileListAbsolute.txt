@@ -2,3 +2,5 @@ N:\STN\RC_src\av\VS16\Release\wfft\wfft.lib
 O:\STN\RC_src\av\VS16\Release\wfft\wfft.lib
 M:\STN\RC_src\av\VS16\Release\wfft\wfft.lib
 P:\STN\RC_src\av\VS18\Release\wfft\wfft.lib
+R:\STN\RC_src\av\VS18\Release\wfft\wfft.lib
+T:\STN\RC_src\av\VS18\Release\wfft\wfft.lib

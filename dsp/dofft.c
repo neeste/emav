@@ -1,3 +1,5 @@
+static void modulesqr(void);
+
 /* dofft.c */
 
 #include <stdio.h>
@@ -44,8 +46,7 @@ alloc_space(int create)
     return (size);
 }
 
-static void
-modulesqr()
+static void modulesqr(void)
 {
     double   a, b, c, tpi;
     int     i, ii, ir;
@@ -93,7 +94,7 @@ show_fft(int xrange, int yrange, int levref, int color, int reset)
 
     n = size / 2;
     if (n < 1)
-        return;
+    return;
     dt = ((float) n) / rate;
     lpsflg = levref;
     lpsval = levref ? (float) (10 * log10(dt)) : 0;

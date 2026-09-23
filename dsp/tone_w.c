@@ -1,3 +1,11 @@
+int adjust_tone_f(void);
+int chk_dur(void);
+void dis_tone(void);
+void spec_volt(void);
+void show_tone(void);
+int do_tone(void);
+int Tone_wind(void);
+
 /* tone_w.c */
 
 #include <stdio.h>
@@ -39,16 +47,14 @@ adjustf(double f)
 }
 
 /* adjust the freq for MENUITEM tone data structure */
-int
-adjust_tone_f()
+int adjust_tone_f(void)
 {
     tone.freq = (float) adjustf(tone.freq);
     return (0);
 }
 
 /* check tone duration for MENUITEM tone */
-int
-chk_dur()
+int chk_dur(void)
 {
     float   a, d;
     int     i;
@@ -156,8 +162,7 @@ unit_select(double in, double *out, int *dpl)
 }
 
 /* display tone level and etc */
-void
-dis_tone()
+void dis_tone(void)
 {
     char *u;
     double v;
@@ -195,8 +200,7 @@ dis_tone()
     (void)gprintf(j, k, "  %-6.*f %s", d, v, u);
 }
 
-void
-spec_volt()
+void spec_volt(void)
 {
     mic_v = sig_v.rms;
     rec_v[0] = (float) (rms_out / Sen.DA[0]);
@@ -207,8 +211,7 @@ spec_volt()
 }
 
 /* graphical display of the tone signal */
-void
-show_tone()
+void show_tone(void)
 {
     double  tms;
     int     cnt = 0, mxpos, mypos;
@@ -216,7 +219,7 @@ show_tone()
 
     if (dsprst(FALSE)) {
 	esc_flg = 1;
-	return;
+    return;
     }
     while (cnt < nsets) {
 	if (dspdget()) {
@@ -279,8 +282,7 @@ gen_tone(float f, int c)
 }
 
 /* do the tone task */
-int
-do_tone()
+int do_tone(void)
 {
     int     nsets_s, swp1set_s, chan, tone_cnt;
     float   a;
@@ -331,8 +333,7 @@ do_tone()
 }
 
 /* this function is associated to the mainmenu TONE item */
-int 
-Tone_wind()
+int Tone_wind(void)
 {
     dis_units(Sen.AD, Sen.MP);
     rate = tone.rate = adjust_rate(tone.rate);

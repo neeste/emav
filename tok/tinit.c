@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 /* tinit.c */
 
 #include <stdio.h>

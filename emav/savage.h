@@ -26,6 +26,8 @@
 #define FILE_SAVE       file_opt[5]
 #define limit(min,val,max)	((val<min)?min:((val>max)?max:val))
 
+#pragma pack(push, 1)
+
 typedef struct {
     char Comment[70];
     char Threshold[12];
@@ -218,6 +220,8 @@ struct BINwav {
     unsigned short f4;
     short L4;
 };
+
+#pragma pack(pop)
 
 extern WIND *w_dis;
 extern WIND w_stim;

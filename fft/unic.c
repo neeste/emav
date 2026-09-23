@@ -1,3 +1,5 @@
+double uni(void);
+
 #include <stdlib.h>
 
 double
@@ -179,8 +181,7 @@ r1unif(int icseed, int itseed, int ibyte[4], int ifcn)
 #-----------------------------------------------------------------------
 #
 */
-double
-uni()
+double uni(void)
 {
     int     ibyte[4];
     static int icseed = 0, itseed = 0, ifcn = 1;

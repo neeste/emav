@@ -222,7 +222,7 @@ z_cav(double f, double lc, double rc, float *z)
 
     if (f == 0) {
 	z_chr(z);
-	return;
+    return;
     }
     if (z_cav_type.at == 0) {
         cav0(f, zc, wn);
@@ -488,7 +488,7 @@ thev_zsps(int n, double df, float *lc)
     z_chr(zs);
     if (nthc == 2) {
         thev_zsps2(n, df, lc);
-	return;
+    return;
     }
     for (i = 1; i < n; i++) {
 	f = i * df;
@@ -707,7 +707,7 @@ smooth(float *pp, int n, int m)
     float t[MAX_SM * 2], si, sr;
 
     if (m < 2) {
-	return;
+    return;
     } else if (m > MAX_SM) {
 	m = MAX_SM;
     }
@@ -877,7 +877,7 @@ dis_cal_cav(int icav)
     int i, j, k, fh;
 
     if (icav < 0 || icav > necv)
-	return;
+    return;
     draw_w(&w_info);
     j = w_info.xtop + 4;
     txtpar.text_wind_len = (w_info.xbot - w_info.xtop + 1) / 8 - 1;
@@ -1835,7 +1835,7 @@ thev_adj_show(char *cfn)
     char    tfn[MAXNAME];
 
     if (stim_unit.at != 3 && stim_unit.at != 4) {
-	return;
+    return;
     }
     strcpy(tfn, cfn);
     newext(tfn, "THL");
@@ -1909,7 +1909,7 @@ Cavity_wind(void)
     int cal_ok = 0;
 
     if (dsp_init() > 0)
-	return;
+    return;
     top_message("Cavity     ");
     dpoae.rate = adjust_rate(dpoae.rate);
     grab_probe();
@@ -1943,9 +1943,9 @@ Probe_wind(void)
     int cal_ok = 0;
 
     if (stepper())
-	return;
+    return;
     if (dsp_init() > 0)
-	return;
+    return;
     top_message("Probe      ");
     dpoae.rate = adjust_rate(dpoae.rate);
     grab_probe();

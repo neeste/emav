@@ -1,12 +1,18 @@
 /* version.h */
 
-#define VERSION_NUM	132
-#define VERSION		"ABRAV  version 1.32, 14-Mar-10"
+#define VERSION_NUM	402
+#define VERSION		"ABRAV  version 4.02, 22-Sep-2026"
 #define PGM_NAME        "Auditory Brainstem Response Averager"
 #define COPYRIGHT	"Copyright 1993-2010"
 #define BTNRH           "Boys Town National Research Hospital"
 
 /**********************************************************************
+* version 4.02 22-Sep-2026
+- Fixed ARM64 ABI struct alignment mismatch and streamlined Browse UX
+* version 4.01 30-Aug-2026
+- added file browser to GUI
+* version 4.00 1-Aug-2026
+- future proof code with Gemini
 * version 1.32 - 10-Mar-09
 - Fixed Tone test
 - Changed _inline to __inline in dsp_arsc.c

@@ -1,3 +1,14 @@
+static int sio_alloc(void);
+static void sio_free(void);
+static void oae_init(void);
+static int oae_start(void);
+static void abr_init(void);
+static int abr_start(void);
+static void dsp_init(void);
+static int dsp_start(void);
+static int dsp_check(void);
+static void dsp_halt(void);
+
 // dsp_wa.c - DSP function calls using ARSC
 
 #include <stdio.h>
@@ -87,8 +98,7 @@ d0error(char *m, int e)
 
 /*************************************************************************/
 
-static int
-sio_alloc()
+static int sio_alloc(void)
 {
     int i;
 
@@ -105,8 +115,7 @@ sio_alloc()
     return (0);	// no errors
 }
 
-static void
-sio_free()
+static void sio_free(void)
 {
     int i;
 
@@ -366,8 +375,7 @@ oae_get_lswp(int bo)
 
 /* oae_init - initialize local variable from parameter area */
 
-static void
-oae_init()
+static void oae_init(void)
 {
     unsigned short  *p;
 
@@ -392,8 +400,7 @@ oae_init()
 
 /* oae_start - emulates DSP code for OAE recording */
 
-static int
-oae_start()
+static int oae_start(void)
 {
     int	    i, err, bs;
 
@@ -532,8 +539,7 @@ abr_get_lswp(int bo)
 
 /* abr_init - initialize local variable from parameter area */
 
-static void
-abr_init()
+static void abr_init(void)
 {
     unsigned short  *p;
 
@@ -553,8 +559,7 @@ abr_init()
 
 /* abr_start - emulates DSP code for ABR recording */
 
-static int
-abr_start()
+static int abr_start(void)
 {
     int	    i, err, bs;
 
@@ -596,8 +601,7 @@ abr_start()
 
 /*************************************************************************/
 
-static void
-dsp_init()
+static void dsp_init(void)
 {
     if (dsp_type == 1) 
 	abr_init();
@@ -605,8 +609,7 @@ dsp_init()
 	oae_init();
 }
 
-static int
-dsp_start()
+static int dsp_start(void)
 {
     if (dsp_type == 1) 
 	return (abr_start());
@@ -614,8 +617,7 @@ dsp_start()
 	return (oae_start());
 }
 
-static int 
-dsp_check()
+static int dsp_check(void)
 {
     int b;
 
@@ -635,8 +637,7 @@ dsp_check()
     return (b);
 }
 
-static void
-dsp_halt()
+static void dsp_halt(void)
 {
     wa_stop_io();
     wa_close();
@@ -867,7 +868,7 @@ dsptest(char *dsp_file, char *file0, char *file1, char *file2)
     strcpy(dsp_file, file0);
     dspseta(0);
     if (dspinit(dsp_file) == 0)
-	return;
+    return;
     dsp_select = -1;
     dsp_err_msg = 1;
 }

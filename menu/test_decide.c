@@ -30,5 +30,5 @@ void my_decide(int set, int item, char *s, ...) {
 
 int main() {
     my_decide(0, 6, "VERSION", "PGM_NAME", "COPYRIGHT", "BTNRH", "dspapi()", "dspdev()");
-    return 0;
+    return;
 }

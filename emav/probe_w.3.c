@@ -1,3 +1,19 @@
+void grab_probe(void);
+static int thev_init(void);
+static void thev_free(void);
+static void thev_err_cav(void);
+static int thev_esc(void);
+static int dis_cal(void);
+static void show_thev_src(void);
+static void thev_cmp_zl(void);
+static void thev_cmp_prz0(void);
+static void thev_cmp_pfcd(void);
+void thev_adj_free(void);
+int create_load(void);
+int stepper(void);
+void Cavity_wind(void);
+void Probe_wind(void);
+
 /* probe_w.c */
 
 #include <stdio.h>
@@ -77,8 +93,7 @@ static int ol = 0;
 
 /* make the probe paramters current */
 
-void
-grab_probe()
+void grab_probe(void)
 {
     dis_units(Sen.AD, Sen.MP);
     buflen = limit(MINNPTS, dpoae.size, maxnpts);
@@ -226,7 +241,7 @@ z_cav(double f, double lc, double rc, float *z)
 
     if (f == 0) {
         z_chr(z);
-	return;
+    return;
     }
     if (z_cav_type.at == 0) {
         cav0(f, zc, wn);
@@ -362,8 +377,7 @@ select_chan(int c)
 }
 
 
-static int
-thev_init()
+static int thev_init(void)
 {
     int m;
 
@@ -396,8 +410,7 @@ thev_init()
     return (buflen / FFRAC);
 }
 
-static void
-thev_free()
+static void thev_free(void)
 {
 
     free_null(pzs);
@@ -492,7 +505,7 @@ thev_zsps(int n, double df, float *lc)
     z_chr(zs);
     if (nthc == 2) {
         thev_zsps2(n, df, lc);
-	return;
+    return;
     }
     for (i = 1; i < n; i++) {
 	f = i * df;
@@ -600,8 +613,7 @@ thev_err(float *lc)
     return (thev_erf(i1, i2, nf, df, lc, 0));
 }
 
-static void
-thev_err_cav()
+static void thev_err_cav(void)
 {
     double df;
     float *lc;
@@ -654,8 +666,7 @@ thev_rep(float *lc)
     k += fh;
 }
 
-static int
-thev_esc()
+static int thev_esc(void)
 {
     int c = 0;
 
@@ -711,7 +722,7 @@ smooth(float *pp, int n, int m)
     float t[MAX_SM * 2], si, sr;
 
     if (m < 2) {
-	return;
+    return;
     } else if (m > MAX_SM) {
 	m = MAX_SM;
     }
@@ -807,8 +818,7 @@ dis_cal_tok(long *buf)
     display_reset = 0;
 }
 
-static int
-dis_cal()
+static int dis_cal(void)
 {
     int i, j, k, m, fh;
 
@@ -881,7 +891,7 @@ dis_cal_cav(int icav)
     int i, j, k, fh;
 
     if (icav < 0 || icav > necv)
-	return;
+    return;
     draw_w(&w_info);
     j = w_info.xtop + 4;
     txtpar.text_wind_len = (w_info.xbot - w_info.xtop + 1) / 8 - 1;
@@ -1170,8 +1180,7 @@ show_thev_src_chan(int c)
     check_event();
 }
 
-static void
-show_thev_src()
+static void show_thev_src(void)
 {
     show_pz(0, 0, 1);
     show_pz(1, 0, 0);
@@ -1493,8 +1502,7 @@ surge_gain(float *zl, float *zs, float *ps, float *pl, int na)
     return (sg);
 }
 
-static void
-thev_cmp_zl()
+static void thev_cmp_zl(void)
 {
     double   plr, pli, pdr, pdi, pdm, prr, pri;
     double   z0r, z0i, zlr, zli, zlm, psr, psi, zsr, zsi, sg;
@@ -1543,8 +1551,7 @@ thev_cmp_zl()
     }
 }
 
-static void
-thev_cmp_prz0()
+static void thev_cmp_prz0(void)
 {
     float   zt[2];
     int     i, ii, ir;
@@ -1583,8 +1590,7 @@ thev_cmp_prz0()
     }
 }
 
-static void
-thev_cmp_pfcd()
+static void thev_cmp_pfcd(void)
 {
     int     i, ii, ir;
     double  zlr, zli, zlm, cdr, ac, nc;
@@ -1820,8 +1826,7 @@ thev_adj_cal(float *fst, float *pst, float *fpl, float *sil, float *rfl)
 }
 
 /* free calibration adjustment arrays */
-void
-thev_adj_free()
+void thev_adj_free(void)
 {
     if (padj) {		// forward pressure adjustment
 	free(padj);
@@ -1839,7 +1844,7 @@ thev_adj_show(char *cfn)
     char    tfn[MAXNAME];
 
     if (stim_unit.at != 3 && stim_unit.at != 4) {
-	return;
+    return;
     }
     strcpy(tfn, cfn);
     newext(tfn, "THL");
@@ -1870,8 +1875,7 @@ create_load_file(void)
     w_spec = wf;    // restore w_spec
 }
 
-int
-create_load()
+int create_load(void)
 {
     set_trailer(create_load_file);
     return (27);
@@ -1879,8 +1883,7 @@ create_load()
 
 /*****************************************************************************/
 
-int
-stepper()
+int stepper(void)
 {
 #ifdef WIN32
     char cmd[80];
@@ -1907,13 +1910,12 @@ stepper()
 
 /*****************************************************************************/
 
-void
-Cavity_wind()
+void Cavity_wind(void)
 {
     int cal_ok = 0;
 
     if (dsp_init() > 0)
-	return;
+    return;
     top_message("Cavity     ");
     dpoae.rate = adjust_rate(dpoae.rate);
     grab_probe();
@@ -1941,15 +1943,14 @@ Cavity_wind()
 
 /*****************************************************************************/
 
-void
-Probe_wind()
+void Probe_wind(void)
 {
     int cal_ok = 0;
 
     if (stepper())
-	return;
+    return;
     if (dsp_init() > 0)
-	return;
+    return;
     top_message("Probe      ");
     dpoae.rate = adjust_rate(dpoae.rate);
     grab_probe();

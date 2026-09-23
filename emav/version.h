@@ -2,12 +2,16 @@
 #include <math.h>
 /* version.h */
 
-#define VERSION         "EMAV  version 4.00, 1-Aug-2026"
+#define VERSION         "EMAV  version 4.02, 22-Sep-2026"
 #define PGM_NAME        "Otoacoustic Emission Averager"
 #define COPYRIGHT       "Copyright 1992-2026"
 #define BTNRH           "Boys Town National Research Hospital"
 
 /**********************************************************************
+* version 4.02 22-Sep-2026
+- Fixed ARM64 ABI struct alignment mismatch and streamlined Browse UX
+* version 4.01 30-Aug-2026
+- added file browser to GUI
 * version 4.00 1-Aug-2026
 - future proof code with Gemini
 * version 3.37 17-Jun-2021

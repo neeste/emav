@@ -5,7 +5,9 @@
 #include <math.h>
 #include <stdio.h>
 #ifdef WIN32
+#pragma pack(push, 8)
 #include <windows.h>
+#pragma pack(pop)
 #include <io.h>
 #else /* WIN32 */
 #include <unistd.h>
@@ -149,16 +151,16 @@ void epamp_init(int gain, int hpf,int lpf, int notch)
     if(clip_mem == NULL)
     {
         //error getting global memory...abort!
-        return;
+    return;
     }
     if(_access("OPTIAMP.EXE", 0) == -1)
-        return;
+    return;
     rval = WinExec("OPTIAMP.EXE",SW_HIDE);      //start opti-amp program
     if(rval == ERROR_FILE_NOT_FOUND || rval == 0)
     {
         //couldn't start optiamp program...aborting!
         GlobalFree(clip_mem);
-        return;
+    return;
     }
 
     //set gain section
@@ -186,13 +188,13 @@ void epamp_init(int gain, int hpf,int lpf, int notch)
             GlobalUnlock(clip_rval);
             CloseClipboard();
             GlobalFree(clip_mem);
-            return;
+    return;
         }
         GlobalUnlock(clip_rval);
         CloseClipboard();
     }
     else
-        return;
+    return;
 
     //high pass gain section
     clip_mem = GlobalAlloc(GHND, 50);
@@ -220,13 +222,13 @@ void epamp_init(int gain, int hpf,int lpf, int notch)
             GlobalUnlock(clip_rval);
             CloseClipboard();
             GlobalFree(clip_mem);
-            return;
+    return;
         }
         GlobalUnlock(clip_rval);
         CloseClipboard();
     }
     else
-        return;
+    return;
 
     //low pass gain section
     clip_mem = GlobalAlloc(GHND, 50);
@@ -253,7 +255,7 @@ void epamp_init(int gain, int hpf,int lpf, int notch)
         GlobalUnlock(clip_rval);
         CloseClipboard();
         GlobalFree(clip_mem);
-        return;
+    return;
     }
     GlobalUnlock(clip_rval);
     CloseClipboard();
@@ -286,7 +288,7 @@ void epamp_init(int gain, int hpf,int lpf, int notch)
         GlobalUnlock(clip_rval);
         CloseClipboard();
         GlobalFree(clip_mem);
-        return;
+    return;
     }
     GlobalUnlock(clip_rval);
     CloseClipboard();

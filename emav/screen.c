@@ -1,3 +1,6 @@
+void set_menu_colors(void);
+void set_text_par(void);
+
 /* screen.c */
 
 #include <stdio.h>
@@ -39,8 +42,7 @@ int scrn_c[NUM_SCRN_COLORS] = {
     LIGHTMAGENTA,	/* C_AMBS - A-B spectrum */
 };
 
-void
-set_menu_colors()
+void set_menu_colors(void)
 {
     menucolor.mfg = BLACK;	/* non active menu fg and bg colors */
     menucolor.mbg = WHITE;
@@ -51,8 +53,7 @@ set_menu_colors()
     menucolor.boxc = DARKGRAY;	/* menu frame color */
 }
 
-void
-set_text_par()
+void set_text_par(void)
 {
 #ifndef WIN32
     txtpar.menu_height = 13;	/* each menu item height in pixels */

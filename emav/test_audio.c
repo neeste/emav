@@ -58,5 +58,5 @@ int main() {
 
         printf("ID: %u, Name: '%s', InChannels: %d, OutChannels: %d\n", adid[i], cname, inchans, outchans);
     }
-    return 0;
+    return;
 }

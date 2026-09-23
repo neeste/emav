@@ -1,3 +1,8 @@
+void dis_artifact(void);
+int init_aver(void);
+int fold_it(void);
+void teoae_aver(void);
+
 /* =========================== naverage.c ================================ */
 
 #include <stdio.h>
@@ -59,8 +64,7 @@ pre_dis_ind(char *s, char *m)
     text_color(tfgc_s, tbgc_s);
 }
 
-void
-dis_artifact()
+void dis_artifact(void)
 {
     double  ppc, ind_mv, max_mv, x;
     int     i, j, k, tfgc_s, tbgc_s;
@@ -149,8 +153,7 @@ check_rej(int32_t *p)
     return (0);
 }
 
-int
-init_aver()
+int init_aver(void)
 {
     int     i;
 
@@ -176,7 +179,7 @@ show_A_B(int c, int m, int nss, int chan)
     int     i, j, k, n, yb, ym, yt;
 
     if (c <= 0)
-        return;
+    return;
 
     display_reset = 1;
     dfgc = scrn_c[C_WAVE];
@@ -232,7 +235,7 @@ show_A_B(int c, int m, int nss, int chan)
     }
     n = itime2 - itime1;
     if (n == 0 || saa == 0 || sbb == 0 || sxx == 0 || syy == 0)
-	return;
+    return;
     eaa = (saa - sa * sa / n) / n;
     ebb = (sbb - sb * sb / n) / n;
     eab = (sab - sa * sb / n) / n;
@@ -303,8 +306,7 @@ filter_it(int32_t *lptr, int n)
     }
 }
 
-int
-fold_it()
+int fold_it(void)
 {
     int i, j, ssw;
     int32_t val, stm, res;
@@ -366,8 +368,7 @@ ramp_it(int32_t *buf)
 }
 
 /* display the stimulus, average a/d into  accum */
-void
-teoae_aver()
+void teoae_aver(void)
 {
     char    outmsg[3][16];
     int     saved, mx, my;
@@ -377,11 +378,11 @@ teoae_aver()
     short   data;
 
     if (acc_sets <= 0 || buflen <= 0)
-	return;
+    return;
 
     np = init_aver();
     if (!np)
-	return;
+    return;
 
     saved = save_w(&w_msg);
     m = message_out(&j, &k);
@@ -478,7 +479,7 @@ teoae_aver()
 	close_w(&w_msg);
     sweeps = acc_sets - sweep;
     if (!sweeps)
-	return;
+    return;
     xbegin = 0;
     xrange = buflen;
     show_A_B(sweeps, 0, nss, 0);

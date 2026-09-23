@@ -1,3 +1,16 @@
+static int sio_alloc(void);
+static void sio_free(void);
+static void oae_init(void);
+static int oae_start(void);
+static void abr_init(void);
+static int abr_start(void);
+static void dsp_init(void);
+static int dsp_start(void);
+static void dsp_halt(void);
+static void dsp_check(void);
+static void dsp_clr_acc(void);
+void dspend(void);
+
 // dsp_arsc.c - DSP function calls using ARSC
 
 #include <stdio.h>
@@ -89,8 +102,7 @@ d0error(char *m, int e)
 
 /*************************************************************************/
 
-static int
-sio_alloc()
+static int sio_alloc(void)
 {
     int i;
     static int nbps = sizeof(int32_t);
@@ -105,8 +117,7 @@ sio_alloc()
     return (0);	// no errors
 }
 
-static void
-sio_free()
+static void sio_free(void)
 {
     int i;
 
@@ -309,8 +320,7 @@ oae_get_lswp(int32_t bo)
 
 /* oae_init - initialize local variable from parameter area */
 
-static void
-oae_init()
+static void oae_init(void)
 {
     unsigned short  *p;
 
@@ -332,8 +342,7 @@ oae_init()
 
 /* oae_start - emulates DSP code for OAE recording */
 
-static int
-oae_start()
+static int oae_start(void)
 {
     int	    i, err = 0;
     static int32_t size[4];
@@ -494,8 +503,7 @@ abr_get_lswp(int32_t bo)
 
 /* abr_init - initialize local variable from parameter area */
 
-static void
-abr_init()
+static void abr_init(void)
 {
     unsigned short  *p;
 
@@ -517,8 +525,7 @@ abr_init()
 
 /* abr_start - emulates DSP code for ABR recording */
 
-static int
-abr_start()
+static int abr_start(void)
 {
     int	    i, err = 0;
     static int32_t size[4];
@@ -572,8 +579,7 @@ abr_start()
 
 /*************************************************************************/
 
-static void
-dsp_init()
+static void dsp_init(void)
 {
     if (dsp_type == 1) {
 	abr_init();
@@ -582,8 +588,7 @@ dsp_init()
     }
 }
 
-static int
-dsp_start()
+static int dsp_start(void)
 {
     if (dsp_type == 1) {
 	return (abr_start());
@@ -592,8 +597,7 @@ dsp_start()
     }
 }
 
-static void
-dsp_halt()
+static void dsp_halt(void)
 {
     ar_io_stop(iodev);
     sioflg = 0;
@@ -601,8 +605,7 @@ dsp_halt()
     sio_free();
 }
 
-static void
-dsp_check()
+static void dsp_check(void)
 {
     if (sioflg) {
 	curseg = ar_io_cur_seg(iodev);
@@ -613,8 +616,7 @@ dsp_check()
     }
 }
 
-static void
-dsp_clr_acc()
+static void dsp_clr_acc(void)
 {
     if (nic > 0) { 
 	// clear accumulate buffer A
@@ -967,8 +969,7 @@ dspcho(int chnoff_in, int chnoff_out)
 
 /* dspend - set termination flag */
 
-void
-dspend()
+void dspend(void)
 {
     if (devset) {
         setoff = 1;

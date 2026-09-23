@@ -1,3 +1,8 @@
+void init_gr(void);
+void end_gr(void);
+void gr_savpix(void);
+void gr_beep(void);
+
 #include <string.h>
 /* g_grx.c - graphics using DJC and GRX */
 
@@ -101,7 +106,7 @@ set_color(int c)
     static int xw_last_color = -1;
 
     if (c == xw_last_color)
-	return;
+    return;
     hw.red = ct[c].r << 8;
     hw.green = ct[c].g << 8;
     hw.blue = ct[c].b << 8;
@@ -130,14 +135,13 @@ get_color(int p)
     return (0);
 }
 
-void
-init_gr()
+void init_gr(void)
 {
     Pixmap icon;
     
     xw_mdsp = XOpenDisplay("");
     if (xw_mdsp == NULL) {
-	return;
+    return;
     }
     xw_wmsk = CWBackPixel | CWBorderPixel | CWOverrideRedirect | CWBackingStore | CWEventMask; 
     xw_scrn = DefaultScreen(xw_mdsp); 
@@ -218,8 +222,7 @@ init_gr()
     signal(SIGINT, SIG_IGN);
 }
 
-void
-end_gr()
+void end_gr(void)
 {
     XDestroyWindow(xw_mdsp, xw_mwin);
     XCloseDisplay(xw_mdsp);
@@ -273,8 +276,7 @@ gr_scrsiz(int *x, int *y)
     *y = ypix;
 }
 
-void
-gr_savpix()
+void gr_savpix(void)
 {
     // save screen image for getpix
     graphimage = XGetImage(xw_mdsp, graphdata, 0, 0, xw_width, xw_height, xw_wp, XYPixmap);
@@ -348,8 +350,7 @@ gr_settc(int fgc, int bgc)
     txtbgc = bgc;
 }
 
-void
-gr_beep()
+void gr_beep(void)
 {
 }
 

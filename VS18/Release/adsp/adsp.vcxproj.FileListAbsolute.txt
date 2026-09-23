@@ -2,3 +2,5 @@ N:\STN\RC_src\av\VS16\Release\adsp\adsp.lib
 O:\STN\RC_src\av\VS16\Release\adsp\adsp.lib
 M:\STN\RC_src\av\VS16\Release\adsp\adsp.lib
 P:\STN\RC_src\av\VS18\Release\adsp\adsp.lib
+R:\STN\RC_src\av\VS18\Release\adsp\adsp.lib
+T:\STN\RC_src\av\VS18\Release\adsp\adsp.lib

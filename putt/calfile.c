@@ -1,3 +1,14 @@
+#include <stdlib.h>
+
+// static int findmax(int    * intbuf, int n);
+static void mat_close(void);
+// static void tok_init(void);
+// static void tok_quit(void);
+static void tok_close(void);
+void cal_close(void);
+static void mat_quit(void);
+void cal_quit(void);
+
 /* calfile.c */
 
 #include <stdio.h>
@@ -400,8 +411,7 @@ mat_read(int tn)
     Sen.MP = mpsen;                 /* Pa/V  */
 }
 
-static void
-mat_close()
+static void mat_close(void)
 {
     if (cfd >= 0) {
         _close(cfd);
@@ -419,8 +429,7 @@ static TOKENFILE *t = NULL;
 
 /* tok_init - initialize tokenfile structure */
 
-static void
-tok_init()
+static void tok_init(void)
 {
     t->header.power10 = 1;
     t->header.isf = (int) (rate / 10);
@@ -487,10 +496,7 @@ rescale(float *fbuf, short *ibuf, int n, int maxfs)
     return (maxval);
 }
 
-static int
-findmax(intbuf, n)
-int    *intbuf;
-int     n;
+static int findmax(int    * intbuf, int n)
 {
     int     i;
     int     maxval = 0, absval;
@@ -512,7 +518,7 @@ tok_store(int c, float *p)
     double  amax, scale;
 
     if (c == 0)
-	return;
+    return;
     amax = rescale(p, outbuf, buflen, MAXPOSINT);
     tmax = findmax(outbuf, buflen);
     reps = c * swp1set;
@@ -557,8 +563,7 @@ tok_shut(char *msg, int rt)
 
 /* tok_quit - close tokenfile for program termination */
 
-static void
-tok_quit()
+static void tok_quit(void)
 {
     if (t != NULL) {
         tclose(t);
@@ -649,8 +654,7 @@ tok_read(int tn)
     Sen.MP = (float) mp_sen;        /* Pa/V  */
 }
 
-static void
-tok_close()
+static void tok_close(void)
 {
     if (tfp != NULL) {
         tclose(tfp);
@@ -696,8 +700,7 @@ cal_read(int tn)
         tok_read(tn);
 }
 
-void
-cal_close()
+void cal_close(void)
 {
     if (matfmt)
         mat_close();
@@ -861,7 +864,7 @@ mat_creat(char *fn, char *hpt)
 {
     mfd = _open(fn, OFLAG, PMODE);    /* open the file */
     if (mfd == -1)
-        return;
+    return;
     mat_wr1_s(mfd, hpt, (short) ntoken);
     mat_wr1_f(mfd, "rate", (float) rate);
     mat_wr1_s(mfd, "npts", (short) buflen);
@@ -903,8 +906,7 @@ mat_shut(char *msg, int rt)
     mfd = -1;
 }
 
-static void
-mat_quit()
+static void mat_quit(void)
 {
     if (mfd >= 0)
         _close(mfd);
@@ -968,8 +970,7 @@ cal_shut(char *msg, int rt)
     mat_shut(msg, rt);
 }
 
-void
-cal_quit()
+void cal_quit(void)
 {
     mat_quit();
 }

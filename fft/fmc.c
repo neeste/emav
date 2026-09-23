@@ -13,8 +13,7 @@
 #               idft with a 32-point sequence
 #-----------------------------------------------------------------------
 */
-int
-main()
+int main(void)
 {
     int     i, j, m, n;
     float   x[32], b[34];

@@ -1,3 +1,15 @@
+void out_message(void);
+void fill_full(void);
+int do_hear2_test(void);
+int do_hear1_test(void);
+static int hear_open(void);
+int hear_cali(void);
+void hear_close(void);
+int hear_test(void);
+void build_fset(void);
+void initial(void);
+void Hear_wind(void);
+
 /* hear_w.c */
 
 #include <stdio.h>
@@ -21,6 +33,7 @@
 #include <io.h>
 #else
 #include <unistd.h>
+
 #endif /* WIN32 */
 
 #define BREAK           1
@@ -34,11 +47,11 @@
 
 char   *atline();
 double  unirand();
-double  get_first_lev();
-double  get_next_lev();
-double  pick_ml_lev();
+double  get_first_lev(double, double);
+double  get_next_lev(double, int);
+double  pick_ml_lev(void);
 double  ml_fit(int, double, float *, char *, float *, float *, float *);
-double  cmp_sd_lev();
+double  cmp_sd_lev(void);
 int     dis_patient(void);
 int     hear_it(double);
 int     draw_w(WIND *);
@@ -145,8 +158,7 @@ static int ncnds = 0;
 static FILE *ofp = NULL;
 static WIND w_dp;
 
-void
-out_message()
+void out_message(void)
 {
     int     j, k;
 
@@ -194,8 +206,7 @@ ref_eq_thr(double f)
     return (rl);
 }
 
-void
-fill_full()
+void fill_full(void)
 {
     int     i;
 
@@ -256,7 +267,7 @@ sig_buf(int N, float *p, int np)
     int     i;
 
     if ((np <= 0) || (N <= 0))
-	return;
+    return;
 
     sum = sumsq = 0;
     min = max = p[0];
@@ -307,8 +318,7 @@ dis_tone2(double f)
 
 // 2AFC hearing test
 
-int
-do_hear2_test()
+int do_hear2_test(void)
 {
     char *cs;
     double  cur = 0, f, et, spl, con, sil, fpl, tml, dbv, max_lev;
@@ -517,8 +527,7 @@ do_hear2_test()
 
 // Y/N hearing test
 
-int
-do_hear1_test()
+int do_hear1_test(void)
 {
     char *cs;
     double  cur = 0, f, et, spl, con, sil, fpl, tml, dbv, int_btw_s, mn_g, mx_g, max_lev;
@@ -719,8 +728,7 @@ do_hear1_test()
 
 /***************************************************************************/
 
-static int
-hear_open()
+static int hear_open(void)
 {
     if (sim_obs.at) {
         strcpy(patient.Firstname, "Simulated");
@@ -754,8 +762,7 @@ hear_open()
     return (1);
 }
 
-int
-hear_cali()
+int hear_cali(void)
 {
     if (sim_obs.at) {
         notch_freq = 6000;
@@ -800,11 +807,10 @@ hear_cali()
     return (1);
 }
 
-void
-hear_close()
+void hear_close(void)
 {
     if (ofp == NULL)
-        return;
+    return;
     fprintf(ofp, "\n");
     fprintf(ofp, ";FileName: %s\n", file_name);
     fprintf(ofp, ";Elapsed_Time = %3.1f (sec)\n", (clock() - run_time) / (double) CLOCKS_PER_SEC);
@@ -812,8 +818,7 @@ hear_close()
     ofp = NULL;
 }
 
-int
-hear_test()
+int hear_test(void)
 {
     int nr = 0, nswps, nskps, ramp;
     int32_t stime;
@@ -880,8 +885,7 @@ hear_test()
     return (nr);
 }
 
-void
-build_fset()
+void build_fset(void)
 {
     double fi, fs, fe, obn, qtroct;
     double F1, F2, Fd, f;
@@ -1038,8 +1042,7 @@ MENUITEM hear_menu_2[] = {
     {NULL, NULL, NONE, 0, 0, 0, NULL}
 };
 
-void
-initial()
+void initial(void)
 {
     w_dp.xtop = w_sig.xtop;
     w_dp.ytop = w_sig.ytop;
@@ -1067,7 +1070,7 @@ show_hearing_file(char *fn)
     };
 
     if (!check_hearing_file(fn, 1)) {
-        return;
+    return;
     }
     fpt = fopen(fn, "rt");
     initial();
@@ -1275,15 +1278,14 @@ show_hearing_result(float f, float spl, float sil, float fpl, int cflg)
     MM_lev = (int) m_lev;
 }
 
-void
-Hear_wind()
+void Hear_wind(void)
 {
     int     nr = 0, done = 0;
     int     mx, my, c;
 
     if (!sim_obs.at && (dsp_init() > 0)) {
         if (!(sim_obs.at = decide(1, 1, "Simulate listener?")))
-            return;
+    return;
     }
     top_message("Hearing ");
     probe.rate = adjust_rate(probe.rate);
@@ -1296,10 +1298,10 @@ Hear_wind()
     my = 3 * txtpar.menu_height;
     draw_w(&w_msg);
     if (!hear_open())
-        return;
+    return;
     if (!hear_cali()) {
         hear_close();
-        return;
+    return;
     }
     while(!done) {
         ncnds = 0;

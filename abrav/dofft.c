@@ -1,3 +1,5 @@
+void modulesqr(void);
+
 /* dofft.c */
 
 #include <stdio.h>
@@ -56,8 +58,7 @@ normalize(double v)
     return (v / b);
 }
 
-void
-modulesqr()
+void modulesqr(void)
 {
     double  a, b, c, d;
     int     i;
@@ -98,7 +99,7 @@ show_fft(int xrange, int yrange, int levref, int color, int reset)
     display_reset = reset;
 
     if (size < 2)
-	return;
+    return;
     ibuf = (short *) fbuf;
 
     dt = ((float) size) / rate;
@@ -148,7 +149,7 @@ gen_sweep(short *sbuf, double scl)
     int i, n;
 
     if (!alloc_space(1))
-	return;
+    return;
     tpi = 8 * atan(1.0);
     n = buflen;
     a = (-tpi / n) / 4;
@@ -180,9 +181,9 @@ fft_A_B(float *p, float *q, int sets, int addflg, int msflg)
     int     i;
 
     if (swp1set <= 0 || !sets)
-	return;
+    return;
     if (!alloc_space(1))
-	return;
+    return;
     if (addflg) {
 	for (i = 0; i < buflen; i++)
 	    fbuf[i] = (float) (p[i] + q[i]) / sets / swp1set;
@@ -264,7 +265,7 @@ cal_gain(SAV_FFT *pft, int npts, double scl)
 
     n = fft_short(stimulus);
     if (n <= 0)
-	return;
+    return;
     save_fft(fbuf, n);
     b = pft->rp;
     n = pft->npts;

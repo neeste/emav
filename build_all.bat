@@ -63,19 +63,38 @@ if "%ISCC%"=="" (
 )
 
 echo.
-echo [1/1] Compiling Installer using ISCC...
-"%ISCC%" VS18\emav_installer.iss
+echo [1/2] Extracting EMAV version...
+for /f "usebackq tokens=*" %%a in (`powershell -Command "$v = (Get-Content emav\version.h | Select-String '#define VERSION').Line; if ($v -match 'version\s+([\d\.]+)') { $matches[1] } else { '1.0' }"`) do set EMAV_VERSION=%%a
+echo Found EMAV version: %EMAV_VERSION%
+
+echo [2/2] Compiling EMAV Installer using ISCC...
+"%ISCC%" "/DAPP_VERSION=%EMAV_VERSION%" VS18\emav_installer.iss
 
 if errorlevel 1 (
     echo.
-    echo [FAIL] Failed to compile the installer.
+    echo [FAIL] Failed to compile the EMAV installer.
+    exit /b 0
+)
+
+echo.
+echo [1/2] Extracting ABRAV version...
+for /f "usebackq tokens=*" %%a in (`powershell -Command "$v = (Get-Content abrav\version.h | Select-String '#define VERSION').Line; if ($v -match 'version\s+([\d\.]+)') { $matches[1] } else { '1.0' }"`) do set ABRAV_VERSION=%%a
+echo Found ABRAV version: %ABRAV_VERSION%
+
+echo [2/2] Compiling ABRAV Installer using ISCC...
+"%ISCC%" "/DAPP_VERSION=%ABRAV_VERSION%" VS18\abrav_installer.iss
+
+if errorlevel 1 (
+    echo.
+    echo [FAIL] Failed to compile the ABRAV installer.
     exit /b 0
 )
 
 echo.
 echo ===================================================
-echo   [SUCCESS] Installer Generated!
+echo   [SUCCESS] Installers Generated!
 echo   Location: VS18\Output\EMAV_Setup.exe
+echo   Location: VS18\Output\ABRAV_Setup.exe
 echo ===================================================
 pause
 popd

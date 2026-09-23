@@ -1,3 +1,6 @@
+void dis_artifact(void);
+int init_aver(void);
+
 /* naverage.c */
 
 #include <stdio.h>
@@ -48,8 +51,7 @@ pre_dis_ind(char *s, char *m)
     t_ind.lim = (float) (upperv * 1000.0 / (Sen.MP * Sen.AD));
 }
 
-void
-dis_artifact()
+void dis_artifact(void)
 {
     float   mvmax;
     int     i, j, k, tfgc_s, tbgc_s;
@@ -114,8 +116,7 @@ check_rej(float *p)
     return (flag);
 }
 
-int
-init_aver()
+int init_aver(void)
 {
     int     i;
 

@@ -1,3 +1,6 @@
+void wrdata(void);
+void usage(void);
+
 #include <string.h>
 #include <stdlib.h>
 /* calspc.c - computes spectrum of CAL file */
@@ -64,8 +67,7 @@ spec(float *a, int k)
     }
 }
 
-void
-wrdata()
+void wrdata(void)
 {
     double df;
     int i, ir, ii, nf;
@@ -81,8 +83,7 @@ wrdata()
     }
 }
 
-void
-usage()
+void usage(void)
 {
     printf("usage:\n");
     printf("    calspc file ...\n");

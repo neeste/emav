@@ -1,3 +1,15 @@
+void grab_probe(void);
+static int thev_src_open(void);
+int thev_init(void);
+int thev_esc(void);
+void thev_free(void);
+static int thev_ld_init(void);
+static void thev_ld_cmp(void);
+int thev_quick_load(void);
+int dis_probe(void);
+int cav_test(void);
+int probe_test(void);
+
 /* probe_w.c */
 
 #include <stdio.h>
@@ -16,6 +28,7 @@
 #include "color.h"
 #include "screen.h"
 #include "putt.h"
+void simpfit(float *iniv, int npv, int mxiter, int mniter, double (*pvar)(float *), void (*prep)(float *), int (*peex)(void));
 
 #ifndef WIN32
 #define _hypot hypot
@@ -39,7 +52,7 @@ int	dis_stim(int, void *, enum TYPE);
 int     getstim(char *, int);
 void    retrieve_fft(float *, int);
 void    set_drspc(int);
-void    simpfit();
+
 void    out_msg(int, char[][16], int);
 
 extern char line[];
@@ -80,8 +93,7 @@ static float *ps = NULL, *px, *zs, *pl = NULL, *zl, *pr;
 static float *qq1 = NULL, *st;
 static complex src_rfl = {0, 0};
 
-void
-grab_probe()
+void grab_probe(void)
 {
     buflen = probe.size;
     rate = probe.rate;
@@ -311,8 +323,7 @@ get_th_src_fn(char *fn)
     return (i);
 }
 
-static int
-thev_src_open()
+static int thev_src_open(void)
 {
     int     n;
     
@@ -330,8 +341,7 @@ thev_src_open()
     return(n);
 }
 
-int
-thev_init()
+int thev_init(void)
 {
     int i, n;
     
@@ -573,8 +583,7 @@ thev_rep(float *lc)
     k += txtpar.font_height;
 }
 
-int
-thev_esc()
+int thev_esc(void)
 {
     int c = 0;
 
@@ -737,8 +746,7 @@ thev_src_dsp(char *tfn)
     return (0);
 }
 
-void
-thev_free()
+void thev_free(void)
 {
     if (ps != NULL) {
         free(ps);
@@ -756,8 +764,7 @@ thev_free()
     nthf = 0;
 }
 
-static int
-thev_ld_init()
+static int thev_ld_init(void)
 {
     int     i, n;
     
@@ -807,8 +814,7 @@ thev_ld_init()
     return (MAX_NF);
 }
 
-static void
-thev_ld_cmp()
+static void thev_ld_cmp(void)
 {
     complex z, y;
     double   plr, pli, pdr, pdi, pdm, prr, pri, pi, zchr, zlrmin;
@@ -956,7 +962,7 @@ show_cond(char *fn, int flg)
     }
     if (pl == NULL) {
         decide(0, 1, "Can't allocate thevenin memory (pl)");
-        return;
+    return;
     }
     zl = pl + MAX_NF * 2;
     pr = zl + MAX_NF * 2;
@@ -966,7 +972,7 @@ show_cond(char *fn, int flg)
     n = thev_ld_read(ldfn, zl, pl, MAX_NF);
     if (n <= 0) {
         decide(0, 2, "Can't open load file", ldfn);
-        return;
+    return;
     }
     if (!cond)
         cond = (float *) calloc(MAX_NF, sizeof(float));
@@ -1213,7 +1219,7 @@ thev_load(char *fn)
     nthf = thev_ld_init() ? thev_src_open() : 0;
     if (nthf <= 0) {                /* chk for proper thev_ld_init */
         thev_free();
-        return;
+    return;
     }
     sets = nsets * 2;
     //reps = sets * swp1set;
@@ -1231,8 +1237,7 @@ thev_load(char *fn)
     thev_free();
 }
 
-int
-thev_quick_load()
+int thev_quick_load(void)
 {
     static int sets = 1;
 
@@ -1268,7 +1273,7 @@ thev_reload(char *fn, char *src, int display)
 
     if (!cal_open(fn, line, 0)) {
 	decide(0, 2, line, fn);
-	return;
+    return;
     } else {
     	strncpy(file_name, fn, FNSZ);
         cal_info(hdr, sfn, outmsg, &tm, &ct);
@@ -1278,7 +1283,7 @@ thev_reload(char *fn, char *src, int display)
         if (nthc <= 0 || nthf <= 0) {
             cal_close();
             thev_free();
-            return;
+    return;
         }
 
 	for (i = 0; i < nthc; i++) {
@@ -1329,8 +1334,7 @@ thev_adjust(double f, double spl, double *sil, double *fpl, double *tml)
     *tml = tmladj ? spl + tmladj[i] : spl;	// SPL_TM adjustment
 }
 
-int
-dis_probe()
+int dis_probe(void)
 {
     int     i, k;
 
@@ -1348,8 +1352,7 @@ dis_probe()
 
 /*****************************************************************************/
 
-int
-cav_test()
+int cav_test(void)
 {
     int     mode;
 
@@ -1405,8 +1408,7 @@ cav_test()
 
 /*****************************************************************************/
 
-int
-probe_test()
+int probe_test(void)
 {
     int     mode = 0;
 

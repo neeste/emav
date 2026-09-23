@@ -45,3 +45,5 @@ Thumbs.db
 # Build scripts
 [Mm]akefile
 makefile.*
+
+.netrc

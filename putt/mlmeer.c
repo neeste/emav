@@ -1,3 +1,16 @@
+double unirand(void);
+void init_cpr(void);
+void comp_cpr(void);
+int max_cpr(void);
+void init_tpr(void);
+double aver_tpr(void);
+double entropy(void);
+double pick_ml_lev(void);
+double pick_meer_lev(void);
+double pick_exp_lev(void);
+int mlf_esc(void);
+double cmp_sd_lev(void);
+
 /* mlmeer.c - "Maximum Likelihood" and "Maximum Expected Entropy Reduction"
  * implemented by the functions pick_ml_lev() and pick_meer_lev().
  */
@@ -5,6 +18,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <math.h>
+void simpfit(float *iniv, int npv, int mxiter, int mniter, double (*pvar)(float *), void (*prep)(float *), int (*peex)(void));
 
 #define NT          151         /* number of possible threshold levels */
 #define NM            1         /* number of ML psych. func. per threshold*/
@@ -34,8 +48,7 @@ static int uflg = 0;            /* UPDN flag */
  * Communications of the ACM, 31, 10 (Oct. 1988) pp. 1192-1201.
  *
  */
-double
-unirand()
+double unirand(void)
 {
     int32_t    hi, lo;
 /*    static int32_t seed = 1; */
@@ -85,8 +98,7 @@ hear_it(double s)
     return (p >= r);
 }
 
-void
-init_cpr()
+void init_cpr(void)
 {
     int i, nc = NC;
 
@@ -94,8 +106,7 @@ init_cpr()
 	cpr[i] = 1;
 }
 
-void
-comp_cpr()
+void comp_cpr(void)
 {
     int i, nc = NC;
 
@@ -104,8 +115,7 @@ comp_cpr()
     }
 }
 
-int
-max_cpr()
+int max_cpr(void)
 {
     int i, nc = NC, imax = 0;
     double max = 0;
@@ -119,8 +129,7 @@ max_cpr()
     return(imax);
 }
 
-void
-init_tpr()
+void init_tpr(void)
 {
     int i, nc = NC;
 
@@ -144,8 +153,7 @@ comp_tpr(double s, int y)
     }
 }
 
-double
-aver_tpr()
+double aver_tpr(void)
 {
     int i, nc = NC;
     double sum1, sum2;
@@ -159,8 +167,7 @@ aver_tpr()
     return (sum2);
 }
 
-double
-entropy()
+double entropy(void)
 {
     int i, nc = NC;
     double sum;
@@ -195,14 +202,12 @@ exp_entrpy(double s)
     return (e);
 }
 
-double
-pick_ml_lev()
+double pick_ml_lev(void)
 {
     return(m_lev(max_cpr()));
 }
 
-double
-pick_meer_lev()
+double pick_meer_lev(void)
 {
     double s, e, ep, em;
 
@@ -230,8 +235,7 @@ pick_meer_lev()
     return(s);
 }
 
-double
-pick_exp_lev()
+double pick_exp_lev(void)
 {
     int i;
     double s, sum1, sum2, x;
@@ -399,7 +403,7 @@ stop_check(char *rsp_hist, char *max_hist, int trial)
 
 /*****************************  ml_fit  *************************************/
 
-void    simpfit();
+
 
 static char *rh;
 static float *lh;
@@ -430,8 +434,7 @@ mlf_rep(float *par)
 {
 }
 
-int
-mlf_esc()
+int mlf_esc(void)
 {
     return (0);
 }
@@ -459,8 +462,7 @@ ml_fit(int nt, double ml, float *lev_hist, char *rsp_hist,
 
 /*****************************  putt  **************************************/
 
-double
-cmp_sd_lev()
+double cmp_sd_lev(void)
 {
     int     i, nc = NC;
     double  a, b, c, s, mn, sd;

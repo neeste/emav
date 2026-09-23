@@ -1,3 +1,11 @@
+void mouse_init(void);
+int lookahead(void);
+int getevent(void);
+int check_event(void);
+void pgm_start(void);
+void pgm_exit(void);
+int pgm_done(void);
+
 #include <stdlib.h>
 /* ========================== evnt.c ==================================== */
 
@@ -19,8 +27,7 @@ static int pgm_terminate = 0;
 
 /************ higher-level mouse functions ********************************/
 
-void
-mouse_init()
+void mouse_init(void)
 {
 }
 
@@ -61,8 +68,7 @@ putbackevent(int c)
     event_q = c;
 }
 
-int
-lookahead()
+int lookahead(void)
 {
     return (event_q);
 }
@@ -71,8 +77,7 @@ lookahead()
    background process is executed
 */
 #include <unistd.h>
-int
-getevent()
+int getevent(void)
 {
     int     c;
 
@@ -110,8 +115,7 @@ set_capture_event(void (*g)(int))
 *    03-01-95 : JDS : Now handles keyboard without jumping to dos
 *                     function calls.  Also does right mouse click.
 ***********************************************************************/
-int 
-check_event()
+int check_event(void)
 {
     unsigned c;
 
@@ -129,20 +133,17 @@ check_event()
 
 /****************************************************************/
 
-void
-pgm_start()
+void pgm_start(void)
 {
     pgm_terminate = 0;
 }
 
-void
-pgm_exit()
+void pgm_exit(void)
 {
     pgm_terminate = 1;
 }
 
-int
-pgm_done()
+int pgm_done(void)
 {
     return (pgm_terminate);
 }

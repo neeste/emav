@@ -1,3 +1,5 @@
+void initial_dp(void);
+
 /* showdp.c */
 
 #include <stdio.h>
@@ -30,8 +32,7 @@ static int dp_yrange = 0;
 static int dp_ymax = 0;
 static FILE *fbin = NULL;
 
-void
-initial_dp()
+void initial_dp(void)
 {
     w_dp.xtop = w_sig.xtop + 30;
     w_dp.ytop = w_sig.ytop;

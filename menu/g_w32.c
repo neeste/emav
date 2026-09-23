@@ -1,3 +1,19 @@
+#include <stdio.h>
+
+static void flush_line(void);
+void gr_beep(void);
+void init_gr(void);
+void end_gr(void);
+int lookahead(void);
+void get_msg(void);
+int getevent(void);
+int check_event(void);
+void mouse_init(void);
+void pgm_start(void);
+void pgm_exit(void);
+int pgm_done(void);
+void toggle_mono(void);
+
 #include <string.h>
 #include <stdlib.h>
 /* g_w32.c - graphics using WIN32 */
@@ -10,16 +26,19 @@
 #define MAXNCO          16
 #define MAXNPNT		256
 
+#pragma pack(push, 1)
 typedef struct {
     int menu_height;	/* each menu item height in pixels */
     int font_height;	/* the font height in pixels */
     int font_width;	/* the font width in pixels */
     int text_wind_len;	/* text window length in characters */
     int gfg, gbg;	/* string input fg and bg colors used in get_str */
+    int dfg, dbg;	/* dialog fg and bg colors used in decide() */
     int gcc;		/* when inputing string, cursor color */
     int cbg;		/* screen background color */
     int mono;		/* mono flag */
 } TEXTPAR;
+#pragma pack(pop)
 
 extern TEXTPAR txtpar;
 
@@ -89,8 +108,7 @@ g_invalidate(int x, int y, int w, int h)
     InvalidateRect(hwnd, &r, FALSE);
 }
 
-static void
-flush_line()
+static void flush_line(void)
 {
     int i, xmn, ymn, xmx, ymx;
     static int last_color = 0;
@@ -214,7 +232,7 @@ g_savscr(int x1, int y1, int x2, int y2)
     int w, h;
 
     if (nss >= MAXNSS)
-	return;
+    return;
 
     w = x2 - x1 + 1;
     h = y2 - y1 + 1;
@@ -233,7 +251,7 @@ g_rstscr(int x1, int y1)
     int w, h;
 
     if (nss <= 0)
-	return;
+    return;
     nss--;
     w = scrn[nss].w;
     h = scrn[nss].h;
@@ -265,8 +283,7 @@ gr_getpix(int x, int y)
     return (b);
 }
 
-void
-gr_beep()
+void gr_beep(void)
 {
 }
 
@@ -287,15 +304,14 @@ gr_dotty(int t)
     dotty = t;
 }
 
-void
-init_gr()
+void init_gr(void)
 {
     int     i;
     HDC     hdc;
     TEXTMETRIC tm;
 
     if (hDCMem)
-	return;
+    return;
     hdc = GetDC(hwnd);
     GetClientRect(hwnd, (LPRECT) &lpSize);
     xpix = lpSize.right - lpSize.left;
@@ -333,8 +349,7 @@ init_gr()
     gr_rectf(0, 0, xpix, ypix, 0);
 }
 
-void
-end_gr()
+void end_gr(void)
 {
     int     i;
 
@@ -377,8 +392,7 @@ putbackevent(int c)
     event_q = c;
 }
 
-int
-lookahead()
+int lookahead(void)
 {
     return (event_q);
 }
@@ -389,8 +403,7 @@ set_capture_event(void (*g) ())
     capture_events = g;
 }
 
-void
-get_msg()
+void get_msg(void)
 {
     MSG         msg;
 
@@ -490,8 +503,7 @@ set_mesg(UINT iMsg, WPARAM wParam, LPARAM lParam)
    background process is executed
 */
 
-int
-getevent()
+int getevent(void)
 {
     int         e;
     MSG         msg;
@@ -512,8 +524,7 @@ getevent()
     return (e);
 }
 
-int
-check_event()
+int check_event(void)
 {
     MSG         msg;
 
@@ -546,8 +557,7 @@ paint_scr(HWND hw, PAINTSTRUCT ps)
 
 /************ higher-level mouse functions ********************************/
 
-void
-mouse_init()
+void mouse_init(void)
 {
 }
 
@@ -571,20 +581,17 @@ mouse_position(int *x, int *y)
 
 /****************************************************************/
 
-void
-pgm_start()
+void pgm_start(void)
 {
     pgm_terminate = 0;
 }
 
-void
-pgm_exit()
+void pgm_exit(void)
 {
     pgm_terminate = 1;
 }
 
-int
-pgm_done()
+int pgm_done(void)
 {
     return (pgm_terminate);
 }
@@ -614,8 +621,7 @@ gr_set_mono(int m)
     mono = m;
 }
 
-void
-toggle_mono()
+void toggle_mono(void)
 {
     end_gr();
     mono = !mono;
@@ -627,3 +633,133 @@ msleep(int msec)
 {       
     Sleep(msec);
 }
+
+/*
+ * w32_browse_file / w32_browse_dir
+ *
+ * Native Win32 file and directory dialogs loaded dynamically so we
+ * don't need to link comdlg32.lib / shell32.lib or include their
+ * headers (which can conflict with the local TEXTPAR definition).
+ *
+ * OPENFILENAMEA layout (classic, no extended fields):
+ *   DWORD  lStructSize        offset 0
+ *   HWND   hwndOwner          offset 4              (ptr-sized, 4 or 8)
+ *   ...remaining fields follow the SDK packing...
+ *
+ * Rather than manually replicate the struct at byte level, we
+ * statically link the functions by adding the libs to the project.
+ * For now, declare the struct and function prototypes ourselves.
+ */
+
+/* --- OPENFILENAMEA (subset we need) ----------------------------------- */
+typedef struct {
+    DWORD   lStructSize;
+    HWND    hwndOwner;
+    HINSTANCE hInstance;
+    LPCSTR  lpstrFilter;
+    LPSTR   lpstrCustomFilter;
+    DWORD   nMaxCustFilter;
+    DWORD   nFilterIndex;
+    LPSTR   lpstrFile;
+    DWORD   nMaxFile;
+    LPSTR   lpstrFileTitle;
+    DWORD   nMaxFileTitle;
+    LPCSTR  lpstrInitialDir;
+    LPCSTR  lpstrTitle;
+    DWORD   Flags;
+    WORD    nFileOffset;
+    WORD    nFileExtension;
+    LPCSTR  lpstrDefExt;
+    LPARAM  lCustData;
+    LPVOID  lpfnHook;
+    LPCSTR  lpTemplateName;
+} MY_OFN;
+
+#define MY_OFN_PATHMUSTEXIST  0x00000800
+#define MY_OFN_FILEMUSTEXIST  0x00001000
+#define MY_OFN_NOCHANGEDIR    0x00000008
+
+/* --- BROWSEINFOA (subset we need) ------------------------------------- */
+typedef struct {
+    HWND    hwndOwner;
+    LPVOID  pidlRoot;
+    LPSTR   pszDisplayName;
+    LPCSTR  lpszTitle;
+    UINT    ulFlags;
+    LPVOID  lpfn;
+    LPARAM  lParam;
+    int     iImage;
+} MY_BI;
+
+#define MY_BIF_RETURNONLYFSDIRS 0x00000001
+#define MY_BIF_USENEWUI         0x00000040
+
+int w32_browse_file(char *path, int max_len, const char *filter) {
+    typedef BOOL (WINAPI *PFN_GETOPENFILENAME)(LPVOID);
+    HMODULE hLib;
+    PFN_GETOPENFILENAME pFunc;
+
+    hLib = LoadLibraryA("comdlg32.dll");
+    if (!hLib) return 0;
+
+    pFunc = (PFN_GETOPENFILENAME)GetProcAddress(hLib, "GetOpenFileNameA");
+    if (pFunc) {
+        char szFile[MAX_PATH];
+        MY_OFN ofn;
+
+        szFile[0] = '\0';
+        ZeroMemory(&ofn, sizeof(ofn));
+        ofn.lStructSize   = sizeof(ofn);
+        ofn.hwndOwner     = hwnd;
+        ofn.lpstrFile     = szFile;
+        ofn.nMaxFile      = sizeof(szFile);
+        ofn.lpstrFilter   = filter ? filter : "All Files\0*.*\0";
+        ofn.nFilterIndex  = 1;
+        ofn.Flags         = MY_OFN_PATHMUSTEXIST
+                          | MY_OFN_FILEMUSTEXIST
+                          | MY_OFN_NOCHANGEDIR;
+
+        if (pFunc(&ofn)) {
+            strncpy(path, szFile, max_len);
+            path[max_len - 1] = '\0';
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int w32_browse_dir(char *path, int max_len) {
+    typedef LPVOID (WINAPI *PFN_SHBROWSE)(LPVOID);
+    typedef BOOL   (WINAPI *PFN_SHGETPATH)(LPVOID, LPSTR);
+    HMODULE hLib;
+    PFN_SHBROWSE   pBrowse;
+    PFN_SHGETPATH  pGetPath;
+
+    hLib = LoadLibraryA("shell32.dll");
+    if (!hLib) return 0;
+
+    pBrowse  = (PFN_SHBROWSE) GetProcAddress(hLib, "SHBrowseForFolderA");
+    pGetPath = (PFN_SHGETPATH)GetProcAddress(hLib, "SHGetPathFromIDListA");
+
+    if (pBrowse && pGetPath) {
+        MY_BI bi;
+        LPVOID pidl;
+
+        ZeroMemory(&bi, sizeof(bi));
+        bi.hwndOwner = hwnd;
+        bi.lpszTitle = "Select Working Directory";
+        bi.ulFlags   = MY_BIF_RETURNONLYFSDIRS | MY_BIF_USENEWUI;
+
+        pidl = pBrowse(&bi);
+        if (pidl) {
+            char temp[MAX_PATH];
+            if (pGetPath(pidl, temp)) {
+                strncpy(path, temp, max_len);
+                path[max_len - 1] = '\0';
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+

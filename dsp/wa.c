@@ -1,3 +1,15 @@
+static void get_devcaps(void);
+static int card_type(void);
+static int list_rates(void);
+static void open_io(void);
+static void close_io(void);
+char   * wa_devnam(void);
+int wa_test(void);
+void wa_close(void);
+void wa_begin_io(void);
+int wa_check_bank(void);
+void wa_stop_io(void);
+
 /* wa.c - sio functions for Win32 wave-audio device */
 
 #include <stdio.h>
@@ -77,8 +89,7 @@ static int nct = NCT;
 
 /* get_devcaps - get device capabilities */
 
-static void
-get_devcaps()
+static void get_devcaps(void)
 {
     Result = waveInGetDevCaps(cardNumber, &WavInCaps, sizeof(WAVEINCAPS));
     mid = WavInCaps.wMid;
@@ -95,8 +106,7 @@ get_devcaps()
 
 /* card_type - return type of "card" from structure */
 
-static int
-card_type()
+static int card_type(void)
 {
     int     i, j, n, c = 0;
 
@@ -136,8 +146,7 @@ card_type()
 
 /* list_rates - create a list of available sample rates */
 
-static int
-list_rates()
+static int list_rates(void)
 {
     int     i, gdsr;
     struct {
@@ -185,8 +194,7 @@ list_rates()
 
 /* open_io - open input and ouput devices */
 
-static void
-open_io()
+static void open_io(void)
 {
     struct {
 	WAVEFORMATEX  f;
@@ -215,7 +223,7 @@ open_io()
 	if (ncad > 0) {
 	    Result = waveInOpen(&hWaveIn, cardNumber, (PWAVEFORMATEX)&w, 0L, 0L, 0);
 	    if (Result != 0) {
-		return;
+    return;
 	    }
 	}
 	if (ncda > 0) {
@@ -231,7 +239,7 @@ open_io()
 	    if (Result != 0) {
 		if (ncad > 0)
 		    waveInClose(hWaveIn);
-		return;
+    return;
 	    }
 	}
 	/*
@@ -255,8 +263,7 @@ open_io()
 
 /* close_io - close input and ouput devices */
 
-static void
-close_io()
+static void close_io(void)
 {
     if (wa_dev_opened) {
 	(void) waveOutReset(hWaveOut);
@@ -299,8 +306,7 @@ devsel_bybits(int bits)
 
 /* wa_devnam - return name of I/O device */
 
-char   *
-wa_devnam()
+char   * wa_devnam(void)
 {
     get_devcaps();
     return (WavInCaps.szPname);
@@ -426,8 +432,7 @@ wa_atten_output(double a)
 
 /* wa_test - test for presence of wave audio device */
 
-int
-wa_test()
+int wa_test(void)
 {
     return (waveInGetNumDevs() * waveOutGetNumDevs());
 }
@@ -492,8 +497,7 @@ wa_open(int *nc, double *at, double *ms)
 
 /* wa_close - close wave-audio device */
 
-void
-wa_close()
+void wa_close(void)
 {
     close_io();
 }
@@ -566,8 +570,7 @@ wa_bank_ready(int b)
 
 /* wa_begin_io - begin I/O */
 
-void
-wa_begin_io()
+void wa_begin_io(void)
 {
     if (wa_dev_opened) {
         // start output and input at the same time
@@ -581,8 +584,7 @@ wa_begin_io()
 
 /* wa_check_bank - check for bank completion */
 
-int
-wa_check_bank()
+int wa_check_bank(void)
 {
     bnkchk %= NBNK;
     if ((whdri[bnkchk].dwFlags & WHDR_DONE)
@@ -594,8 +596,7 @@ wa_check_bank()
 
 /* wa_stop_io - stop I/O */
 
-void
-wa_stop_io()
+void wa_stop_io(void)
 {
     int     b;
 

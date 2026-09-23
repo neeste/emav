@@ -1,3 +1,15 @@
+void points_msg(void);
+void dis_artifact(void);
+int init_aver(void);
+void init_wt(void);
+void init_sh(void);
+void show_A_B_labels(void);
+void repr_A_B(void);
+void qm_info(void);
+void out_spectrum(void);
+int check_term(void);
+void inform_term(void);
+
 /* naverage.c */
 
 #include <stdio.h>
@@ -177,8 +189,7 @@ static int fhd = -1;
 static short *Aaqm_trk, *Baqm_trk, *Apqm_trk, *Bpqm_trk;
 static short *Ansp_trk, *Bnsp_trk, *Anmn_trk, *Bnmn_trk;
 
-void
-points_msg()
+void points_msg(void)
 {
     text_color(scrn_c[C_MSGF], scrn_c[C_MSGB]);
     txtpar.text_wind_len = 4;
@@ -213,8 +224,7 @@ pre_dis_ind(char *s, char *m)
     t_ind.lim = rej_mv;
 }
 
-void
-dis_artifact()
+void dis_artifact(void)
 {
     double  mvmax;
     int     i, j, k, tfgc_s, tbgc_s;
@@ -321,8 +331,7 @@ check_rej(float *p)
     return (flag);
 }
 
-int
-init_aver()
+int init_aver(void)
 {
     int     i, n;
 
@@ -372,8 +381,7 @@ init_aver()
     return (n);
 }
 
-void
-init_wt()
+void init_wt(void)
 {
     ts1sp_A = ts1sp_B = 0;
     tsssp_A = tsssp_B = 0;
@@ -389,8 +397,7 @@ init_ai(double dt)
     abr_pk[0][0] = nint(ep_start / dt);
 }
 
-void
-init_sh()
+void init_sh(void)
 {
     sh_of[0][0] = sh_of[0][1] = sh_of[1][0] = sh_of[1][1] = 0;
     sh_A = ep_chan & 1;
@@ -410,8 +417,7 @@ static double a2bl[2][3] = {{-0.2, 0.0, -0.1},{0.0, 0.2, 0.1}};
 static double b1bl[2][3] = {{0.2, 0.0, 0.1},{0.0, -0.2, -0.1}};
 static double b2bl[2][3] = {{-0.2, 0.0, -0.1},{0.0, -0.2, -0.3}};
 
-void
-show_A_B_labels()
+void show_A_B_labels(void)
 {
     int     a1lb = 0, a2lb = 0, b1lb = 0, b2lb = 0;
     int     xxlb, oklb;
@@ -623,8 +629,7 @@ Fmp_A_B(int nset, float *tp_a1, float *tp_b1, float *tp_a2, float *tp_b2)
     Bnmn = (float) db_(vdb) - dbuv_ref;
 }
 
-void
-repr_A_B()
+void repr_A_B(void)
 {
     int     i, n;
     float   sa1 = 0, sa2 = 0, sa11 = 0, sa22 = 0, sa12 = 0;
@@ -655,7 +660,7 @@ repr_A_B()
 
     n = itime2 - itime1;
     if (n == 0)
-	return;
+    return;
     ea11 = (sa11 - sa1 * sa1 / n) / n;
     ea22 = (sa22 - sa2 * sa2 / n) / n;
     ea12 = (sa12 - sa1 * sa2 / n) / n;
@@ -714,7 +719,7 @@ Fsp_A_B(int nset)
     }
     n = itime2 - itime1;
     if (n <= 0)
-	return;
+    return;
     ea11 = (sa11 - sa1 * sa1 / n) / n;
     eb11 = (sb11 - sb1 * sb1 / n) / n;
 
@@ -746,8 +751,7 @@ Fsp_A_B(int nset)
     B_qm[QM_SNR] = (nb11 > 0) ? eb11 / nb11 : 0;
 }
 
-void
-qm_info()
+void qm_info(void)
 {
     char    name[8], *u, *n1, *n2;
     int     j, k;
@@ -808,7 +812,7 @@ Monitor_track(int nset)
     };
 
     if (!abr_.show_track)
-        return;
+    return;
 
     /* plot the Fsp track */
 
@@ -893,8 +897,7 @@ Monitor_track(int nset)
     }
 }
 
-void
-out_spectrum()
+void out_spectrum(void)
 {
     int     i;
 
@@ -1098,8 +1101,7 @@ char *term[] = {
     "with VR2 on B",
 };
 
-int
-check_term()
+int check_term(void)
 {
     if (evb(EC_OTN))
 	return (1);
@@ -1122,8 +1124,7 @@ check_term()
     return (0);
 }
 
-void
-inform_term()
+void inform_term(void)
 {
     int     x1, y1, x2, y2;
     int     j, k;
@@ -1224,7 +1225,7 @@ abr_aver(int condition)
     pause_collect = 0;
 
     if (nsweeps <= 0 || buflen <= 0)
-	return;
+    return;
 
     t2 = stim_.sig_type[0];
     t1 = stim_.sig_type[1];
@@ -1255,7 +1256,7 @@ abr_aver(int condition)
 	    if (_access(record_file, 0) == 0) {
 		if (!decide(1, 2, "Do you want to overwrite existing file?",
 			record_file))
-		    return;
+    return;
 	    }
 	} else {
 	    omode = (int) O_MODE;
@@ -1264,7 +1265,7 @@ abr_aver(int condition)
 	if (fhd == -1) {
 	    (void) decide(0, 3, "Sweep file open error!", record_file,
 		"ABR Test skipped.");
-	    return;
+    return;
 	}
     	if (r_mode.at == 1) {           /* write sweeps to disk */
 	    _write(fhd, "SW6", 4);
@@ -1285,11 +1286,11 @@ abr_aver(int condition)
 	    if (swpfmt < 0) {
 		(void) decide(0, 3, "Not a valid sweep file!", record_file,
 		    "ABR test skipped.");
-		return;
+    return;
 	    }
 	    if (swpfmt == 0 && weight_type == 3) {
 		(void) decide(0, 2, "File can't do Fsp!", "ABR test skipped.");
-		return;
+    return;
 	    }
 	    text_color(scrn_c[C_BTXF], scrn_c[C_BTXB]);
 	    txtpar.text_wind_len = 60;
@@ -1358,7 +1359,7 @@ abr_aver(int condition)
     init_sh();
     np = init_aver();
     if (np <= 0)
-	return;
+    return;
     init_ai(dt);
     recbuf = (ep_chan & 1) ? outbuf_a : outbuf_b;
     npr = ((ep_chan & 1) && (ep_chan & 2)) ? np : np / 2;
@@ -1793,7 +1794,7 @@ abr_aver(int condition)
 	close_w(&w_msg);
     sweeps = nsweeps - sweep;
     if (!sweeps)
-	return;
+    return;
     if (weight_type != 0 && sweeps > 0 && twt_A > 0 && twt_B > 0) {
         twt_A /= (float) sweeps * swp1set;
         twt_B /= (float) sweeps * swp1set;

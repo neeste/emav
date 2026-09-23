@@ -1,3 +1,11 @@
+int display_version(void);
+int device_list(void);
+int check_chkfit_time(void);
+void reset_chkfit_time(void);
+int check_refresh_time(void);
+void reset_refresh_time(void);
+void init_graphics(void);
+
 /* =========================== event.c ================================= */
 
 #include <stdio.h>
@@ -25,16 +33,14 @@ static int32_t next_refresh_time = 0;
 extern char dsp_code_file[MAXNAME];
 
 /* display the verison number and copyright info */
-int
-display_version()
+int display_version(void)
 {
     decide(0, 6, VERSION, PGM_NAME, COPYRIGHT, BTNRH, dspapi(), dspdev());
     return (0);
 }
 
 /* display the verison number and copyright info */
-int
-device_list()
+int device_list(void)
 {
     char sel, *cur, *nam, *dev[MXND];
     int i, nd = MXND;
@@ -69,8 +75,7 @@ device_list()
 }
 
 /* check the chkfit time */
-int
-check_chkfit_time()
+int check_chkfit_time(void)
 {
     if(lookahead() == 0) {
 	if(chkfit_time > 0) {
@@ -82,15 +87,13 @@ check_chkfit_time()
     return (0);
 }
 
-void
-reset_chkfit_time()
+void reset_chkfit_time(void)
 {
     next_chkfit_time = clock() + (int32_t) (chkfit_time * CLOCKS_PER_SEC);
 }
 
 /* check the refresh time */
-int
-check_refresh_time()
+int check_refresh_time(void)
 {
     if(lookahead() == 0) {
 	if(refresh_time > 0) {
@@ -102,8 +105,7 @@ check_refresh_time()
     return (0);
 }
 
-void
-reset_refresh_time()
+void reset_refresh_time(void)
 {
     next_refresh_time = clock() + (int32_t) (refresh_time * CLOCKS_PER_SEC);
 }
@@ -157,12 +159,11 @@ proc_event(int c)
 
 int     dfgc, xpix, ypix;
 
-void
-init_graphics()
+void init_graphics(void)
 {
     set_menu_colors();
     set_text_par();
-    init_gr();
-    gr_scrsiz(&xpix, &ypix);		/* get screen size */
+    printf("init_gr\n"); fflush(stdout); init_gr();
+    printf("gr_scrsiz\n"); fflush(stdout); gr_scrsiz(&xpix, &ypix);		/* get screen size */
     set_capture_event(proc_event);
 }

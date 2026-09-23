@@ -41,6 +41,8 @@
 #define EC_FB2   10
 #define evb(ec)  ((ai.events & (1 << ec)) != 0)
 
+#pragma pack(push, 1)
+
 struct _upload {
     short   mode;
     short   npts;
@@ -276,6 +278,8 @@ typedef struct {
     short   top, bot, old, old1;
     float   new, lim;
 } REJ_IND;
+
+#pragma pack(pop)
 
 extern WIND *w_dis;
 extern WIND w_stim;

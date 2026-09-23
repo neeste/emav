@@ -14,8 +14,7 @@ int _getch(void);
 #endif /* DOS */
 #endif /* _MSC_VER */
 
-int
-main()
+int main(void)
 {
     int c, d, k = 0;
 

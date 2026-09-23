@@ -1,3 +1,5 @@
+int count_files(void);
+
 /* sfile.c */
 
 #include <stdio.h>
@@ -22,8 +24,7 @@ int ncfn = 12;
 int ncfn = 24;
 #endif /* DJ */
 
-int
-count_files()
+int count_files(void)
 {
 #if defined(_WIN32) || defined(WIN32)
     int     nf = 0;

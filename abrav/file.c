@@ -1,3 +1,25 @@
+int display_version(void);
+int Start_New(void);
+void file_trailer(void);
+int Edit_wind(void);
+int File_wind(void);
+void init_edit_msg(void);
+void init_edit_msg2(void);
+double def_time(void);
+void edit_abr(void);
+void save_bin(void);
+void edit_bin(void);
+void batch_format(void);
+void wr_abr_log(void);
+void wr_bin_dat(void);
+void dis_events(void);
+void cp_swp_file(void);
+void rd_abr_file(void);
+void rd_cal_file(void);
+void rd_bin_file(void);
+void select_param(void);
+int eventintime(void);
+
 /* file.c */
 
 #include <stdio.h>
@@ -253,8 +275,7 @@ static TOGGLETYPE filetypes = {
 };
 
 /* display the verison number and copyright info */
-int
-display_version()
+int display_version(void)
 {
     decide(0, 6, VERSION, PGM_NAME, COPYRIGHT, BTNRH, dspapi(), dspdev());
     return (0);
@@ -306,8 +327,7 @@ savefile(char *no_use)
     return (1);
 }
 
-int
-Start_New()
+int Start_New(void)
 {
     file_opt[4].status = 0;
     file_opt[5].status = 0;
@@ -344,10 +364,52 @@ toggle_type(char **s)
     return (0);
 }
 
+int browse_file_action(char *no_use) {
+    char filter[128];
+    char path[MAXPATH*2];
+    path[0] = '\0';
+    
+    // Create the filter
+    sprintf(filter, "%s Files (*%s)", filetypes.strs[filetypes.at], sf[filetypes.at] + 1);
+    int len = strlen(filter);
+    filter[len] = '\0';
+    strcpy(&filter[len+1], sf[filetypes.at]);
+    filter[len + 1 + strlen(sf[filetypes.at]) + 1] = '\0';
+
+#ifdef _WIN32
+    extern int w32_browse_file(char *path, int max_len, const char *filter);
+    if (w32_browse_file(path, sizeof(path), filter)) {
+#elif defined(__APPLE__)
+    FILE *fp = popen("osascript -e 'POSIX path of (choose file with prompt \"Select Data File:\")' 2>/dev/null", "r");
+    if (fp) {
+        if (fgets(path, sizeof(path), fp) != NULL) {
+            int L = strlen(path);
+            while (L > 0 && (path[L-1] == '\n' || path[L-1] == '\r')) path[--L] = '\0';
+        }
+        pclose(fp);
+    }
+    if (path[0] != '\0') {
+#else
+    if (0) {
+#endif
+        struct PATH p;
+        split_path(path, p.drive, p.dir, p.name, p.ext);
+        
+        strcpy(ofiledir, p.drive);
+        strcat(ofiledir, p.dir);
+        
+        strcpy(o_file_name, path);
+        set_trailer((void (*)(void)) rd_and_show[filetypes.at]);
+        return (27);
+    }
+    return (0);
+}
+
 MENUITEM sub_file[] = {
     {"&Open File", NULL, NONE, 0, 0, 1, open_file},
     {"File &Type =", (char *) &filetypes, TOGGLE, 0, 0, 1, toggle_type},
     {"File &Name :=", o_file_name, STRING, 127, 0, 1, savedir},
+    {"&Browse...", NULL, NONE, 0, 0, 1, browse_file_action},
     {NULL, NULL, NONE, 0, 0, 1, NULL}
 };
 
@@ -377,8 +439,7 @@ savedir(char **s)
     return (0);
 }
 
-void
-file_trailer()
+void file_trailer(void)
 {
     strcpy(o_file_name, ofiledir);
     strcat(o_file_name, sf[filetypes.at]);
@@ -392,8 +453,7 @@ file_items(char *no_use)
     return (27);
 }
 
-int
-Edit_wind()
+int Edit_wind(void)
 {
     if (file_opt[4].status) 
     {
@@ -411,8 +471,7 @@ Edit_wind()
     return (0);
 }
 
-int
-File_wind()
+int File_wind(void)
 {
     return (simple_submenu(0, txtpar.menu_height, file_opt));
 }
@@ -498,8 +557,7 @@ cursor_line(int x, int y1, int y2)
     gr_dotty(0);
 }
 
-void
-init_edit_msg()
+void init_edit_msg(void)
 {
     int     j, k;
 
@@ -511,7 +569,7 @@ init_edit_msg()
     (void) gprintf(j, k, "   Lat     A1     A2     B1     B2      S");
 }
 
-void init_edit_msg2()
+void init_edit_msg2(void)
 {
     int     j, k;
 
@@ -553,8 +611,7 @@ zpf(float *x, int n, double f1, double f2)
     fsip(x, n);
 }
 
-double 
-def_time()
+double def_time(void)
 {
     itime1 = nint(0.001 * time1_ms * rate);
     itime2 = nint(0.001 * time2_ms * rate);
@@ -567,8 +624,7 @@ def_time()
     return (1000.0 / rate);
 }
 
-void
-edit_abr()
+void edit_abr(void)
 {
     TOKENFILE *tfp;
     struct AUX_INF bi;
@@ -590,12 +646,12 @@ edit_abr()
 	top_message("Open Error");
 	while (!check_event());
 	top_message("          ");
-	return;
+    return;
     }
     if(tfp->hitch.tokens == 1) 
     {
 	tclose(tfp);
-	return;
+    return;
     }
     strcpy(line, outmsg[1]);
     bi = ai;
@@ -773,7 +829,7 @@ edit_abr()
     tclose(tfp);
 }
 
-void save_bin()
+void save_bin(void)
 {
     struct BINhdr bh;
     struct BINwav bw;
@@ -792,7 +848,7 @@ void save_bin()
     wr_bin_dat();
 }
 
-void edit_bin()
+void edit_bin(void)
 {
     struct AUX_INF bi;
     double  dt, sc, scb;
@@ -805,7 +861,7 @@ void edit_bin()
 	top_message("BIN file Open Error");
 	while (!check_event());
 	top_message("          ");
-	return;
+    return;
     }
 
     display_param(1);    //display the first parameter, and don't show patient info
@@ -955,8 +1011,7 @@ void edit_bin()
 
 
 
-void
-batch_format()
+void batch_format(void)
 {
     TOKENFILE *tfp;
     double  dt, sc = 0.001;
@@ -967,11 +1022,11 @@ batch_format()
 
     tfp = check_abr_file(file_name, 1);
     if (tfp == NULL) {
-	return;
+    return;
     }
     if(tfp->hitch.tokens == 1) {
 	tclose(tfp);
-	return;
+    return;
     }
     text_color(scrn_c[C_BTXF], scrn_c[C_BTXB]);
     txtpar.text_wind_len = 60;
@@ -1034,8 +1089,7 @@ batch_format()
     tclose(tfp);
 }
 
-void
-wr_abr_log()
+void wr_abr_log(void)
 {
     char    lfn[82], *qm;
     double  dt;
@@ -1076,7 +1130,7 @@ wr_abr_log()
     lfp = fopen(lfn, "w");
     if (lfp == NULL) {
 	(void) decide(0, 2, "Can't open log file", "Press any key continue");
-	return;
+    return;
     }
     fprintf(lfp, ";LastName:  %s\n;FirstName: %s\n",
 	patient.Lastname, patient.Firstname);
@@ -1141,8 +1195,7 @@ wr_abr_log()
     fclose(lfp);
 }
 
-void 
-wr_bin_dat()
+void wr_bin_dat(void)
 {
     char datfn[82];
     FILE * datfp;
@@ -1159,12 +1212,12 @@ wr_bin_dat()
     if (datfp == NULL) 
     {
 	(void) decide(0, 2, "Can't open dat file for writing", "Press any key continue");
-	return;
+    return;
     }
     if(my_param == NULL)
     {
         (void) decide(0, 2, "No parameters available for writing", "Press any key to continue");
-        return;
+    return;
     }
     fprintf(datfp, ";ABRAV\n;");
     fprintf(datfp, VERSION);
@@ -1223,8 +1276,7 @@ wr_bin_dat()
     fclose(datfp);
 }
 
-void
-dis_events()
+void dis_events(void)
 {
     float   s;
     int     i, k;
@@ -1266,8 +1318,7 @@ dis_events()
 #endif
 }
 
-void
-cp_swp_file()
+void cp_swp_file(void)
 {
     r_mode.at = 2;
     strcpy(record_file, o_file_name);
@@ -1292,14 +1343,13 @@ set_dis_units_car(TOKENFILE *tfp)
     dis_units(ad_sen, mp_sen, atof(epa_gain.strs[epa_gain.at]));
 }
 
-void
-rd_abr_file()
+void rd_abr_file(void)
 {
     TOKENFILE *tfp;
 
     tfp = check_abr_file(o_file_name, 1);
     if (tfp == NULL)
-	return;
+    return;
     (void) draw_w(&w_info);
     rate = (int32_t) (tfp->header.isf
 	* pow(10.0, (double) tfp->header.power10));
@@ -1354,8 +1404,7 @@ rd_abr_file()
     tclose(tfp);
 }
 
-void
-rd_cal_file()
+void rd_cal_file(void)
 {
     TOKENFILE *tfp;
     int     n, t;
@@ -1363,7 +1412,7 @@ rd_cal_file()
 
     tfp = check_abr_file(o_file_name, 1);
     if (tfp == NULL)
-	return;
+    return;
     rate = (int32_t) (tfp->header.isf
 	* pow(10.0, (double) tfp->header.power10));
     n = (int) (0.005 * rate);
@@ -1414,8 +1463,7 @@ rd_cal_file()
     tclose(tfp);
 }
 
-void 
-rd_bin_file()
+void rd_bin_file(void)
 {
     struct BINwav bw;
     FILE   *fpt;
@@ -1427,7 +1475,7 @@ rd_bin_file()
     strcpy(file_name, o_file_name);
     fpt = fopen(o_file_name, "rb");
     if(fpt == NULL)
-        return;
+    return;
     fread(&binhdr, sizeof(struct BINhdr), 1, fpt);
     memcpy(&patient, &binhdr.patient, sizeof(PATIENT) );
     memcpy(&ai, &binhdr.ai, sizeof(struct AUX_INF) );
@@ -1447,7 +1495,7 @@ rd_bin_file()
         if(read <= 0)    {
             (void) decide(0, 1, "ERROR reading bin file, currupt or outdated file type!");
             delete_param_list();
-            return;
+    return;
         } else {
             add_param_list(bw.param);
 	}
@@ -1510,7 +1558,7 @@ display_param(int param)
     file_opt[6].status = 1;
 }
 
-void select_param()
+void select_param(void)
 {
     WIND    w;
     static int nrow = 10, ncfn = 55;
@@ -1700,8 +1748,7 @@ int select_param_win(char *nope)
     return (27);
 }
 
-int
-eventintime()
+int eventintime(void)
 {
     int32_t    timer;
     int     rv;

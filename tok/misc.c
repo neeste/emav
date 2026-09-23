@@ -1,3 +1,9 @@
+#include <stdlib.h>
+
+void waitkp(void);
+void clr(void);
+void beep(void);
+
 /* misc.c */
 
 #include <stdio.h>
@@ -9,8 +15,7 @@
 /*
  * Wait for key press
  */
-void
-waitkp()
+void waitkp(void)
 {
     putstr("\n\nPress any key to continue...\n");
     (void) getch();
@@ -74,8 +79,7 @@ getfloat(char *prompt)
 /*
  * clear the screen (vt100 terminal)
  */
-void
-clr()
+void clr(void)
 {
     putstr("\033[H\033[0J");
 }
@@ -100,8 +104,7 @@ yesno(char *a, char *b)
     }
 }
 
-void
-beep()
+void beep(void)
 {
     (void) putch(7);
 }

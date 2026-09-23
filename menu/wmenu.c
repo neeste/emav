@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 /* wmenu.c */
 
 #include <stdio.h>

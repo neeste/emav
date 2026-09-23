@@ -1,3 +1,19 @@
+int Test_wind(void);
+void print_version(void);
+void init_alloc_space(void);
+void defpar(void);
+void read_args(void);
+char   * atline(void);
+int check_starter(void);
+void read_init_file(void);
+void read_counter_file(void);
+void write_counter_file(void);
+int set_tone_wind(void);
+int set_hear_wind(void);
+int set_cav_wind(void);
+int set_probe_wind(void);
+static void batch(void);
+
 /* putt.c */
 
 #include <stdio.h>
@@ -34,7 +50,7 @@ int     today_file(char *);
 int     File_wind();
 int     Info_wind(void);
 int     Option_wind(void);
-int     Quit_wind();
+int     Quit_wind(char*);
 int     Test_wind();
 void    init_graphics(void);
 void    wait_for_key(double);
@@ -123,22 +139,19 @@ char    tokstr[MAXTOK];
 
 static int cnt = 0, linelen = 0;
 
-int
-Test_wind()
+int Test_wind(void)
 {
     simple_submenu(menu_x(), menu_y(), testmenu);
     return (0);
 }
 
 /* print the verison number and copyright info */
-void
-print_version()
+void print_version(void)
 {
     fprintf(stderr, "%s\n%s\n%s %s\n", VERSION, PGM_NAME, COPYRIGHT, BTNRH);
 }
 
-void
-init_alloc_space()
+void init_alloc_space(void)
 {
     int bufsiz = 0;
     int accnpts, wi, wo;
@@ -188,8 +201,7 @@ init_alloc_space()
 }
 
 /* set default parameter values */
-void
-defpar()
+void defpar(void)
 {
 
     // soundcard sensitivity
@@ -314,8 +326,7 @@ testexist(char *n)
     return (0);
 }
 
-void
-read_args()
+void read_args(void)
 {
     char **av = argv;
     int    ac = argc;
@@ -401,8 +412,7 @@ strip(char *s)
     *s = '\0';
 }
 
-char   *
-atline()
+char   * atline(void)
 {
     int     i;
 
@@ -454,8 +464,7 @@ check_list(char *s, char **lp)
     return (0);
 }
 
-int
-check_starter()
+int check_starter(void)
 {
     char   *keys[] = {
 	"[SYSTEM]", "[PRINTER]", "[HEARING]", "[PROBE]", "[TONE]", ""
@@ -897,22 +906,21 @@ set_tone(int c, double num)
     }
 }
 
-void
-read_init_file()
+void read_init_file(void)
 {
     FILE   *fptr;
     double  num;
     int     c, flag;
 
     if (!testexist(file_name))
-	return;
+    return;
     fptr = fopen(file_name, "rt");
     if (fptr == NULL)
-	return;
+    return;
 
     do {
 	if (fgets(line, MAXLINE, fptr) == NULL)
-	    return;
+    return;
 	strip(line);
 	get_token(1);
 	flag = check_starter();
@@ -949,8 +957,7 @@ read_init_file()
     fclose(fptr);
 }
 
-void
-read_counter_file()
+void read_counter_file(void)
 {
     FILE   *fpt;
     int hcc, pcc, htc;
@@ -966,14 +973,13 @@ read_counter_file()
     }
 }
 
-void
-write_counter_file()
+void write_counter_file(void)
 {
     FILE   *fpt;
 
     fpt = fopen(puttcounter, "wt");
     if (fpt == NULL)
-	return;
+    return;
     fprintf(fpt, "%5d %5d %5d", prob_cal_cnt, hear_cal_cnt, hear_tth_cnt);
     fclose(fpt);
 }
@@ -996,29 +1002,25 @@ corner(char *s)
     gr_text(560, txtpar.font_height, s);
 }
 
-int
-set_tone_wind()
+int set_tone_wind(void)
 {
     set_trailer(Tone_wind);
     return (27);
 }
 
-int
-set_hear_wind()
+int set_hear_wind(void)
 {
     set_trailer(Hear_wind);
     return (27);
 }
 
-int
-set_cav_wind()
+int set_cav_wind(void)
 {
     set_trailer((void (*)(void)) cav_test);
     return (27);
 }
 
-int
-set_probe_wind()
+int set_probe_wind(void)
 {
     set_trailer((void (*)(void)) probe_test);
     return (27);
@@ -1033,7 +1035,7 @@ proc_batch(char *fn)
 
     fpt = fopen(fn, "rt");
     if (fpt == NULL)
-	return;
+    return;
     top_message("Batching");
     while (fgets(o_file_name, 128, fpt) != NULL) {
 	strip(o_file_name);
@@ -1070,8 +1072,7 @@ proc_batch(char *fn)
     fclose(fpt);
 }
 
-static void
-batch()
+static void batch(void)
 {
     int     c;
 

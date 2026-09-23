@@ -1,3 +1,14 @@
+int flip_polar(void);
+void close_text_w(void);
+int Option_wind(void);
+static int adjust_window(void);
+static int adjust_mask_freq(void);
+static int adjust_tone_freq(void);
+static int adjust_stim_len(void);
+int dsp_init(void);
+static int check_th_off(void);
+static int check_t1_t2(void);
+
 /* savage.c */
 
 #include <stdio.h>
@@ -217,8 +228,7 @@ static int stim_opt_1(char *);
 static int stim_opt_2(char *);
 static int epa_reset(char *);
 
-int
-flip_polar()
+int flip_polar(void)
 {
     int i;
 
@@ -383,16 +393,14 @@ open_text_w(int *i)
     return (w_text.ytop + txtpar.font_height);
 }
 
-void
-close_text_w()
+void close_text_w(void)
 {
     if (text_wind_flag)
 	close_w(&w_text);
     text_wind_flag = 0;
 }
 
-int
-Option_wind()
+int Option_wind(void)
 {
     int ret;
 
@@ -522,8 +530,7 @@ static int epa_reset(char *no_use)
 
 //this funciton will make sure that the duration of the window will not
 //exceed the legnth of the signal
-static int 
-adjust_window()
+static int adjust_window(void)
 {
     return (0);
 }
@@ -547,8 +554,7 @@ chk_int(int **i)
     return (0);
 }
 
-static int 
-adjust_mask_freq()
+static int adjust_mask_freq(void)
 {
     abr_.msk_freq = (float)(floor((abr_.msk_freq * abr_.size) / abr_.rate + 0.5) 
 	* abr_.rate) / abr_.size;
@@ -556,22 +562,19 @@ adjust_mask_freq()
 
 }
 
-static int 
-adjust_tone_freq()
+static int adjust_tone_freq(void)
 {
     abr_.sig_freq = (float)(floor((abr_.sig_freq * abr_.size) / abr_.rate + 0.5) 
 	* abr_.rate) / abr_.size;
     return (0);
 }
 
-static int 
-adjust_stim_len()
+static int adjust_stim_len(void)
 {
     return (0);
 }
 
-int
-dsp_init()
+int dsp_init(void)
 {
     int     err;
 
@@ -627,7 +630,7 @@ tok_store(int tcount, int c, float *p)
     float   scale;
 
     if (c == 0)
-	return;
+    return;
     amax = rescale(p, outbuf, buflen, MAXPOSINT);
     tmax = findmax(outbuf, buflen);
     c *= swp1set;
@@ -728,15 +731,13 @@ write_next_car(int tcount)
     }
 }
 
-static int
-check_th_off()
+static int check_th_off(void)
 {
     rej_mv = (float) limit(0.001, rej_mv, (1000.0 * MAXPOSINT) / Sen.AD);
     return (0);
 }
 
-static int
-check_t1_t2()
+static int check_t1_t2(void)
 {
     static float tmax = 999;
 

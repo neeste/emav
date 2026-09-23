@@ -13,6 +13,7 @@
 #include <menu.h>
 #include <token.h>
 #include <util.h>
+extern void crash_log(const char *fmt, ...);
 #include "savage.h"
 #include "color.h"
 #include "version.h"
@@ -44,6 +45,19 @@ extern TOKENFILE *t;
 extern WIND w_stim_fft;
 
 /* Exit the program */
+#include <stdarg.h>
+void crash_log(const char *fmt, ...) {
+    FILE *f = fopen("emav_crash.log", "a");
+    if (f) {
+        va_list args;
+        va_start(args, fmt);
+        vfprintf(f, fmt, args);
+        va_end(args);
+        fprintf(f, "\n");
+        fflush(f);
+        fclose(f);
+    }
+}
 int
 Exit_wind(char *no_use)
 {
@@ -255,11 +269,68 @@ savedir(char **s)
     strcat(ofiledir, path.dir);
     return (0);
 }
+static int setcwd(char **);
+
+int browse_file_action(char *no_use) {
+    char filter[128];
+    char path[MAXPATH*2];
+    path[0] = '\0';
+    
+    // Create the filter, e.g. "DPOAE Files\0*.DAT\0"
+    sprintf(filter, "%s Files (*%s)", filetypes.strs[filetypes.at], sf[filetypes.at] + 1);
+    int len = strlen(filter);
+    filter[len] = '\0';
+    strcpy(&filter[len+1], sf[filetypes.at]);
+    filter[len + 1 + strlen(sf[filetypes.at]) + 1] = '\0';
+
+#ifdef _WIN32
+    extern int w32_browse_file(char *path, int max_len, const char *filter);
+    if (w32_browse_file(path, sizeof(path), filter)) {
+#elif defined(__APPLE__)
+    FILE *fp = popen("osascript -e 'POSIX path of (choose file with prompt \"Select Data File:\")' 2>/dev/null", "r");
+    if (fp) {
+        if (fgets(path, sizeof(path), fp) != NULL) {
+            int L = strlen(path);
+            while (L > 0 && (path[L-1] == '\n' || path[L-1] == '\r')) path[--L] = '\0';
+        }
+        pclose(fp);
+    }
+    if (path[0] != '\0') {
+#else
+    if (0) {
+#endif
+        struct PATH p;
+        char *dummy = NULL;
+        split_path(path, p.drive, p.dir, p.name, p.ext);
+        
+        // Update current directory and ofiledir
+        strcpy(curdir, p.drive);
+        strcat(curdir, p.dir);
+        // Remove trailing slash for chdir if present
+        int c_len = strlen(curdir);
+        if (c_len > 0 && (curdir[c_len-1] == '\\' || curdir[c_len-1] == '/'))
+            curdir[c_len-1] = '\0';
+        setcwd(&dummy);
+        
+        // Update ofiledir for internal state
+        strcpy(ofiledir, p.drive);
+        strcat(ofiledir, p.dir);
+
+        // Put full path in o_file_name for immediate open
+        strcpy(o_file_name, path);
+        
+        // Immediately run the trailer and exit the menu
+        set_trailer((void (*)(void)) rd_file[filetypes.at]);
+        return (27);
+    }
+    return (0);
+}
 
 MENUITEM sub_file[] = {
     {"&Open File", NULL, NONE, 0, 0, 1, open_file},
     {"File &Type =", (char *) &filetypes, TOGGLE, 0, 0, 1, toggle_type},
     {"File &Name :=", o_file_name, STRING, 127, 0, 1, savedir},
+    {"&Browse...", NULL, NONE, 0, 0, 1, browse_file_action},
     {NULL, NULL, NONE, 0, 0, 1, NULL}
 };
 
@@ -314,6 +385,9 @@ scaleback(int tokmax, int32_t maxval, short *sbuf, int32_t *lbuf)
 {
     int     i;
     float   scale;
+
+    extern void crash_log(const char *fmt, ...);
+    crash_log("scaleback: buflen=%d, tokmax=%d, maxval=%d", buflen, tokmax, maxval);
 
     if (tokmax > 0)
 	scale = (float) maxval / tokmax;
@@ -427,16 +501,20 @@ check_dpoae_file(char *fn, int flag)
     int     ok = 0;
     FILE   *fpt;
 
+    crash_log("check_dpoae_file: fn='%s'", fn);
     fpt = fopen(fn, "rt");
     if (!fpt) {
+        crash_log("check_dpoae_file: fopen failed");
 	if (flag) {
 	    decide(0, 3, "Can't open file", fn,
 		"Press any key to continue");
 	}
     } else {
+        crash_log("check_dpoae_file: fopen succeeded");
         fgets(line, MAXLINE, fpt);
 	get_token(1);
 	if (strcmp(tokstr, ";DPOAE")) {
+            crash_log("check_dpoae_file: signature mismatch, tokstr='%s'", tokstr);
 	    fclose(fpt);
 	    if (flag) {
 		decide(0, 3, "Not a DPOAE file",
@@ -444,6 +522,7 @@ check_dpoae_file(char *fn, int flag)
 		    "Press any key to continue");
 	    }
 	} else {
+            crash_log("check_dpoae_file: signature match");
 	    fclose(fpt);
 	    ok = 1;
 	}
@@ -506,9 +585,13 @@ rd_dpoae_file(void)
 	"Threshold", "limit", ""
     };
 
+    crash_log("rd_dpoae_file: entry. o_file_name='%s'", o_file_name);
+
     if (!check_dpoae_file(o_file_name, 1)) {
+        crash_log("rd_dpoae_file: check_dpoae_file failed");
 	return (0);
     }
+    crash_log("rd_dpoae_file: check_dpoae_file succeeded");
     fpt = fopen(o_file_name, "rt");
     strcpy(file_name, o_file_name);
     o_file_name[0] = o_file_name[40] = o_file_name[80] = 0;
@@ -1071,11 +1154,16 @@ open_file(char *use2chk)
 	}
     } while (acpt == 0);
 
+    crash_log("open_file: acpt=%d ptr=%d start=%d", acpt, ptr, start);
+
     if (acpt > 0) {
 	snprintf(o_file_name, sizeof(o_file_name), "%s%s", ofiledir, files + (ptr - start) * (ncfn + 1));
 	trim(o_file_name);
-	if (use2chk != NULL)
+        crash_log("open_file: trimmed o_file_name='%s'", o_file_name);
+	if (use2chk != NULL) {
+            crash_log("open_file: calling set_trailer. filetypes.at=%d", filetypes.at);
 	    set_trailer((void (*)(void)) rd_file[filetypes.at]);
+        }
 	rc = 27;
     } else if (acpt == -2) {
 	rc = 'N';
@@ -1092,6 +1180,7 @@ open_file(char *use2chk)
 	close_w(&w);
     if (files)
         free(files);
+    crash_log("open_file: returning %d", rc);
     return (rc);
 }
 

@@ -115,7 +115,7 @@ static NSWindow *mainWindow = nil;
         else if (c == NSPageDownFunctionKey) push_event(FK_PgDn);
         else if (c == NSHomeFunctionKey) push_event(FK_Home);
         else if (c == NSEndFunctionKey) push_event(FK_End);
-        else if (c == NSDeleteFunctionKey || c == NSBackspaceCharacter) push_event(8);
+        else if (c == NSDeleteFunctionKey || c == NSBackspaceCharacter || c == NSDeleteCharacter) push_event(8);
         else if (c == NSCarriageReturnCharacter || c == NSEnterCharacter) push_event(13);
         else if (c == 27) push_event(Esc);
         else if (c < 128) push_event(c);
@@ -177,6 +177,8 @@ void init_gr() {
         [mainWindow setContentView:view];
         [mainWindow makeKeyAndOrderFront:nil];
         [mainWindow makeFirstResponder:view];
+        [NSApp activateIgnoringOtherApps:YES];
+
         
         // Setup offscreen context
         CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
@@ -242,7 +244,7 @@ void gr_recto(int x1, int y1, int x2, int y2, int c) {
     redraw_view();
 }
 
-void gr_rectf(int x1, int y1, int x2, int y2, int c) {
+void gr_rectf_orig(int x1, int y1, int x2, int y2, int c) {
     dispatch_sync(dispatch_get_main_queue(), ^{
         if (offscreenContext) {
             set_cg_color(offscreenContext, c);
@@ -376,6 +378,8 @@ extern int pgm_main(int argc, char **argv);
 
 int main(int argc, char **argv) {
     @autoreleasepool {
+        NSString *appName = [[[NSString stringWithUTF8String:argv[0]] lastPathComponent] uppercaseString];
+        [[NSProcessInfo processInfo] setProcessName:appName];
         NSApplication *app = [NSApplication sharedApplication];
         EMAVAppDelegate *delegate = [[EMAVAppDelegate alloc] init];
         delegate.argc = argc;
@@ -385,4 +389,18 @@ int main(int argc, char **argv) {
         [app run];
     }
     return 0;
+}
+void gr_rectf(int x1, int y1, int x2, int y2, int c) {
+    printf("gr_rectf enter\\n"); fflush(stdout);
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        printf("gr_rectf block enter\\n"); fflush(stdout);
+        if (offscreenContext) {
+            set_cg_color(offscreenContext, c);
+            CGRect rect = CGRectMake(MIN(x1, x2), ymax - MAX(y1, y2), ABS(x2 - x1), ABS(y2 - y1));
+            CGContextFillRect(offscreenContext, rect);
+            [[mainWindow contentView] setNeedsDisplay:YES];
+        }
+        printf("gr_rectf block exit\\n"); fflush(stdout);
+    });
+    printf("gr_rectf exit\\n"); fflush(stdout);
 }

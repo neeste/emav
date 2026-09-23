@@ -1,11 +1,12 @@
+int button_down(void);
+
 /* button.c */
 
 #ifdef NEVER
 #include <conio.h>
 #endif /* NEVER */
 
-int
-button_down()
+int button_down(void)
 {
 #ifdef NEVER
     static struct {int buff, stat, ctrl;} ptr = {0x378, 0x379, 0x37A};

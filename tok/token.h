@@ -5,6 +5,8 @@
 #define COMNTSIZE 82
 #define TOKENFILE struct _tokenfile
 
+#pragma pack(push, 1)
+
 struct HEADER	{               /* word locs*/
 	int16_t blank1[5];      /* 1-5   */
 	int16_t blocks;         /* 6     */
@@ -87,6 +89,8 @@ TOKENFILE {
 	short token;		
 };
 
+#pragma pack(pop)
+
 /*  ANSCII function prototypes */
 
 double getfloat(char *);
@@ -109,4 +113,4 @@ void trdhitch(TOKENFILE *);
 void twrcar(int, TOKENFILE *);
 void twrheader(TOKENFILE *);
 void twrhitch(TOKENFILE *);
-void waitkp();
+void waitkp(void);

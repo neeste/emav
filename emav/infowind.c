@@ -1,3 +1,6 @@
+int reset_cali(void);
+int Info_wind(void);
+
 /* ============================ infowind.c =============================== */
 
 #include <stdio.h>
@@ -17,8 +20,7 @@ TOGGLETYPE ears = {
 
 PATIENT patient = {"", "", "", "", 'L', "", ""};
 
-int
-reset_cali()
+int reset_cali(void)
 {
     cali_file[0] = 0;
     return(0);
@@ -36,8 +38,7 @@ MENUITEM info[] = {
 };
 
 /* This function gets the subject info and displays it */
-int
-Info_wind()
+int Info_wind(void)
 {
     int i;
 

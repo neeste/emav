@@ -66,7 +66,7 @@ simpfit(float *iniv, int npv, int mxiter, int mniter, double (*pvar)(float *), v
     float   cent[MXNV], nxtv[MXNV], nxres;
 
     if (npv >= MXNV)
-	return;
+    return;
     variance = pvar;
     report = prep;
     early_exit = peex;
@@ -152,9 +152,9 @@ sfhilo(int ii, int ir)
 
     if (ir > 0) {
 	if (ii < lastii + ir)
-	    return;
+    return;
 	if (lores >= lstres)
-	    return;
+    return;
     }
     lastii = ii;
     lstres = lores;
@@ -305,8 +305,7 @@ test_report(float *x)
     printf(" x1=%.1f x2=%.1f x3=%.1f x4=%.1f\n", x[0], x[1], x[2], x[3]);
 }
 
-void 
-main()
+void main(void)
 {
     static float x[4] = {3, 2, 1, 1};
 

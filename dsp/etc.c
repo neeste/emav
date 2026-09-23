@@ -1,10 +1,11 @@
+void zero_all(void);
+
 /* etc.c */
 
 #include "menu.h"
 #include "savage.h"
 
-void
-zero_all()
+void zero_all(void)
 {
     int     i;
 

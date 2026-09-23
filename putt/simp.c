@@ -1,3 +1,23 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#define MXNV	21		/* maximum number of parameters + 1 */
+#define ALFA	1.0		/* reflection coefficient */
+#define BETA	0.5		/* contraction coefficient */
+#define GAMA	2.0		/* expansion coefficient */
+
+static void sfinflate(float iniv[MXNV]);
+static void sfhilo(int ii, int ir);
+static void sfcentroid(float cent[MXNV]);
+static void sfreflect(float cent[MXNV], float nxtv[MXNV]);
+static void sfaccept(float nxtv[MXNV]);
+static void sfsavelo(float iniv[MXNV]);
+static void sfexpansion(float cent[MXNV], float nxtv[MXNV]);
+static void sfcontraction(float cent[MXNV], float nxtv[MXNV]);
+static void sfshrink(void);
+static int sfconvergence(void);
+
 /* simp.c - simplex parameter fitting routine
  ****************************************************************************
  *
@@ -29,14 +49,6 @@
  ****************************************************************************
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#define MXNV	21		/* maximum number of parameters + 1 */
-#define ALFA	1.0		/* reflection coefficient */
-#define BETA	0.5		/* contraction coefficient */
-#define GAMA	2.0		/* expansion coefficient */
 #define IPER	0.01		/* initial fraction */
 #define FPER	0.0001		/* final fraction */
 
@@ -44,34 +56,17 @@ double  (*variance) (float *pv);
 void    (*report) (float *pv);
 int     (*early_exit) ();
 
-static int sfconvergence();
-static void sfinflate();
-static void sfhilo();
-static void sfcentroid();
-static void sfreflect();
-static void sfaccept();
-static void sfsavelo();
-static void sfexpansion();
-static void sfcontraction();
-static void sfshrink();
-
 static double lores, hires, lstres;
 static int npar, nval, hiidx, loidx, lastii;
 static float simp[MXNV][MXNV];
 
-void 
-simpfit(iniv, npv, mxiter, mniter, pvar, prep, peex)
-float  *iniv;
-int     npv, mxiter, mniter;
-double  (*pvar) (float *);
-void    (*prep) (float *);
-int     (*peex) ();
+void simpfit(float *iniv, int npv, int mxiter, int mniter, double (*pvar)(float *), void (*prep)(float *), int (*peex)(void))
 {
     int     i;
     float   cent[MXNV], nxtv[MXNV], nxres;
 
     if (npv >= MXNV)
-	return;
+    return;
     variance = pvar;
     report = prep;
     early_exit = peex;
@@ -111,9 +106,7 @@ int     (*peex) ();
     return;
 }
 
-static void 
-sfinflate(iniv)
-float   iniv[MXNV];
+static void sfinflate(float iniv[MXNV])
 {
     int     i, j;
     float   d;
@@ -136,9 +129,7 @@ float   iniv[MXNV];
     return;
 }
 
-static void 
-sfhilo(ii, ir)
-int     ii, ir;
+static void sfhilo(int ii, int ir)
 {
     int     i;
 
@@ -159,9 +150,9 @@ int     ii, ir;
 
     if (ir > 0) {
 	if (ii < lastii + ir)
-	    return;
+    return;
 	if (lores >= lstres)
-	    return;
+    return;
     }
     lastii = ii;
     lstres = lores;
@@ -172,9 +163,7 @@ int     ii, ir;
     return;
 }
 
-static void 
-sfcentroid(cent)
-float   cent[MXNV];
+static void sfcentroid(float cent[MXNV])
 {
     int     i, j;
 
@@ -189,9 +178,7 @@ float   cent[MXNV];
     return;
 }
 
-static void 
-sfreflect(cent, nxtv)
-float   cent[MXNV], nxtv[MXNV];
+static void sfreflect(float cent[MXNV], float nxtv[MXNV])
 {
     int     i;
 
@@ -202,9 +189,7 @@ float   cent[MXNV], nxtv[MXNV];
     return;
 }
 
-static void 
-sfaccept(nxtv)
-float   nxtv[MXNV];
+static void sfaccept(float nxtv[MXNV])
 {
     int     i;
 
@@ -214,9 +199,7 @@ float   nxtv[MXNV];
     return;
 }
 
-static void 
-sfsavelo(iniv)
-float   iniv[MXNV];
+static void sfsavelo(float iniv[MXNV])
 {
     int     i;
 
@@ -226,9 +209,7 @@ float   iniv[MXNV];
     return;
 }
 
-static void 
-sfexpansion(cent, nxtv)
-float   cent[MXNV], nxtv[MXNV];
+static void sfexpansion(float cent[MXNV], float nxtv[MXNV])
 {
     int     i;
 
@@ -239,9 +220,7 @@ float   cent[MXNV], nxtv[MXNV];
     return;
 }
 
-static void 
-sfcontraction(cent, nxtv)
-float   cent[MXNV], nxtv[MXNV];
+static void sfcontraction(float cent[MXNV], float nxtv[MXNV])
 {
     int     i;
 
@@ -252,8 +231,7 @@ float   cent[MXNV], nxtv[MXNV];
     return;
 }
 
-static void 
-sfshrink()
+static void sfshrink(void)
 {
     int     i, j;
 
@@ -266,8 +244,7 @@ sfshrink()
     return;
 }
 
-static int 
-sfconvergence()
+static int sfconvergence(void)
 {
     int     i, j;
     double  error, hi[MXNV], lo[MXNV];
@@ -318,8 +295,7 @@ test_report(float *x)
     printf(" x1=%.1f x2=%.1f x3=%.1f x4=%.1f\n", x[0], x[1], x[2], x[3]);
 }
 
-void 
-main()
+void main(void)
 {
     static float x[4] = {3, 2, 1, 1};
 

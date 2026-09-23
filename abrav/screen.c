@@ -1,3 +1,6 @@
+void set_menu_colors(void);
+void set_text_par(void);
+
 /* screen.c */
 
 #include <stdio.h>
@@ -46,8 +49,7 @@ int scrn_c[NUM_SCRN_COLORS] = {
     LIGHTGREEN,         /* C_OKTX - "OK" indicator */
 };
 
-void
-set_menu_colors()
+void set_menu_colors(void)
 {
     menucolor.mfg = BLACK;	/* non active menu fg and bg colors */
     menucolor.mbg = WHITE;
@@ -58,8 +60,7 @@ set_menu_colors()
     menucolor.boxc = DARKGRAY;	/* menu frame color */
 }
 
-void
-set_text_par()
+void set_text_par(void)
 {
     txtpar.menu_height = 13;	/* each menu item height in pixels */
     txtpar.font_height = 10;	/* the font height in pixels */

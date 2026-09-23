@@ -53,13 +53,6 @@ trdcar(int itok, TOKENFILE *t)
 {
     _lseek(t->fd, (long) (t->header.blocks + 1 + itok) << 9, SEEK_SET);
     _read(t->fd, (char *) &(t->car), sizeof(t->car));	/* read car */
-    if (sizeof(t->car) > 202) {   /* fix 64-bit structure alignment */
-        int sz = sizeof(t->car);
-        char *car = (char *) &t->car.tokeno;
-        memmove(car +   4, car +   2, sz -   4); /* block   */
-        memmove(car +  40, car +  38, sz -  40); /* toktime */
-        memmove(car + 184, car + 182, sz - 184); /* scale   */
-    }
 }
 
 /*

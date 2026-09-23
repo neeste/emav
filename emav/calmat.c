@@ -1,3 +1,5 @@
+void usage(void);
+
 /* calmat.c  - CAL to MAT file converter */
 
 #include <stdio.h>
@@ -201,7 +203,7 @@ dp_mat(char *fn)
     newext(fn, "mat");
     mfd = _open(fn, OFLAG, PMODE);    /* open the file */
     if (mfd == -1)
-        return;
+    return;
     mat_wr1_s(mfd, "DPOAE_CAL", ntok);
     mat_wr1_f(mfd, "rate", (float) rate);
     mat_wr1_s(mfd, "npts", npts);
@@ -213,8 +215,7 @@ dp_mat(char *fn)
     _close(mfd);
 }
 
-void
-usage()
+void usage(void)
 {
     printf("usage:\n");
     printf("    calmat file.cal ...\n");

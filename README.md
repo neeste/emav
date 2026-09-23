@@ -22,7 +22,7 @@ To compile the macOS executable and create the deployment archive, run:
 ```bash
 make mac_deploy
 ```
-This will build the binaries using GCC and compress them into `EMAV_Mac.zip`, before uploading it to the deployment server.
+This will build the binaries using GCC, automatically generate a native, double-clickable `EMAV.app` bundle, package it into an `EMAV_App.pkg` installer, and then compress everything into `EMAV_Mac.zip` before uploading it to the deployment server.
 
 ## License
 Creative Commons Attribution 4.0 International (CC-BY)

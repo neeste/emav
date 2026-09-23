@@ -1,3 +1,5 @@
+int chk_ramp_tone(void);
+
 /* savage.c */
 
 #include <stdio.h>
@@ -61,8 +63,7 @@ tone_opt(char *no_use)
     return (simple_submenu(menu_x(), menu_y(), tone_option));
 }
 
-int
-chk_ramp_tone()
+int chk_ramp_tone(void)
 {
     int i, n, r, m = 16;
 

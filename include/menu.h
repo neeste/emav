@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include <stdlib.h>
 /* ============================== menu.h =====================================
 Minimenu is a library of C callable simple menu routines on IBM-PC's video
@@ -55,6 +57,12 @@ Boystown National Research Hospital, 1992-1999
 
 enum TYPE { NONE, STRING, SHORT, INT, CHAR, LONG, FLOAT, DOUBLE, TOGGLE };
 
+/* Force 1-byte packing for all shared structs so that projects compiled
+   with /Zp1 (emav, abrav, putt) and projects compiled with default
+   alignment (wmenu, wutil) produce identical struct layouts.  Without
+   this, pointer-sized fields get different padding on ARM64/x64. */
+#pragma pack(push, 1)
+
 typedef struct {
     long at;		/* current selection */
     char *strs[12];	/* name of each toggled type */
@@ -94,6 +102,8 @@ typedef struct {
     char status;	/* 1 for enabled, 0 for disabled */
     int (*exe)();       /* execute this each time get_str is invoked */
 } MENUITEM;
+
+#pragma pack(pop)
 
 /* =======================================================================
    The following are the global variables used in the mini-menu library

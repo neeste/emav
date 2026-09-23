@@ -1,3 +1,8 @@
+void mainmenu_exit(void);
+void mainmenu_clear(void);
+int menu_x(void);
+void mainmenu_driver(void);
+
 /* mainmenu.c */
 
 #include <stdio.h>
@@ -27,20 +32,17 @@ mainmenu_init(MAIN_MENU * m)
 	continue;
 }
 
-void
-mainmenu_exit()
+void mainmenu_exit(void)
 {
     _exit_flg_ = 1;
 }
 
-void
-mainmenu_clear()
+void mainmenu_clear(void)
 {
     gr_rectf(0, 0, items * step, txtpar.menu_height, txtpar.cbg);
 }
 
-int
-menu_x()
+int menu_x(void)
 {
     return ((xsub < 0) ? xdef : xsub);
 }
@@ -105,8 +107,7 @@ mainmenu_show(char *key)
     return (items);
 }
 
-void
-mainmenu_driver()
+void mainmenu_driver(void)
 {
     int     i, j, n, c, mx, my;
     char    keys[MAX_ITEMS];
@@ -147,7 +148,7 @@ mainmenu_driver()
 	} else {
 	    switch (n) {
 	    case Ctrl_C:
-		return;
+    return;
 	    case Ctrl_P:
 	    case Ctrl_W:
 		prn_screen();

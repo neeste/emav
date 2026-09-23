@@ -1,3 +1,7 @@
+void init_alloc_space(void);
+void defpar(void);
+void default_init(void);
+
 /* tstdsp.c */
 
 #include <stdio.h>
@@ -80,8 +84,7 @@ float  *accbuf, *accbuf_a, *accbuf_b;
 char    line[MAXLINE];
 char    tokstr[40];
 
-void
-init_alloc_space()
+void init_alloc_space(void)
 {
     accbuf = (float *) calloc(4 * MAXNPTS, sizeof(float));
     outbuf = (short *) calloc(4 * MAXNPTS, sizeof(float));
@@ -96,8 +99,7 @@ init_alloc_space()
 }
 
 /* set default parameter values */
-void
-defpar()
+void defpar(void)
 {
     // TONE
     tone.rate = 32000;
@@ -195,8 +197,7 @@ Quit_wind(char *no_use)
     return (0);
 }
 
-void
-default_init()
+void default_init(void)
 {
     int wi, wo;
 

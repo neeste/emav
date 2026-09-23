@@ -1,0 +1,27 @@
+name: Deploy Web Page via FTP
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'web/**'
+
+jobs:
+  web-deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get latest code
+      uses: actions/checkout@v4
+      
+    - name: Sync files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: bonkachen.com
+        username: audres_deploy@bonkachen.com
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./web/
+        server-dir: /rc/emav/
+        dangerous-clean-slate: false

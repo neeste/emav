@@ -1,3 +1,7 @@
+int check_timing(void);
+void reset_timing(void);
+void init_graphics(void);
+
 /* event.c */
 
 #include <stdio.h>
@@ -15,8 +19,7 @@ float   refresh_time = 5;   /* sec */
 static int32_t timing = 0;
 
 /* check the refresh timing */
-int
-check_timing()
+int check_timing(void)
 {
     if(lookahead() == 0) {
 	if(refresh_time > 0) {
@@ -28,8 +31,7 @@ check_timing()
     return (0);
 }
 
-void
-reset_timing()
+void reset_timing(void)
 {
     timing = clock() + (int32_t) (refresh_time * CLOCKS_PER_SEC);
 }
@@ -59,8 +61,7 @@ proc_event(int c)
 
 int     dfgc, xpix, ypix;
 
-void
-init_graphics()
+void init_graphics(void)
 {
     int k;
     extern int mono_screen;

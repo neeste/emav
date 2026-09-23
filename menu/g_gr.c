@@ -1,3 +1,6 @@
+void init_gr(void);
+void end_gr(void);
+
 /* g_gr.c - graphics using MSC and GRLIB */
 
 #include <stdio.h>
@@ -12,14 +15,13 @@ static int pc_video_adapt = 0;
 static int nss = 0;
 static unsigned char *scrnbuf[MAXNSS];
 
-void
-init_gr()
+void init_gr(void)
 {
     int     ncolors = 2;
     int     new_vid_mode = 0, mono = 0;
 
     if (old_vid_mode)
-    	return;
+    return;
     old_vid_mode = gr_gtmod();	/* save orignal graphics mode */
 
     if (pc_video_adapt == GR_UNKNOWN)
@@ -71,11 +73,10 @@ init_gr()
     txtpar.font_width = 8;
 }
 
-void
-end_gr()
+void end_gr(void)
 {
     if (old_vid_mode == 0)
-	return;
+    return;
     gr_init(old_vid_mode, 0, 0);
 }
 
@@ -87,10 +88,10 @@ g_savscr(x1, y1, x2, y2)
     if (nss < MAXNSS) {
         nb = gr_imagesize(x1, y1, x2, y2);
         if (nb >= 65000)
-    	    return;
+    return;
         scrnbuf[nss] = (unsigned char *) malloc((size_t) nb);
         if (scrnbuf[nss] == NULL)
-            return;
+    return;
         gr_getimage(x1, y1, x2, y2, scrnbuf[nss]);
         nss++;
     }

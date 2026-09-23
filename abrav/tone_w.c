@@ -1,3 +1,12 @@
+void grab_tone(void);
+void zero_all(void);
+int adjust_tone_f(void);
+int chk_due(void);
+void dis_tone(void);
+void show_tone(void);
+int do_tone(void);
+void Tone_wind(void);
+
 /* tone_w.c */
 
 #include <stdio.h>
@@ -39,8 +48,7 @@ TOGGLETYPE play_chan = {
 static int esc_flg = 0;
 
 /* make the tone option current */
-void
-grab_tone()
+void grab_tone(void)
 {
     dis_units(Sen.AD, Sen.MP, 1.0);
     if (tone.size > maxnpts) {
@@ -50,8 +58,7 @@ grab_tone()
     rate = tone.rate = adjust_rate(tone.rate);
 }
 
-void
-zero_all()
+void zero_all(void)
 {
     int     i;
 
@@ -71,16 +78,14 @@ adjustf(double f)
 }
 
 /* adjust the freq for MENUITEM tone data structure */
-int
-adjust_tone_f()
+int adjust_tone_f(void)
 {
     tone.freq = (float) adjustf(tone.freq);
     return (0);
 }
 
 /* check tone duration for MENUITEM tone */
-int
-chk_due()
+int chk_due(void)
 {
     float   a, d;
     int     i;
@@ -150,8 +155,7 @@ unit_select(double in, double *out, int *dpl)
 }
 
 /* display tone level and etc */
-void
-dis_tone()
+void dis_tone(void)
 {
     char *u;
     double v;
@@ -190,8 +194,7 @@ dis_tone()
 }
 
 /* graphical display of the tone */
-void
-show_tone()
+void show_tone(void)
 {
     double  tms;
     int     cnt = 0, mx, my;
@@ -262,8 +265,7 @@ gen_tone(float f, int c)
 }
 
 /* do the tone task */
-int
-do_tone()
+int do_tone(void)
 {
     int     nsweeps_s, swp1set_s, c;
     float   a;
@@ -304,11 +306,10 @@ do_tone()
 }
 
 /* this function is associated to the mainmenu TONE item */
-void 
-Tone_wind()
+void Tone_wind(void)
 {
     if (dsp_init() > 0)
-	return;
+    return;
     top_message("Tone       ");
     grab_tone();
     adjust_tone_f();

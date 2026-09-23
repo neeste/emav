@@ -1,3 +1,8 @@
+int display_version(void);
+int check_timing(void);
+void reset_timing(void);
+void init_graphics(void);
+
 /* event.c */
 
 #include <stdio.h>
@@ -19,8 +24,7 @@ float   refresh_time = 0;
 static int32_t timing = 0;
 
 /* display the verison number and copyright info */
-int
-display_version()
+int display_version(void)
 {
     dsp_init();
     decide(0, 6, VERSION, PGM_NAME, COPYRIGHT, BTNRH, dspapi(), dspdev());
@@ -28,8 +32,7 @@ display_version()
 }
 
 /* check the refresh timing */
-int
-check_timing()
+int check_timing(void)
 {
     if(lookahead() == 0) {
 	if(refresh_time > 0) {
@@ -41,8 +44,7 @@ check_timing()
     return (0);
 }
 
-void
-reset_timing()
+void reset_timing(void)
 {
     timing = clock() + (int32_t) (refresh_time * CLOCKS_PER_SEC);
 }
@@ -74,8 +76,7 @@ proc_event(int c)
 
 int     dfgc, xpix, ypix;
 
-void
-init_graphics()
+void init_graphics(void)
 {
     int k;
     extern int mono_screen;

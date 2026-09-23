@@ -1,3 +1,9 @@
+static void swap_wind(void);
+static void view_teoae(void);
+static void view_dpoae(void);
+static void view_dpcal(void);
+void view_file(void);
+
 /* view.c */
 
 #include <stdio.h>
@@ -20,8 +26,7 @@ extern int fileflag, dp_repeat, dp_items, num_oct;
 
 int xbegin = 0, xrange = 0;
 
-static void
-swap_wind()
+static void swap_wind(void)
 {
     WIND    w;
 
@@ -32,15 +37,14 @@ swap_wind()
     wind_color(&w_spec, scrn_c[C_RFTF], scrn_c[C_RFTB]);
 }
 
-static void
-view_teoae()
+static void view_teoae(void)
 {
     int     i, mx, my, sweeps, quit = 0, show = 0, chan = 0;
     static int mode = 0;
 
     sweeps = rd_teoae_file();
     if (sweeps <= 0)
-	return;
+    return;
 
     while (!quit) {
 	i = getevent();
@@ -106,8 +110,7 @@ view_teoae()
     }
 }
 
-static void
-view_dpoae()
+static void view_dpoae(void)
 {
     char dat_file[80];
     int     i, mx, my, maxsel;
@@ -184,8 +187,7 @@ view_dpoae()
     }
 }
 
-static void
-view_dpcal()
+static void view_dpcal(void)
 {
     char    cfn[MAXNAME];
     int     i, mx, my, icav = 0;
@@ -264,8 +266,7 @@ view_dpcal()
     w_spec = wf;	// restore w_spec
 }
 
-void
-view_file()
+void view_file(void)
 {
     int tmp;
     WIND    w0, w1;

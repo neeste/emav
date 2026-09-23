@@ -96,7 +96,7 @@ lp2ba(float *p, int np, float *b, float *a, float *wn, int ft)
     
     if (ft < 0 || ft > 1) {
 	lp2bax(p, np, b, a, wn, ft);
-	return;
+    return;
     }
     warp(p, np, *wn);
     nc = 1;
@@ -145,7 +145,7 @@ lp2bax(float *p, int np, float *b, float *a, float *wn, int ft)
     float *p2, *b2, *a2, *w2, *c2;
 
     if (ft < 2 || ft > 3) {
-	return;
+    return;
     }
     nc = 1 + np;
     ns = 1 + np * 2;
@@ -193,7 +193,7 @@ butterp(float *p, int n)
     int i, ir, ii, m;
     
     if (n < 1) {
-	return;
+    return;
     }
     m = n / 2;
     pi = 4 * atan(1.0);
@@ -256,7 +256,7 @@ besselp(float *p, int n)
 	p09, p10, p11, p12, p13, p14, p15, p16};
 
     if (n < 1 || n > 16) {
-	return;
+    return;
     }
     for (i = 0; i < n; i++) {
 	p[i] = (float) ((pp[n-1])[i]);

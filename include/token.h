@@ -5,6 +5,8 @@
 #define COMNTSIZE 82
 #define TOKENFILE struct _tokenfile
 
+#pragma pack(push, 1)
+
 struct HEADER	{               /* word locs*/
 	int16_t blank1[5];      /* 1-5   */
 	int16_t blocks;         /* 6     */
@@ -86,6 +88,8 @@ TOKENFILE {
 	short *buf;		
 	short token;		
 };
+
+#pragma pack(pop)
 
 /*  ANSCII function prototypes */
 

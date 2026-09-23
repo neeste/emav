@@ -1,3 +1,16 @@
+static void put_bank(void);
+static void get_bank(void);
+static int check_bank(void);
+static void begin_io(void);
+static void stop_io(void);
+static void init_vpc(void);
+static void stim_fix(void);
+static void stim_float(void);
+static void resp_zero(void);
+static void resp_scale_average(void);
+static void resp_scale_input(void);
+void sio_close(void);
+
 /* sio.c - depends on functions in wa.c */
 
 #include <stdio.h>
@@ -154,8 +167,7 @@ set_resp_buff(int b)
     rspbuf = b;
 }
 
-static void
-put_bank()
+static void put_bank(void)
 {
     int     bnko, chnk, ibnk, doit, ofst, nrem, nsmp, smpo;
 
@@ -175,8 +187,7 @@ put_bank()
     bnk_oc++;
 }
 
-static void
-get_bank()
+static void get_bank(void)
 {
     int     bnko, chnk, ibnk, doit, ofst, nrem, nsmp, smpi;
 
@@ -208,7 +219,7 @@ get_bank()
     bnk_ic++;
 }
 
-static int check_bank()
+static int check_bank(void)
 {
     int bank = 0;
 
@@ -234,8 +245,7 @@ reset_io(int bs)
     return (bs);
 }
 
-static void
-begin_io()
+static void begin_io(void)
 {
 #ifdef WIN32
     if (iodev == WA_DEV)
@@ -255,11 +265,11 @@ setup_io(int32_t nstm, int32_t ngap, int nskp, int nswp, double pregap)
 
     if (nswp <= 0 || nstm <= 0) {
 	escflg = 1;
-	return;
+    return;
     }
 #ifdef WIN32
     if (wa_open(mxndc, atten, mxsmp))
-	return;
+    return;
 #endif // WIN32
     smpstm = nstm;
     smpswp = nstm + ngap;
@@ -284,7 +294,7 @@ perform_io(int navg, int nrej)
 
     if (escape)
         if (escape())
-            return;
+    return;
     swpcnt = 0;
     bnk_ic = 0;
     bnk_oc = 0;
@@ -310,8 +320,7 @@ perform_io(int navg, int nrej)
     }
 }
 
-static void
-stop_io()
+static void stop_io(void)
 {
 #ifdef WIN32
     if (iodev == WA_DEV) {
@@ -331,8 +340,7 @@ static double prgap = 0;
 static int nsgap = 0;
 static int nsstm = 0;
 
-static void
-init_vpc()
+static void init_vpc(void)
 {
     double  da_vfs[MAXNDC], ad_vfs[MAXNDC];
     int     c;
@@ -350,8 +358,7 @@ init_vpc()
 }
 
 
-static void
-stim_fix()
+static void stim_fix(void)
 {
     float  *ob, sc;
     int     c, b, i, j, k, dj;
@@ -374,8 +381,7 @@ stim_fix()
     }
 }
 
-static void
-stim_float()
+static void stim_float(void)
 {
     float  *ob, sc;
     int     c, b, i, j, k, dj;
@@ -397,8 +403,7 @@ stim_float()
     }
 }
 
-static void
-resp_zero()
+static void resp_zero(void)
 {
     float  *ib;
     int     c, b, i, j, k, dj;
@@ -422,8 +427,7 @@ resp_zero()
     escflg = bio_.accept = avcnt = 0;
 }
 
-static void
-resp_scale_average()
+static void resp_scale_average(void)
 {
     float  *ab, sc;
     int     c, b, i, j, k, dj, n;
@@ -446,8 +450,7 @@ resp_scale_average()
     }
 }
 
-static void
-resp_scale_input()
+static void resp_scale_input(void)
 {
     float  *ib, sc;
     int     c, b, i, j, k, dj;
@@ -506,8 +509,7 @@ int sio_open(	// returns non-zero if successful
 
 // sio_close - Terminate I/O and free any allocated resources.
 
-void sio_close(
-)
+void sio_close(void)
 {
     iodev = 0;
 }

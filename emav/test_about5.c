@@ -18,5 +18,5 @@ int main() {
     pthread_t th;
     pthread_create(&th, NULL, bg_thread, NULL);
     pthread_join(th, NULL);
-    return 0;
+    return;
 }

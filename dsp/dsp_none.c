@@ -1,3 +1,5 @@
+void dspend(void);
+
 /* dsp_none.c - DSP function calls (for no DSP) */
 
 #include "dsp.h"
@@ -193,8 +195,7 @@ dspcho(int chnoff_in, int chnoff_out)
 
 /* dspend - set termination flag */
 
-void
-dspend()
+void dspend(void)
 {
 }
 
